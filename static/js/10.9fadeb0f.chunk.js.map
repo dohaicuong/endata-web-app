@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/VideoCall/index.tsx"],"names":["VideoCallPage"],"mappings":"mGAAA,2BAOeA,UALiB,WAC9B,OACE","file":"static/js/10.9fadeb0f.chunk.js","sourcesContent":["import React from 'react'\n\nconst VideoCallPage: React.FC = () => {\n  return (\n    <>Video call room</>\n  )\n}\nexport default VideoCallPage"],"sourceRoot":""}

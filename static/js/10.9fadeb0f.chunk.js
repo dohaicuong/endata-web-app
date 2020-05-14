@@ -1,0 +1,2 @@
+(this.webpackJsonpendata=this.webpackJsonpendata||[]).push([[10],{397:function(a,e,n){"use strict";n.r(e);var t=n(0),r=n.n(t);e.default=function(){return r.a.createElement(r.a.Fragment,null,"Video call room")}}}]);
+//# sourceMappingURL=10.9fadeb0f.chunk.js.map

@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/Communication/index.tsx"],"names":["CommunicationPage"],"mappings":"kGAAA,2BAOeA,UALqB,WAClC,OACE","file":"static/js/6.1b467618.chunk.js","sourcesContent":["import React from 'react'\n\nconst CommunicationPage: React.FC = () => {\n  return (\n    <>Communication</>\n  )\n}\nexport default CommunicationPage"],"sourceRoot":""}

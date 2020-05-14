@@ -1,0 +1,2 @@
+(this.webpackJsonpendata=this.webpackJsonpendata||[]).push([[5],{401:function(a,n,t){"use strict";t.r(n);var e=t(0),s=t.n(e);n.default=function(){return s.a.createElement(s.a.Fragment,null,"Claims")}}}]);
+//# sourceMappingURL=5.5ef8bc5e.chunk.js.map

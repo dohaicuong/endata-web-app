@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/Media/index.tsx"],"names":["MediaPage"],"mappings":"kGAAA,2BAOeA,UALa,WAC1B,OACE","file":"static/js/8.c3b0fa15.chunk.js","sourcesContent":["import React from 'react'\n\nconst MediaPage: React.FC = () => {\n  return (\n    <>Media</>\n  )\n}\nexport default MediaPage"],"sourceRoot":""}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/Claims/index.tsx"],"names":["ClaimsPage"],"mappings":"kGAAA,2BAOeA,UALc,WAC3B,OACE","file":"static/js/5.5ef8bc5e.chunk.js","sourcesContent":["import React from 'react'\n\nconst ClaimsPage: React.FC = () => {\n  return (\n    <>Claims</>\n  )\n}\nexport default ClaimsPage"],"sourceRoot":""}

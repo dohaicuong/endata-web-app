@@ -1,0 +1,2 @@
+(this.webpackJsonpendata=this.webpackJsonpendata||[]).push([[6],{399:function(n,t,a){"use strict";a.r(t);var e=a(0),u=a.n(e);t.default=function(){return u.a.createElement(u.a.Fragment,null,"Communication")}}}]);
+//# sourceMappingURL=6.1b467618.chunk.js.map
