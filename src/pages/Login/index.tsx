@@ -11,7 +11,10 @@ import LoginForm from './LoginForm'
 const LoginPage: React.FC = () => {
   // login and redirect user in if they got token from somewhere else
   const { token, redirect_from } = useQueryString()
-  useLoginUser({ token, redirect_from })
+  useLoginUser({
+    token: token as string,
+    redirect_from: redirect_from as string
+  })
   if(token) return null
 
   const storedToken = localStorage.getItem('ACCESS_TOKEN')

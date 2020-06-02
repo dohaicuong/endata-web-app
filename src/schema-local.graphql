@@ -1,0 +1,11 @@
+type AppMeta {
+  accessToken: String
+  refreshToken: String
+  rootRoute: String
+  redirectFrom: String
+}
+
+extend type Query {
+  meta: AppMeta
+  isClick: Boolean
+}

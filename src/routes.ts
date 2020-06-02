@@ -1,9 +1,6 @@
 import { lazy } from 'react'
-import { RouteProps } from 'react-router-dom'
+import { AppRouteProps } from 'providers/RouteProvider'
 
-export type AppRouteProps = RouteProps & {
-  private?: boolean
-}
 const routes: AppRouteProps[] = [
   { exact: true, path: '/user/login', component: lazy(() => import('pages/Login')) },
   { exact: true, path: '/video-call', component: lazy(() => import('pages/VideoCall')) },
