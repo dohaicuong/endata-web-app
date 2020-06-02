@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "yarn update:schema && yarn relay",
     "start": "react-scripts start",
     "build": "yarn relay && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{ts,tsx}'",
-    "isready": "npm run format && npm run lint && npm run build",
+    "update:schema": "dotenv -e .env.local yarn schema",
     "schema": "get-graphql-schema $REACT_APP_API_ENDPOINT > schema.graphql",
     "relay": "relay-compiler"
   },
