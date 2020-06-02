@@ -1,5 +1,5 @@
-import { commitLocalUpdate } from "react-relay"
-import environment from "./environment"
+import { commitLocalUpdate } from 'react-relay'
+import environment from './environment'
 
 type AppMetaInput = {
   accessToken?: string | null
@@ -8,20 +8,27 @@ type AppMetaInput = {
   redirectFrom?: string | null
 }
 
-export const recoverAppMeta = () => {
+export const recoverAppMeta = (): void => {
   const accessToken = localStorage.getItem('ACCESS_TOKEN')
   const refreshToken = localStorage.getItem('REFRESH_TOKEN')
   const rootRoute = localStorage.getItem('ROOT_ROUTE')
   const redirectFrom = localStorage.getItem('REDIRECT_FROM')
   commitAppMeta({ accessToken, refreshToken, rootRoute, redirectFrom })
 }
-export const commitAppMeta = ({ accessToken, refreshToken, rootRoute, redirectFrom }: AppMetaInput) => {
+export const commitAppMeta = ({
+  accessToken,
+  refreshToken,
+  rootRoute,
+  redirectFrom,
+}: AppMetaInput): void => {
   commitLocalUpdate(environment, store => {
     const fieldKey = 'meta'
     const __typename = 'AppMeta'
 
     const dataID = `client:${__typename}`
-    const record = store.get(dataID) ? store.get(dataID) : store.create(dataID, __typename)
+    const record = store.get(dataID)
+      ? store.get(dataID)
+      : store.create(dataID, __typename)
     if (!record) return console.log('some kind of error on relay')
 
     if (accessToken) {

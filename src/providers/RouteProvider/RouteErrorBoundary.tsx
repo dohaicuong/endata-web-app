@@ -1,7 +1,11 @@
 import React from 'react'
 import { FallbackProps } from 'react-error-boundary'
 
-const RouteErrorBoundary: React.FC<FallbackProps> = ({ error, componentStack, resetErrorBoundary }) => {
+const RouteErrorBoundary: React.FC<FallbackProps> = ({
+  error,
+  componentStack,
+  resetErrorBoundary,
+}) => {
   return (
     <div role="alert">
       <p>Something went wrong:</p>

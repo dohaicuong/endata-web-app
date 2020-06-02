@@ -1,5 +1,10 @@
 import React from 'react'
-import { HashRouter as Router, Switch, Route, RouteProps } from 'react-router-dom'
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  RouteProps,
+} from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 
 export type AppRouteProps = RouteProps & {

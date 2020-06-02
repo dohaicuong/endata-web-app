@@ -13,12 +13,12 @@ const LoginPage: React.FC = () => {
   const { token, redirect_from } = useQueryString()
   useLoginUser({
     token: token as string,
-    redirect_from: redirect_from as string
+    redirect_from: redirect_from as string,
   })
-  if(token) return null
+  if (token) return null
 
   const storedToken = localStorage.getItem('ACCESS_TOKEN')
-  if(storedToken) return <Redirect to='/' />
+  if (storedToken) return <Redirect to="/" />
 
   return <LoginForm />
 }

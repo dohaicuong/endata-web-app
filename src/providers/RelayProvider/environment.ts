@@ -10,18 +10,19 @@ import { recoverAppMeta } from './commitAppMeta'
 const network = new RelayNetworkLayer(
   [
     urlMiddleware({
-      url: (req) => Promise.resolve('https://videotest.endataclaims.com/midgard/graphql'),
+      url: () =>
+        Promise.resolve('https://videotest.endataclaims.com/midgard/graphql'),
     }),
     authMiddleware({
       token: () => localStorage.getItem('ACCESS_TOKEN') ?? '',
-    })
+    }),
   ],
   { noThrow: true }
 )
 
 const environment = new Environment({
   network,
-  store: new Store(new RecordSource())
+  store: new Store(new RecordSource()),
 })
 export default environment
 

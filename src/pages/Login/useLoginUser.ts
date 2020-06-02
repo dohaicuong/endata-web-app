@@ -14,7 +14,7 @@ const useLoginUser = ({ token, redirect_from }: useLoginUserProps) => {
 
   // const [] = useMutation(graphql``)
   React.useEffect(() => {
-    if(token) {
+    if (token) {
       // commitAppMeta({ refreshToken: token })
       console.log(token)
     }

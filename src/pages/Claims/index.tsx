@@ -8,7 +8,11 @@ const ClaimsPage: React.FC = () => {
     graphql`
       query ClaimsPageClaimQuery {
         claimJobs(first: 10) {
-          edges { node { id }}
+          edges {
+            node {
+              id
+            }
+          }
         }
         meta {
           accessToken
@@ -23,8 +27,6 @@ const ClaimsPage: React.FC = () => {
 
   console.log(data)
 
-  return (
-    <>Claims</>
-  )
+  return <>Claims</>
 }
 export default ClaimsPage

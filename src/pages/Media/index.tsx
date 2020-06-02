@@ -1,8 +1,6 @@
 import React from 'react'
 
 const MediaPage: React.FC = () => {
-  return (
-    <>Media</>
-  )
+  return <>Media</>
 }
 export default MediaPage

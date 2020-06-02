@@ -3,5 +3,5 @@
 /// <reference types="react/experimental" />
 
 declare module 'babel-plugin-relay/macro' {
-  export { graphql } from 'react-relay'
+  export { graphql } from 'react-relay';
 }

@@ -10,8 +10,6 @@ const NotFound = () => {
     else push('/claims')
   }, [token, push])
 
-  return (
-    <>Not found 404</>
-  )
+  return <>Not found 404</>
 }
 export default NotFound

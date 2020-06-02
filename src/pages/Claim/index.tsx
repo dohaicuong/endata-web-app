@@ -17,17 +17,13 @@ const ClaimPage: React.FC = () => {
     `,
     {
       where: {
-        id: claimId
-      }
+        id: claimId,
+      },
     }
   )
   console.log(data)
 
-  return (
-    <>
-      Claim page
-    </>
-  )
+  return <>Claim page</>
 }
 
 export default ClaimPage

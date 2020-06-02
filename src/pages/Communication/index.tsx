@@ -1,8 +1,6 @@
 import React from 'react'
 
 const CommunicationPage: React.FC = () => {
-  return (
-    <>Communication</>
-  )
+  return <>Communication</>
 }
 export default CommunicationPage

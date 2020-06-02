@@ -7,9 +7,9 @@ const theme = createMuiTheme({
         '*': {
           'scrollbar-width': 'thin',
         },
-        '*::-webkit-scrollbar': { width: 4, height: 4 }
-      }
-    }
-  }
+        '*::-webkit-scrollbar': { width: 4, height: 4 },
+      },
+    },
+  },
 })
 export default theme
