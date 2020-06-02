@@ -62,6 +62,8 @@ input ActionConfigsInput {
 }
 
 type ActionControl {
+  """The Global Id of the ActionControl"""
+  id: ID!
   isDisabled: Boolean!
   isDisplay: Boolean!
   label: String!
@@ -81,21 +83,48 @@ enum ActionType {
   RESERVE_UPDATE
   COMMUNICATION_SEND
   COMMUNICATION_ACKNOWLEDGE
+  DOCUMENT_UPLOAD
+  DOCUMENT_DELETE
   CLAIM_ADD
   CLAIM_ADD_PORTFOLIO
+  CLAIM_UPDATE
+  CLAIM_UPDATE_REF
   CLAIM_AWAITING_INFO
   CLAIM_STATUS_VOLUME
   CLAIM_FINALISE
   CLAIM_CASH_SETTLE
-  CLAIMJOB_ALLOCATE_SUPPLIER
-  CLAIMJOB_REALLOCATE_SUPPLIER
+  JOB_BUILDING_ALLOCATE
+  JOB_BUILDING_REALLOCATE
+  JOB_BUILDING_ADD_SITEREPORT
+  JOB_BUILDING_SUBMIT
+  JOB_BUILDING_REQUEST
+  JOB_BUILDING_REVIEW
+  JOB_BUILDING_AUTHORISE
+  JOB_BUILDING_RESET
+  JOB_BUILDING_VARIATION_AUDIT
+  JOB_BUILDING_MAKESAFE_RESET
+  JOB_RESTORATION_ALLOCATE
+  JOB_RESTORATION_REALLOCATE
+  JOB_RESTORATION_ADD_SITEREPORT
+  JOB_RESTORATION_SUBMIT
+  JOB_RESTORATION_REQUEST
+  JOB_RESTORATION_REVIEW
+  JOB_RESTORATION_AUTHORISE
+  JOB_RESTORATION_RESET
+  JOB_RESTORATION_VARIATION_AUDIT
+  JOB_CONTENTS_SUBMIT
+  JOB_CONTENTS_REQUEST
+  JOB_CONTENTS_AUTHORISE
+  JOB_CONTENTS_RESET
   ADJUSTER_INITIAL_CALL
   ADJUSTER_APPOINTMENT
   SPECIALIST_REQUEST_ADD
   SPECIALIST_REQUEST_EDIT
   SPECIALIST_REQUEST_DELETE
+  TRIAGE_CLAIM_VIDEO
   FILTER_INTERNAL_ASSESSOR
   FILTER_RECOMMENDATION_STATUS
+  SERVICE_VIDEO
 }
 
 input AddPortfolioInput {
@@ -143,7 +172,7 @@ type AuthenticatedUser {
   claimJob(
     """the claim key statement"""
     where: ENDataEntityKey!
-  ): ClaimJobView
+  ): ClaimJob
   communicationFilters: [FilterInput]
   dashboardFilters: [FilterInput]
 
@@ -258,6 +287,9 @@ input CaseReportFilter {
   restorationStatus: [ID!] = null
   suppliers: [ID!] = null
   status: [ID!] = null
+  feeTypeIds: [ID!] = null
+  invoiceStatus: [ID!] = null
+  variationStatus: [ID!] = null
   regions: [String] = null
   dateRange: DateRangeOption = null
   portfolios: [PortfolioType] = null
@@ -318,6 +350,7 @@ type ClaimCommunication {
   acknowledgeDate: DateString
   acknowledgeUserId: Int
   acknowledgeUserName: String
+  actions: ClaimCommunicationAction!
   claimId: ID
   claimRef: String!
 
@@ -340,6 +373,10 @@ type ClaimCommunication {
   senderId: Int
   senderName: String
   senderRole: AccessRole
+}
+
+type ClaimCommunicationAction {
+  acknowledge: ActionControl!
 }
 
 enum ClaimCommunicationBox {
@@ -548,6 +585,7 @@ type ClaimJob {
   riskname: String
   specialistRequests: [SpecialistRequest]
   tenantDetails: Contact
+  view: ClaimJobView
   reportForm: Form
   reportData: Report
 }
@@ -718,6 +756,8 @@ type ClaimJobGeneral {
   logDate: DateString!
   portfolioType: PortfolioType!
   refNumber: String!
+  reportCategoryName: String!
+  reportStatusName: String!
   riskRegion: String
   riskState: State
   status: ClaimStatus
@@ -837,46 +877,7 @@ type ClaimJobStatusInfo {
 
 type ClaimJobView {
   actions: ClaimJobAction!
-  additionalData: [ClaimAdditionalDataCategory]
-  additionalRefNumber: String
-  associatedRiskJobId: Int
-  brc: ClaimManager
-  building: ClaimPortfolio
-  caseManager: ClaimManager
-  claimDescription: String
-  contents: ClaimPortfolio
-  contentsRefNum: String
-  customLoginEmail: String
-  externalLossAdjuster: Company
-  feeTab: FeeTab!
   fields: ClaimJobField!
-  hasBuilding: Boolean!
-  hasContents: Boolean!
-  hasRestoration: Boolean!
-  hATypeVisit: HATypeVisit
-  homeAssessor: InternalAssesor
-
-  """The Global Id of the ClaimJobView"""
-  id: ID!
-  incidentDetail: IncidentDetail
-  insured: ContactDetail
-  insurer: Company
-  lodgeDate: DateString
-  lossAdjustProgress: ClaimProgress
-  lotNumber: String!
-  managedByENData: Boolean!
-  mapRef: String!
-  multipleRisks: Boolean
-  planNumber: String!
-  policyCover: PolicyCover
-  policyType: PolicyType
-  refNumber: String!
-  reportFormId: ID
-  requireCustomLogin: Boolean
-  restoration: ClaimPortfolio
-  riskname: String
-  specialistRequests: [SpecialistRequest]
-  tenantDetails: Contact
 }
 
 type ClaimLossAdjusterDocument {
@@ -1803,6 +1804,8 @@ interface Field {
 }
 
 type FieldInput {
+  """The Global Id of the FieldInput"""
+  id: ID!
   isDisabled: Boolean!
   isDisplay: Boolean!
   label: String
@@ -2438,6 +2441,7 @@ type JobQuotePayload {
 
 enum JobRecommendationStatus {
   NotRecommended
+  Recommended
 }
 
 type JobSupplier {
