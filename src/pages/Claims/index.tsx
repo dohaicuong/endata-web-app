@@ -22,7 +22,10 @@ const ClaimsPage: React.FC = () => {
         }
       }
     `,
-    {}
+    {},
+    {
+      fetchPolicy: 'store-and-network',
+    }
   )
 
   console.log(data)

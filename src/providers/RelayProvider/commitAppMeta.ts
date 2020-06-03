@@ -1,5 +1,6 @@
 import { commitLocalUpdate } from 'react-relay'
-import environment from './environment'
+import { graphql } from 'babel-plugin-relay/macro'
+import { getRequest, createOperationDescriptor } from 'relay-runtime'
 
 type AppMetaInput = {
   accessToken?: string | null
@@ -8,19 +9,22 @@ type AppMetaInput = {
   redirectFrom?: string | null
 }
 
-export const recoverAppMeta = (): void => {
+export const recoverAppMeta = (environment: any): void => {
   const accessToken = localStorage.getItem('ACCESS_TOKEN')
   const refreshToken = localStorage.getItem('REFRESH_TOKEN')
   const rootRoute = localStorage.getItem('ROOT_ROUTE')
   const redirectFrom = localStorage.getItem('REDIRECT_FROM')
-  commitAppMeta({ accessToken, refreshToken, rootRoute, redirectFrom })
+  commitAppMeta(environment, {
+    accessToken,
+    refreshToken,
+    rootRoute,
+    redirectFrom,
+  })
 }
-export const commitAppMeta = ({
-  accessToken,
-  refreshToken,
-  rootRoute,
-  redirectFrom,
-}: AppMetaInput): void => {
+export const commitAppMeta = (
+  environment: any,
+  { accessToken, refreshToken, rootRoute, redirectFrom }: AppMetaInput
+): void => {
   commitLocalUpdate(environment, store => {
     const fieldKey = 'meta'
     const __typename = 'AppMeta'
@@ -49,5 +53,22 @@ export const commitAppMeta = ({
     }
 
     store.getRoot().setLinkedRecord(record, fieldKey)
+
+    const request = getRequest(graphql`
+      query commitAppMetaQuery {
+        ... on Query {
+          __typename
+          meta {
+            accessToken
+            refreshToken
+            rootRoute
+            redirectFrom
+          }
+        }
+      }
+    `)
+    const operation = createOperationDescriptor(request, {})
+    const disposable = environment.retain(operation)
+    return disposable.dispose
   })
 }

@@ -12,7 +12,7 @@ import logo from 'resources/logo.png'
 
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
-import { useMutation } from 'react-relay/hooks'
+import { useMutation, useRelayEnvironment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import {
   LoginFormMutation,
@@ -21,9 +21,12 @@ import {
 import { useSnackbar } from 'notistack'
 import { useHistory } from 'react-router-dom'
 import { commitAppMeta } from 'providers/RelayProvider/commitAppMeta'
+import { useAppContext } from 'App'
 
 const LoginForm: React.FC = () => {
   const classes = useStyles()
+  const environment = useRelayEnvironment()
+  const { resetEnvironment } = useAppContext()
   const { enqueueSnackbar } = useSnackbar()
   const { push } = useHistory()
   const [loginMutate, isOnFly] = useMutation<LoginFormMutation>(graphql`
@@ -99,7 +102,12 @@ const LoginForm: React.FC = () => {
                       enqueueSnackbar(`Welcome, ${user?.userName ?? ''}`, {
                         variant: 'success',
                       })
-                      commitAppMeta({ accessToken, refreshToken, rootRoute })
+                      commitAppMeta(environment, {
+                        accessToken,
+                        refreshToken,
+                        rootRoute,
+                      })
+                      if (resetEnvironment) resetEnvironment()
                       push(`/claims`)
                     }
 

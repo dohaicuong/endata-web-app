@@ -4,7 +4,6 @@ import {
   RelayNetworkLayer,
   urlMiddleware,
   authMiddleware,
-  cacheMiddleware,
   retryMiddleware,
 } from 'react-relay-network-modern'
 import { recoverAppMeta, commitAppMeta } from './commitAppMeta'
@@ -12,10 +11,6 @@ import { API_ENDPOINT } from 'configs'
 
 const network = new RelayNetworkLayer(
   [
-    cacheMiddleware({
-      size: 100,
-      ttl: 900000,
-    }),
     urlMiddleware({
       url: () => Promise.resolve(API_ENDPOINT),
     }),
@@ -57,15 +52,19 @@ const network = new RelayNetworkLayer(
           .then(res => res.json())
           .then(res => {
             if (!res.data?.userRenewToken) {
-              return console.log(`[client.js] ERROR can not refresh token`)
+              throw new Error('no token returned')
             }
 
             const { accessToken, refreshToken } = res.data.userRenewToken
-            commitAppMeta({ accessToken, refreshToken })
+            // TODO find a way to clean up this
+            // @ts-ignore
+            const environment = window.env
+            commitAppMeta(environment, { accessToken, refreshToken })
             return res.data.userRenewToken.accessToken
           })
           .catch(error => {
             console.log(`[client.js] ERROR can not refresh token ${error}`)
+            localStorage.clear()
           })
       },
     }),
@@ -73,11 +72,17 @@ const network = new RelayNetworkLayer(
   { noThrow: true }
 )
 
-const environment = new Environment({
-  network,
-  store: new Store(new RecordSource()),
-})
-export default environment
+export default () => {
+  const environment = new Environment({
+    network,
+    store: new Store(new RecordSource()),
+  })
+  // TODO find a way to clean up this
+  // @ts-ignore
+  window.env = environment
 
-// init local state data
-recoverAppMeta()
+  // init local state data
+  recoverAppMeta(environment)
+
+  return environment
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { commitAppMeta } from 'providers/RelayProvider/commitAppMeta'
+import { useRelayEnvironment } from 'react-relay/hooks'
 // import { useMutation } from 'react-relay/hooks'
 // import { graphql } from 'babel-plugin-relay/macro'
 
@@ -8,9 +9,13 @@ export type useLoginUserProps = {
   redirect_from?: string | null
 }
 const useLoginUser = ({ token, redirect_from }: useLoginUserProps) => {
+  const environment = useRelayEnvironment()
+
   React.useEffect(() => {
-    if (redirect_from) commitAppMeta({ redirectFrom: redirect_from })
-  }, [redirect_from])
+    if (redirect_from) {
+      commitAppMeta(environment, { redirectFrom: redirect_from })
+    }
+  }, [redirect_from, environment])
 
   // const [] = useMutation(graphql``)
   React.useEffect(() => {

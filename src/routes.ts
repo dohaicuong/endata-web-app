@@ -22,7 +22,7 @@ const routes: AppRouteProps[] = [
   {
     exact: true,
     private: true,
-    path: '/communication',
+    path: '/communicationtasks',
     component: lazy(() => import('pages/Communication')),
   },
   {
@@ -38,7 +38,7 @@ const routes: AppRouteProps[] = [
     component: lazy(() => import('pages/Claims')),
   },
   {
-    exact: true,
+    exact: false,
     private: true,
     path: '/claim/:claimId',
     component: lazy(() => import('pages/Claim')),

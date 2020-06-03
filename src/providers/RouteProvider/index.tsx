@@ -1,11 +1,6 @@
 import React from 'react'
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-  RouteProps,
-} from 'react-router-dom'
-import PrivateRoute from './PrivateRoute'
+import { Switch, Route, RouteProps } from 'react-router-dom'
+import PrivateRoute from '../../components/route/PrivateRoute'
 
 export type AppRouteProps = RouteProps & {
   private?: boolean
@@ -15,15 +10,13 @@ export type RouteProviderProps = {
 }
 const RouteProvider: React.FC<RouteProviderProps> = ({ routes }) => {
   return (
-    <Router>
-      <Switch>
-        {routes.map((route, index) => {
-          // @ts-ignore
-          if (route.private) return <PrivateRoute key={index} {...route} />
-          return <Route key={index} {...route} />
-        })}
-      </Switch>
-    </Router>
+    <Switch>
+      {routes.map((route, index) => {
+        // @ts-ignore
+        if (route.private) return <PrivateRoute key={index} {...route} />
+        return <Route key={index} {...route} />
+      })}
+    </Switch>
   )
 }
 export default RouteProvider
