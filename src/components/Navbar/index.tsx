@@ -57,6 +57,7 @@ const NavbarWrapper = () => {
   const { pathname } = useLocation()
   const storedToken = React.useMemo(() => {
     return localStorage.getItem('ACCESS_TOKEN')
+    // eslint-disable-next-line
   }, [pathname])
   if (!storedToken) return null
 
