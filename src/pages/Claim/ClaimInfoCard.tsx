@@ -1,7 +1,14 @@
 import React from 'react'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
-import { makeStyles, Grid, Paper, Tooltip, Collapse, IconButton } from '@material-ui/core'
+import {
+  makeStyles,
+  Grid,
+  Paper,
+  Tooltip,
+  Collapse,
+  IconButton,
+} from '@material-ui/core'
 import Info from 'components/Info'
 import PortfolioIcon from 'components/PortfolioIcon'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'

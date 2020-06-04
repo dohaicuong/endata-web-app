@@ -26,7 +26,7 @@ const ClaimsPage: React.FC = () => {
   return (
     <ul>
       {data.claimJobs?.edges?.map(edge => (
-        <li>
+        <li key={edge?.node?.id}>
           <Link to={`/claim/${edge?.node?.id}`}>{edge?.node?.id}</Link>
         </li>
       ))}
