@@ -1,6 +1,6 @@
 import React from 'react'
 
 const JobInfo = () => {
-  return <>JobInfo</>
+  return <>Job info</>
 }
 export default JobInfo
