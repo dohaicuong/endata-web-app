@@ -28,6 +28,35 @@ export default (options: ThemeOptions = {}) => {
           '*::-webkit-scrollbar': { width: 4, height: 4 },
         },
       },
+      MuiFormLabel: {
+        root: {
+          // color: 'rgba(0, 0, 0, 0.84) !important',
+          fontWeight: '600 !important',
+        },
+      },
+      MuiSwitch: {
+        checked: {
+          '& .MuiSwitch-thumb': {
+            color: 'green !important',
+          },
+        },
+        thumb: {
+          color: 'red',
+        },
+      },
+      MuiButton: {
+        label: {
+          textTransform: 'none',
+        },
+      },
+      MuiTab: {
+        root: {
+          fontWeight: 700,
+        },
+        wrapper: {
+          textTransform: 'none',
+        },
+      },
     },
   })
 }
