@@ -5,7 +5,7 @@ import { RelayEnvironmentProvider } from 'react-relay/hooks'
 import createEnvironment from 'providers/RelayProvider/createEnvironment'
 
 import { ThemeProvider, CssBaseline } from '@material-ui/core'
-import theme from './providers/ThemeProvider/theme'
+import createTheme from './providers/ThemeProvider/theme'
 
 import { SnackbarProvider } from 'notistack'
 
@@ -16,11 +16,16 @@ import RouteErrorBoundary from 'components/route/RouteErrorBoundary'
 import RouteLoading from 'components/route/RouteLoading'
 import routes from 'routes'
 import Navbar from 'components/Navbar'
+import getTheme, { ThemeName } from 'providers/ThemeProvider/getTheme'
 
 type AppContextType = {
-  resetEnvironment?: () => void
+  resetEnvironment: () => void
+  changeTheme: (name: ThemeName) => void
 }
-const AppContext = React.createContext<AppContextType>({})
+const AppContext = React.createContext<AppContextType>({
+  resetEnvironment: () => console.log('App is not ready'),
+  changeTheme: () => console.log('App is not ready'),
+})
 export const useAppContext = () => {
   const value = React.useContext(AppContext)
   return value
@@ -28,14 +33,21 @@ export const useAppContext = () => {
 
 const App = () => {
   const [environment, setEnvironment] = React.useState(createEnvironment())
+  const [theme, setTheme] = React.useState(createTheme())
+
   const resetEnvironment = () => {
     const newEnv = createEnvironment()
     setEnvironment(newEnv)
   }
 
+  const changeTheme = async (name: ThemeName) => {
+    const theme = await getTheme(name)
+    setTheme(theme)
+  }
+
   return (
     <Router>
-      <AppContext.Provider value={{ resetEnvironment }}>
+      <AppContext.Provider value={{ resetEnvironment, changeTheme }}>
         <RelayEnvironmentProvider environment={environment}>
           <ThemeProvider theme={theme}>
             <CssBaseline />

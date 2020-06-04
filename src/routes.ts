@@ -44,6 +44,13 @@ const routes: AppRouteProps[] = [
     component: lazy(() => import('pages/Claim')),
   },
 
+  {
+    exact: false,
+    private: true,
+    path: '/settings',
+    component: lazy(() => import('pages/Settings')),
+  },
+
   { exact: true, path: '*', component: lazy(() => import('pages/NotFound')) },
 ]
 export default routes

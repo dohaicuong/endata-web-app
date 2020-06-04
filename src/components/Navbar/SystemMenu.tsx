@@ -3,7 +3,8 @@ import { useRelayEnvironment } from 'react-relay/hooks'
 import { IconButton, Menu, MenuItem, makeStyles } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
-import { useHistory } from 'react-router-dom'
+import SettingsIcon from '@material-ui/icons/Settings'
+import { useHistory, Link } from 'react-router-dom'
 import { commitAppMeta } from 'providers/RelayProvider/commitAppMeta'
 
 const SystemMenu = () => {
@@ -32,6 +33,10 @@ const SystemMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <MenuItem component={Link} to="/settings">
+          <SettingsIcon className={classes.itemIcon} />
+          <div className={classes.itemText}>User Settings</div>
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
           <PowerSettingsNewIcon className={classes.itemIcon} />
           <div className={classes.itemText}>Logout</div>
