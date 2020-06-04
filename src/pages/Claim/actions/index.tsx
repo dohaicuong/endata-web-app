@@ -1,5 +1,8 @@
 import React from 'react'
-import { Dialog, DialogTitle } from '@material-ui/core'
+import NextStepAction, {
+  NextStepActions,
+  useNextStepAction,
+} from './NextStepAction'
 
 const placeHolderAction = () => console.log('action loading...')
 export type ActionContextValue = {
@@ -8,11 +11,17 @@ export type ActionContextValue = {
 export const ActionContext = React.createContext<ActionContextValue>({
   nextStep: { handleOpen: placeHolderAction, handleClose: placeHolderAction },
 })
+export const useClaimAction = () => {
+  const value = React.useContext(ActionContext)
+  return value
+}
 
 const ActionProvider: React.FC = ({ children }) => {
-  const [isNextActionOpen, setIsNextActionOpen] = React.useState(false)
-  const handleNextActionOpen = () => setIsNextActionOpen(true)
-  const handleNextActionClose = () => setIsNextActionOpen(false)
+  const [
+    isNextActionOpen,
+    handleNextActionOpen,
+    handleNextActionClose,
+  ] = useNextStepAction({})
 
   return (
     <>
@@ -31,19 +40,3 @@ const ActionProvider: React.FC = ({ children }) => {
   )
 }
 export default ActionProvider
-
-export type NextStepActions = {
-  handleOpen: () => void
-  handleClose: () => void
-}
-export type NextStepActionProps = {
-  open: boolean
-  onClose: () => void
-}
-const NextStepAction: React.FC<NextStepActionProps> = ({ open, onClose }) => {
-  return (
-    <Dialog onClose={onClose} open={open}>
-      <DialogTitle>Next step dialog</DialogTitle>
-    </Dialog>
-  )
-}

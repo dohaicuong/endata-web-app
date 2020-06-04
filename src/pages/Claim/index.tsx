@@ -16,6 +16,7 @@ import TabNavbar from './TabNavbar'
 import TabLoading from 'components/route/TabLoading'
 import { tabs } from './tabSections/tabs'
 import RouteErrorBoundary from 'components/route/RouteErrorBoundary'
+import ActionProvider from './actions'
 
 const ClaimPage: React.FC = () => {
   const { claimId } = useParams()
@@ -52,11 +53,13 @@ const ClaimPage: React.FC = () => {
           <TabNavbar style={{ marginTop: 8 }} tabs={tabs} />
           <ErrorBoundary FallbackComponent={RouteErrorBoundary}>
             <React.Suspense fallback={<TabLoading />}>
-              <Switch>
-                {tabs.map(({ path, ...tab }) => (
-                  <Route key={path} path={`${url}${path}`} {...tab} />
-                ))}
-              </Switch>
+              <ActionProvider>
+                <Switch>
+                  {tabs.map(({ path, ...tab }) => (
+                    <Route key={path} path={`${url}${path}`} {...tab} />
+                  ))}
+                </Switch>
+              </ActionProvider>
             </React.Suspense>
           </ErrorBoundary>
         </Container>
