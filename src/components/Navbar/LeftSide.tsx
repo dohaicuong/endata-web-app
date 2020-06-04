@@ -63,8 +63,6 @@ const LeftSide: React.FC<LeftSideProps> = props => {
       {filteredRoutes.map(route => (
         <Button
           key={route.path}
-          component={Link}
-          to={route.path}
           startIcon={route.icon}
           color="inherit"
           size="large"
@@ -73,6 +71,10 @@ const LeftSide: React.FC<LeftSideProps> = props => {
               ? classes.routeButtonActive
               : ''
           }`}
+          component={route.href ? 'a' : Link}
+          to={route.path}
+          href={route.href}
+          target={route.href ? '_blank' : undefined}
         >
           {route.label}
         </Button>
