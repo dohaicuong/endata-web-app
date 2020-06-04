@@ -1,14 +1,12 @@
 import React from 'react'
 import { Dialog, DialogTitle } from '@material-ui/core'
 
+const placeHolderAction = () => console.log('action loading...')
 export type ActionContextValue = {
   nextStep: NextStepActions
 }
 export const ActionContext = React.createContext<ActionContextValue>({
-  nextStep: {
-    handleOpen: () => console.log('loading...'),
-    handleClose: () => console.log('loading...'),
-  },
+  nextStep: { handleOpen: placeHolderAction, handleClose: placeHolderAction },
 })
 
 const ActionProvider: React.FC = ({ children }) => {
