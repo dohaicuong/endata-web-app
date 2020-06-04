@@ -1,4 +1,5 @@
 import React from 'react'
+import 'providers/I18N'
 
 import { RelayEnvironmentProvider } from 'react-relay/hooks'
 import createEnvironment from 'providers/RelayProvider/createEnvironment'
@@ -36,8 +37,8 @@ const App = () => {
     <Router>
       <AppContext.Provider value={{ resetEnvironment }}>
         <RelayEnvironmentProvider environment={environment}>
-          <CssBaseline />
           <ThemeProvider theme={theme}>
+            <CssBaseline />
             <SnackbarProvider
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
               autoHideDuration={1500}

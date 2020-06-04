@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { LeftSide_data$key } from './__generated__/LeftSide_data.graphql'
@@ -24,6 +25,7 @@ type LeftSideProps = {
 }
 const LeftSide: React.FC<LeftSideProps> = props => {
   const classes = useStyles()
+  const { t } = useTranslation()
   const data = useFragment(
     graphql`
       fragment LeftSide_data on User {
@@ -76,7 +78,7 @@ const LeftSide: React.FC<LeftSideProps> = props => {
           href={route.href}
           target={route.href ? '_blank' : undefined}
         >
-          {route.label}
+          {t(route.label)}
         </Button>
       ))}
     </>
