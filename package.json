@@ -19,9 +19,11 @@
     }
   },
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.55",
+    "@material-ui/pickers": "^3.2.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -29,8 +31,10 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.0",
+    "date-fns": "^2.14.0",
     "formik": "^2.1.4",
     "formik-material-ui": "^2.0.0-beta.1",
+    "formik-material-ui-pickers": "^0.0.8",
     "i18next": "^19.4.5",
     "notistack": "^0.9.13",
     "query-string": "^6.12.1",

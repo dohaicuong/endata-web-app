@@ -58,7 +58,7 @@ const CommunicationMenu = () => {
       <IconButton onClick={handleClick} color="inherit">
         <Badge
           max={99}
-          color="secondary"
+          color="error"
           badgeContent={data.communications?.totalCount}
         >
           <MailIcon />

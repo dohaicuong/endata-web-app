@@ -18,6 +18,9 @@ import routes from 'routes'
 import Navbar from 'components/Navbar'
 import getTheme, { ThemeName } from 'providers/ThemeProvider/getTheme'
 
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
+
 type AppContextType = {
   resetEnvironment: () => void
   changeTheme: (name: ThemeName) => void
@@ -49,22 +52,24 @@ const App = () => {
     <Router>
       <AppContext.Provider value={{ resetEnvironment, changeTheme }}>
         <RelayEnvironmentProvider environment={environment}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <SnackbarProvider
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              autoHideDuration={1500}
-            >
-              <ErrorBoundary FallbackComponent={RouteErrorBoundary}>
-                <React.Suspense fallback={<RouteLoading />}>
-                  <Navbar />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <SnackbarProvider
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                autoHideDuration={1500}
+              >
+                <ErrorBoundary FallbackComponent={RouteErrorBoundary}>
                   <React.Suspense fallback={<RouteLoading />}>
-                    <RouteProvider routes={routes} />
+                    <Navbar />
+                    <React.Suspense fallback={<RouteLoading />}>
+                      <RouteProvider routes={routes} />
+                    </React.Suspense>
                   </React.Suspense>
-                </React.Suspense>
-              </ErrorBoundary>
-            </SnackbarProvider>
-          </ThemeProvider>
+                </ErrorBoundary>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </MuiPickersUtilsProvider>
         </RelayEnvironmentProvider>
       </AppContext.Provider>
     </Router>

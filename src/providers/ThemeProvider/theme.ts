@@ -35,14 +35,8 @@ export default (options: ThemeOptions = {}) => {
         },
       },
       MuiSwitch: {
-        checked: {
-          '& .MuiSwitch-thumb': {
-            color: 'green !important',
-          },
-        },
-        thumb: {
-          color: 'red',
-        },
+        track: { backgroundColor: 'red' },
+        switchBase: { color: 'red' },
       },
       MuiButton: {
         label: {

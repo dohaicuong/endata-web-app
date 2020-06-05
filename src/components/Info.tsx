@@ -40,5 +40,11 @@ const useStyles = makeStyles({
     '& .MuiInput-underline:before': {
       borderBottom: 'none',
     },
+    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+      borderBottom: 'none',
+    },
+    '& .MuiInput-underline.Mui-focused:after': {
+      transform: 'scaleX(0)',
+    },
   },
 })

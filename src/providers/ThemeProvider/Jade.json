@@ -2,6 +2,9 @@
   "palette": {
     "primary": {
       "main": "#5ca794"
+    },
+    "secondary": {
+      "main": "#35c500"
     }
   }
 }

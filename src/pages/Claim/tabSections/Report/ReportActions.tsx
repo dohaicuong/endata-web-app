@@ -16,6 +16,10 @@ const ReportActions = () => {
       >
         Next Step
       </Button>
+      <div className={classes.pad} />
+      <Button color="primary" variant="outlined" size="large" type="submit">
+        Save
+      </Button>
     </Paper>
   )
 }
@@ -23,6 +27,8 @@ export default ReportActions
 
 const useStyles = makeStyles(theme => ({
   actionRoot: {
+    display: 'flex',
     padding: theme.spacing(),
   },
+  pad: { flexGrow: 1 },
 }))

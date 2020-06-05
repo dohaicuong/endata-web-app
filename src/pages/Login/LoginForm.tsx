@@ -73,6 +73,7 @@ const LoginForm: React.FC = () => {
                 loginMutate({
                   variables: { input: values },
                   onCompleted: (res, errors) => {
+                    setSubmitting(false)
                     if (errors)
                       return errors.forEach(error => {
                         enqueueSnackbar(error.message, { variant: 'error' })
@@ -110,8 +111,6 @@ const LoginForm: React.FC = () => {
                       if (resetEnvironment) resetEnvironment()
                       push(`/claims`)
                     }
-
-                    setSubmitting(false)
                   },
                 })
               }, 500)
