@@ -43,6 +43,12 @@ const routes: AppRouteProps[] = [
     path: '/claim/:claimId',
     component: lazy(() => import('pages/Claim')),
   },
+  {
+    exact: false,
+    private: true,
+    path: '/add-claim',
+    component: lazy(() => import('pages/ClaimAdd')),
+  },
 
   {
     exact: false,
