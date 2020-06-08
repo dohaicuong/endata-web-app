@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectField tests snapshots should render with icon 1`] = `ShallowWrapper {}`;
+
+exports[`SelectField tests snapshots should render with options 1`] = `ShallowWrapper {}`;
+
+exports[`SelectField tests snapshots should render with right icon 1`] = `ShallowWrapper {}`;
+
+exports[`SelectField tests snapshots should render without options 1`] = `ShallowWrapper {}`;
