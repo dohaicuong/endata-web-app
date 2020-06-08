@@ -42,16 +42,36 @@ const ReportFileField: React.FC<ReportFileFieldProps> = props => {
     },
     autoProceed: false,
   })
+  const uppyAddFile = React.useCallback(uppy?.addFile, [uppy?.addFile])
 
   const { setFieldValue, isSubmitting } = useFormikContext()
   const isDisabled = isSubmitting // || disabled
 
   const [formikField] = useField(name)
-  // if (name === 'coverPhoto') console.log(formikField.value)
+  const defaultFiles = formikField.value
+    ? formikField.value.map(({ name, url }: any) => ({ name, url }))
+    : null
+  React.useEffect(() => {
+    if (defaultFiles && uppyAddFile) {
+      defaultFiles.forEach(({ name, url }: any) => {
+        fetch(url)
+          .then(res => res.blob())
+          .then(blob => {
+            uppyAddFile({
+              id: url,
+              name,
+              type: blob.type,
+              data: blob,
+            })
+          })
+      })
+    }
+    // eslint-disable-next-line
+  }, [uppyAddFile])
+
   const defaultValue = formikField.value
     ? formikField.value.map(({ name }: any) => name).join(', ')
     : ''
-
   const [textValue, setTextValue] = React.useState(defaultValue)
   React.useEffect(() => {
     if (files && files.length) {
