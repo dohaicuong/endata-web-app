@@ -17,6 +17,7 @@ import ReportInfoField from '../ReportInfoField'
 import ReportTextAreaField from '../ReportTextAreaField'
 import ReportSelectField from '../ReportSelectField'
 import ReportDateTimeField from '../ReportDateTimeField'
+import ReportFileField from '../ReportFileField'
 
 export type ArrayFieldProps = {
   fieldArrayHelpers: FieldArrayRenderProps
@@ -38,6 +39,7 @@ const ArrayField: React.FC<ArrayFieldProps> = props => {
           ...ReportTextAreaField_field
           ...ReportSelectField_field
           ...ReportDateTimeField_field
+          ...ReportFileField_field
         }
       }
     `,
@@ -90,6 +92,13 @@ const ArrayField: React.FC<ArrayFieldProps> = props => {
       case 'DateTimeField':
         return (
           <ReportDateTimeField
+            field={field}
+            parentFieldName={`${data.name}[${index}]`}
+          />
+        )
+      case 'FileField':
+        return (
+          <ReportFileField
             field={field}
             parentFieldName={`${data.name}[${index}]`}
           />

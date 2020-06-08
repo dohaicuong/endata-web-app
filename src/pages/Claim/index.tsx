@@ -55,8 +55,13 @@ const ClaimPage: React.FC = () => {
             <React.Suspense fallback={<TabLoading />}>
               <ActionProvider>
                 <Switch>
-                  {tabs.map(({ path, ...tab }) => (
-                    <Route key={path} path={`${url}${path}`} {...tab} />
+                  {tabs.map(({ path, component: Comp, ...tab }) => (
+                    <Route
+                      key={path}
+                      path={`${url}${path}`}
+                      {...tab}
+                      render={props => <Comp {...props} claimId={claimId} />}
+                    />
                   ))}
                 </Switch>
               </ActionProvider>

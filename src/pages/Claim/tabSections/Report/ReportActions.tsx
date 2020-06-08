@@ -2,7 +2,20 @@ import React from 'react'
 import { useClaimAction } from 'pages/Claim/actions'
 import { Paper, Button, makeStyles } from '@material-ui/core'
 
-const ReportActions = () => {
+export type ReportActionsProps = {
+  isSavedData: boolean
+  isReadOnly: boolean
+
+  // saveReport: (claimId: string, values: any) => void
+  resetReport: () => void
+  submitReport: () => void
+}
+const ReportActions: React.FC<ReportActionsProps> = ({
+  isSavedData,
+  isReadOnly,
+  resetReport,
+  submitReport,
+}) => {
   const classes = useStyles()
   const { nextStep } = useClaimAction()
 
@@ -17,7 +30,34 @@ const ReportActions = () => {
         Next Step
       </Button>
       <div className={classes.pad} />
-      <Button color="primary" variant="outlined" size="large" type="submit">
+      <Button
+        className={classes.actionButton}
+        color="primary"
+        variant="outlined"
+        size="large"
+        disabled={isSavedData && !isReadOnly}
+        onClick={resetReport}
+      >
+        Reset
+      </Button>
+      <Button
+        className={classes.actionButton}
+        color="primary"
+        variant="outlined"
+        size="large"
+        disabled={isSavedData && isReadOnly}
+        onClick={submitReport}
+      >
+        Submit
+      </Button>
+      <Button
+        className={classes.actionButton}
+        color="primary"
+        variant="outlined"
+        size="large"
+        type="submit"
+        disabled={isReadOnly}
+      >
         Save
       </Button>
     </Paper>
@@ -31,4 +71,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(),
   },
   pad: { flexGrow: 1 },
+  actionButton: {
+    marginRight: theme.spacing(),
+  },
 }))

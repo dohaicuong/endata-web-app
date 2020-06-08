@@ -1,24 +1,30 @@
 import { lazy } from 'react'
 
+export type TabProps = {
+  claimId: string
+}
 export const tabs = [
   {
     label: 'Job Info',
     path: '/job-info',
-    component: lazy(() => import('./JobInfo')),
+    component: 'JobInfo',
   },
   {
     label: 'Job Notes',
     path: '/job-notes',
-    component: lazy(() => import('./JobNotes')),
+    component: 'JobNotes',
   },
   {
     label: 'Report',
     path: '/report',
-    component: lazy(() => import('./Report')),
+    component: 'Report',
   },
   {
     label: 'Communications',
     path: '/communications',
-    component: lazy(() => import('./Communications')),
+    component: 'Communications',
   },
-]
+].map(({ component, ...args }) => ({
+  ...args,
+  component: lazy(() => import(`./${component}`)),
+}))

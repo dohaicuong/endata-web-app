@@ -8,6 +8,7 @@ import ReportInfoField from './ReportInfoField'
 import ReportSelectField from './ReportSelectField'
 import ReportDateTimeField from './ReportDateTimeField'
 import ReportGroupField from './ReportGroupField'
+import ReportFileField from './ReportFileField'
 
 export type ReportCardFieldProps = {
   field: ReportCardField_field$key | null
@@ -24,6 +25,7 @@ const ReportCardField: React.FC<ReportCardFieldProps> = props => {
         ...ReportSelectField_field
         ...ReportDateTimeField_field
         ...ReportGroupField_field
+        ...ReportFileField_field
       }
     `,
     props.field
@@ -43,6 +45,8 @@ const ReportCardField: React.FC<ReportCardFieldProps> = props => {
       return <ReportDateTimeField field={field} />
     case 'GroupField':
       return <ReportGroupField field={field} />
+    case 'FileField':
+      return <ReportFileField field={field} />
     default:
       console.log(field.__typename)
       return <>{field.label}</>
