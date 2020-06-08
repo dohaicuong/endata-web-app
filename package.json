@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "yarn update:schema && yarn relay",
     "start": "react-scripts start",
     "build": "yarn relay && react-scripts build",
     "test": "react-scripts test",
