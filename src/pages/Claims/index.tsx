@@ -2,23 +2,29 @@ import React from 'react'
 import { useLazyLoadQuery } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { ClaimsPageClaimQuery } from './__generated__/ClaimsPageClaimQuery.graphql'
-import { Link } from 'react-router-dom'
 import ClaimFloatActions from './ClaimFloatActions'
+import ClaimList from './ClaimList'
 
 const ClaimsPage: React.FC = () => {
+  const [keyWords, setKeyWords] = React.useState('')
+
   const data = useLazyLoadQuery<ClaimsPageClaimQuery>(
     graphql`
-      query ClaimsPageClaimQuery {
-        claimJobs(first: 10) {
-          edges {
-            node {
-              id
-            }
-          }
-        }
+      query ClaimsPageClaimQuery(
+        $where: ClaimJobFilter
+        $count: Int!
+        $cursor: String!
+      ) {
+        ...ClaimList_claims
       }
     `,
-    {},
+    {
+      count: 5,
+      cursor: '',
+      where: {
+        keyWords,
+      },
+    },
     {
       fetchPolicy: 'store-and-network',
     }
@@ -26,13 +32,8 @@ const ClaimsPage: React.FC = () => {
 
   return (
     <>
-      <ul>
-        {data.claimJobs?.edges?.map(edge => (
-          <li key={edge?.node?.id}>
-            <Link to={`/claim/${edge?.node?.id}`}>{edge?.node?.id}</Link>
-          </li>
-        ))}
-      </ul>
+      <input value={keyWords} onChange={e => setKeyWords(e.target.value)} />
+      <ClaimList claims={data} />
       <ClaimFloatActions />
     </>
   )
