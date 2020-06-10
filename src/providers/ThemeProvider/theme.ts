@@ -5,7 +5,7 @@ import Sophia from './Sophia.json'
 const defaultTheme =
   process.env.NODE_ENV === 'development' ? Kuro : (Sophia as any)
 
-const defaultMuiTheme = createMuiTheme({ ...Sophia })
+const defaultMuiTheme = createMuiTheme({ ...defaultTheme })
 
 export default (options: ThemeOptions = {}) => {
   return createMuiTheme({
@@ -29,11 +29,11 @@ export default (options: ThemeOptions = {}) => {
           },
           '*::-webkit-scrollbar': { width: 8, height: 4 },
           '::-webkit-scrollbar-thumb': {
-            background: defaultMuiTheme.palette.secondary.main,
+            background: defaultMuiTheme.palette.primary.main,
             borderRadius: 10,
           },
           '::-webkit-scrollbar-thumb:hover': {
-            background: defaultMuiTheme.palette.secondary.dark,
+            background: defaultMuiTheme.palette.primary.dark,
           },
         },
       },
