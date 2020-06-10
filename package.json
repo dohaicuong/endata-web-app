@@ -7,7 +7,7 @@
     "build": "yarn relay && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint": "eslint ./src/**/*.{ts,tsx}",
     "update:schema": "dotenv -e .env.local yarn schema",
     "schema": "get-graphql-schema $REACT_APP_API_ENDPOINT > schema.graphql",
     "relay": "relay-compiler"
