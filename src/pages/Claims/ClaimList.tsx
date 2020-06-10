@@ -41,7 +41,8 @@ const ClaimList: React.FC<ClaimList> = props => {
       <button onClick={() => loadNext(5)}>next</button>
       {data?.claimJobs?.edges?.map(edge => (
         <p key={edge?.node?.id}>
-          {edge?.node?.insurer?.companyName}: <Link to={`/claim/${edge?.node?.id}`}>{edge?.node?.id}</Link>
+          {edge?.node?.insurer?.companyName}:{' '}
+          <Link to={`/claim/${edge?.node?.id}`}>{edge?.node?.id}</Link>
         </p>
       ))}
     </>
