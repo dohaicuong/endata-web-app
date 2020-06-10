@@ -21,7 +21,7 @@ export type CheckboxGroupFieldProps = {
   color?: 'primary' | 'secondary' | 'default'
   maxHeight?: string
 }
-type Option = {
+export type Option = {
   label?: string
   value: string
 }
@@ -51,7 +51,7 @@ const CheckboxGroupField: React.FC<CheckboxGroupFieldProps> = ({
       options?.map(({ label, value }) => ({
         label,
         id: value,
-        value: fieldValue.includes(value),
+        value: fieldValue?.includes(value) ?? '',
       })),
     // TODO
     // eslint-disable-next-line
@@ -89,7 +89,7 @@ const CheckboxGroupField: React.FC<CheckboxGroupFieldProps> = ({
                 <Checkbox
                   {...field}
                   value={value}
-                  checked={fieldValue.includes(value)}
+                  checked={fieldValue?.includes(value) ?? false}
                   onChange={() => handleChange(value)}
                   disabled={isSubmitting || disabled || readOnly}
                   color={color}

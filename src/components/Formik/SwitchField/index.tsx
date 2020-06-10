@@ -27,7 +27,8 @@ const FormikSwitch: React.FC<FormikSwitchProps> = ({
   offLabel = 'No',
   disabled = false,
   readOnly = false,
-  // fullWidth = true,
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  fullWidth = true,
   ...props
 }) => {
   const { isSubmitting } = useFormikContext()
@@ -49,7 +50,7 @@ const FormikSwitch: React.FC<FormikSwitchProps> = ({
           label={field.value ? onLabel : offLabel}
           control={
             <Switch
-              color="primary"
+              // color="primary"
               {...props}
               disabled={isSubmitting || disabled || readOnly}
               checked={field.value}

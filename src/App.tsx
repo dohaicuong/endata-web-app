@@ -35,7 +35,7 @@ export const useAppContext = () => {
 }
 
 const App = () => {
-  const [environment, setEnvironment] = React.useState(createEnvironment())
+  const [environment, setEnvironment] = React.useState<any>(createEnvironment())
   const [theme, setTheme] = React.useState(createTheme())
 
   const resetEnvironment = () => {
