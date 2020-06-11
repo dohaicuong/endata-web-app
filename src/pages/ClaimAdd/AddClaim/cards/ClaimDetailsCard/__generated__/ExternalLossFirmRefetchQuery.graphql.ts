@@ -19,8 +19,8 @@ export type ExternalLossFirmRefetchQuery = {
 
 /*
 query ExternalLossFirmRefetchQuery(
-  $companyId: [ID!] = "0"
-  $postcode: String = "0"
+  $companyId: [ID!]
+  $postcode: String
 ) {
   ...ExternalLossFirm_options_2W2fkl
 }
@@ -37,13 +37,13 @@ fragment ExternalLossFirm_options_2W2fkl on Query {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": "0",
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "companyId",
     "type": "[ID!]"
   },
   {
-    "defaultValue": "0",
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "postcode",
     "type": "String"
@@ -142,9 +142,9 @@ return {
     },
     "name": "ExternalLossFirmRefetchQuery",
     "operationKind": "query",
-    "text": "query ExternalLossFirmRefetchQuery(\n  $companyId: [ID!] = \"0\"\n  $postcode: String = \"0\"\n) {\n  ...ExternalLossFirm_options_2W2fkl\n}\n\nfragment ExternalLossFirm_options_2W2fkl on Query {\n  adjusters: claimFilterOptions(where: {subject: \"adjusters\", insurers: $companyId, postcode: $postcode}) {\n    label: name\n    value\n    id\n  }\n}\n"
+    "text": "query ExternalLossFirmRefetchQuery(\n  $companyId: [ID!]\n  $postcode: String\n) {\n  ...ExternalLossFirm_options_2W2fkl\n}\n\nfragment ExternalLossFirm_options_2W2fkl on Query {\n  adjusters: claimFilterOptions(where: {subject: \"adjusters\", insurers: $companyId, postcode: $postcode}) {\n    label: name\n    value\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '503414799b45c861b83e1d8092318d1d';
+(node as any).hash = '8e5a5ee500692952a8d99d6902e4b23d';
 export default node;

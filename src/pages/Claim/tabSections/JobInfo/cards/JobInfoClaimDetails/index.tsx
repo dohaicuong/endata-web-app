@@ -1,8 +1,8 @@
 import React from 'react'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
-import { JobInfoClaimDetails_claim$key } from '../__generated__/JobInfoClaimDetails_claim.graphql'
-import { JobInfoClaimDetails_optionData$key } from '../__generated__/JobInfoClaimDetails_optionData.graphql'
+import { JobInfoClaimDetails_claim$key } from './__generated__/JobInfoClaimDetails_claim.graphql'
+import { JobInfoClaimDetails_optionData$key } from './__generated__/JobInfoClaimDetails_optionData.graphql'
 
 import Card from 'components/Card'
 

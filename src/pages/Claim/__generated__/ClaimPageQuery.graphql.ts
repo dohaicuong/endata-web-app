@@ -12,8 +12,7 @@ export type ClaimPageQueryVariables = {
 export type ClaimPageQueryResponse = {
     readonly claimJob: {
         readonly id: string;
-        readonly description: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ClaimInfoCard_info">;
+        readonly " $fragmentRefs": FragmentRefs<"ClaimInfoCard_info" | "JobInfo_claim">;
     } | null;
     readonly currentUser: {
         readonly " $fragmentRefs": FragmentRefs<"ClaimInfoCard_user">;
@@ -32,8 +31,8 @@ query ClaimPageQuery(
 ) {
   claimJob(where: $where) {
     id
-    description: claimDescription
     ...ClaimInfoCard_info
+    ...JobInfo_claim
   }
   currentUser {
     ...ClaimInfoCard_user
@@ -147,6 +146,82 @@ fragment ClaimInfoCard_info on ClaimJob {
 fragment ClaimInfoCard_user on AuthenticatedUser {
   userType
 }
+
+fragment JobInfoClaimDetailsRow1_claim on ClaimJob {
+  insurer {
+    companyName
+  }
+  incidentDetail {
+    incidentDate
+  }
+  caseManager {
+    managerId
+    id
+  }
+  externalLossAdjuster {
+    companyId
+  }
+}
+
+fragment JobInfoClaimDetailsRow2_claim on ClaimJob {
+  hasContents
+  insurer {
+    contentsref
+  }
+  refNumber
+  contentsRefNum
+  building {
+    jobSuppliers {
+      quote {
+        supplier {
+          companyName
+        }
+        id
+      }
+      id
+    }
+    authorisedSupplier {
+      companyName
+    }
+    scopingSupplier {
+      companyName
+    }
+  }
+  restoration {
+    jobSuppliers {
+      quote {
+        supplier {
+          companyName
+        }
+        id
+      }
+      id
+    }
+    authorisedSupplier {
+      companyName
+    }
+    scopingSupplier {
+      companyName
+    }
+  }
+}
+
+fragment JobInfoClaimDetailsRow3_claim on ClaimJob {
+  lodgeDate
+}
+
+fragment JobInfoClaimDetails_claim on ClaimJob {
+  ...JobInfoClaimDetailsRow1_claim
+  ...JobInfoClaimDetailsRow2_claim
+  ...JobInfoClaimDetailsRow3_claim
+}
+
+fragment JobInfo_claim on ClaimJob {
+  insurer {
+    companyId
+  }
+  ...JobInfoClaimDetails_claim
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -173,17 +248,17 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": "description",
+  "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "claimDescription",
+  "name": "companyName",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "companyName",
+  "name": "companyId",
   "storageKey": null
 },
 v5 = [
@@ -206,7 +281,7 @@ v6 = {
   "storageKey": null
 },
 v7 = [
-  (v4/*: any*/),
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -282,7 +357,7 @@ v10 = [
             "name": "supplier",
             "plural": false,
             "selections": [
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -323,11 +398,15 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
             "name": "ClaimInfoCard_info"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "JobInfo_claim"
           }
         ],
         "storageKey": null
@@ -366,7 +445,6 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -375,7 +453,7 @@ return {
             "name": "insurer",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -388,6 +466,14 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "policyCoverSuppliersView",
+                "storageKey": null
+              },
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "contentsref",
                 "storageKey": null
               }
             ],
@@ -481,6 +567,13 @@ return {
                     "storageKey": null
                   }
                 ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "incidentDate",
                 "storageKey": null
               }
             ],
@@ -615,6 +708,51 @@ return {
               (v9/*: any*/)
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ClaimManager",
+            "kind": "LinkedField",
+            "name": "caseManager",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "managerId",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Company",
+            "kind": "LinkedField",
+            "name": "externalLossAdjuster",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasContents",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "contentsRefNum",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -645,9 +783,9 @@ return {
     "metadata": {},
     "name": "ClaimPageQuery",
     "operationKind": "query",
-    "text": "query ClaimPageQuery(\n  $where: ENDataEntityKey!\n) {\n  claimJob(where: $where) {\n    id\n    description: claimDescription\n    ...ClaimInfoCard_info\n  }\n  currentUser {\n    ...ClaimInfoCard_user\n    id\n  }\n}\n\nfragment ClaimInfoCard_info on ClaimJob {\n  insurer {\n    companyName\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  refNumber\n  incidentDetail {\n    riskAddress {\n      line1\n      suburb\n      state\n      postcode\n    }\n    eventType {\n      eventName\n    }\n    cATCode {\n      cATCodeName\n    }\n  }\n  insured {\n    name\n    phone1\n    phone2\n    phone3\n    email\n  }\n  lodgeDate\n  policyType {\n    policyTypeName\n  }\n  policyCover {\n    policyCoverName\n  }\n  building {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  restoration {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  contents {\n    portfolioType\n    claimStatus {\n      statusName\n    }\n    toCollectExcess\n    excessValue\n  }\n}\n\nfragment ClaimInfoCard_user on AuthenticatedUser {\n  userType\n}\n"
+    "text": "query ClaimPageQuery(\n  $where: ENDataEntityKey!\n) {\n  claimJob(where: $where) {\n    id\n    ...ClaimInfoCard_info\n    ...JobInfo_claim\n  }\n  currentUser {\n    ...ClaimInfoCard_user\n    id\n  }\n}\n\nfragment ClaimInfoCard_info on ClaimJob {\n  insurer {\n    companyName\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  refNumber\n  incidentDetail {\n    riskAddress {\n      line1\n      suburb\n      state\n      postcode\n    }\n    eventType {\n      eventName\n    }\n    cATCode {\n      cATCodeName\n    }\n  }\n  insured {\n    name\n    phone1\n    phone2\n    phone3\n    email\n  }\n  lodgeDate\n  policyType {\n    policyTypeName\n  }\n  policyCover {\n    policyCoverName\n  }\n  building {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  restoration {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  contents {\n    portfolioType\n    claimStatus {\n      statusName\n    }\n    toCollectExcess\n    excessValue\n  }\n}\n\nfragment ClaimInfoCard_user on AuthenticatedUser {\n  userType\n}\n\nfragment JobInfoClaimDetailsRow1_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    incidentDate\n  }\n  caseManager {\n    managerId\n    id\n  }\n  externalLossAdjuster {\n    companyId\n  }\n}\n\nfragment JobInfoClaimDetailsRow2_claim on ClaimJob {\n  hasContents\n  insurer {\n    contentsref\n  }\n  refNumber\n  contentsRefNum\n  building {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n  restoration {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n}\n\nfragment JobInfoClaimDetailsRow3_claim on ClaimJob {\n  lodgeDate\n}\n\nfragment JobInfoClaimDetails_claim on ClaimJob {\n  ...JobInfoClaimDetailsRow1_claim\n  ...JobInfoClaimDetailsRow2_claim\n  ...JobInfoClaimDetailsRow3_claim\n}\n\nfragment JobInfo_claim on ClaimJob {\n  insurer {\n    companyId\n  }\n  ...JobInfoClaimDetails_claim\n}\n"
   }
 };
 })();
-(node as any).hash = 'c07535aba857f3d78d856a91b2022699';
+(node as any).hash = 'f45b01828cc3c4784ace8b976838fa35';
 export default node;

@@ -21,13 +21,13 @@ export type ExternalLossFirm_options$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": "0",
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "companyId",
       "type": "[ID!]"
     },
     {
-      "defaultValue": "0",
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "postcode",
       "type": "String"
@@ -93,5 +93,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '503414799b45c861b83e1d8092318d1d';
+(node as any).hash = '8e5a5ee500692952a8d99d6902e4b23d';
 export default node;
