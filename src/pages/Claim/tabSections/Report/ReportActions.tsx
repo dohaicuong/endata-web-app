@@ -35,7 +35,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
         color="primary"
         variant="outlined"
         size="large"
-        disabled={isSavedData && !isReadOnly}
+        disabled={!isSavedData || (isSavedData && !isReadOnly)}
         onClick={resetReport}
       >
         Reset
@@ -45,7 +45,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
         color="primary"
         variant="outlined"
         size="large"
-        disabled={isSavedData && isReadOnly}
+        disabled={!isSavedData || (isSavedData && isReadOnly)}
         onClick={submitReport}
       >
         Submit

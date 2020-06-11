@@ -11,6 +11,7 @@ import { useFormikContext } from 'formik'
 
 type ExternalLossFirmProps = {
   options: ExternalLossFirm_options$key | null
+  defaultValue?: any
 }
 const ExternalLossFirm: React.FC<ExternalLossFirmProps> = props => {
   const [options, refetch] = useRefetchableFragment<
@@ -21,8 +22,8 @@ const ExternalLossFirm: React.FC<ExternalLossFirmProps> = props => {
       fragment ExternalLossFirm_options on Query
         @refetchable(queryName: "ExternalLossFirmRefetchQuery")
         @argumentDefinitions(
-          companyId: { type: "[ID!]", defaultValue: "0" }
-          postcode: { type: "String", defaultValue: "0" }
+          companyId: { type: "[ID!]" }
+          postcode: { type: "String" }
         ) {
         adjusters: claimFilterOptions(
           where: {
@@ -40,8 +41,11 @@ const ExternalLossFirm: React.FC<ExternalLossFirmProps> = props => {
   )
 
   const { values } = useFormikContext<any>()
-  const selectedPostcode = values.incidentDetail.riskAddress.postcode
+  const selectedPostcode =
+    values?.incidentDetail?.riskAddress?.postcode ?? undefined
   React.useEffect(() => {
+    if (selectedPostcode === undefined) refetch({})
+
     if (selectedPostcode?.length === 4) {
       refetch({ postcode: String(selectedPostcode) })
     }
@@ -53,6 +57,7 @@ const ExternalLossFirm: React.FC<ExternalLossFirmProps> = props => {
     name: 'externalLossAdjusterId',
     options: options?.adjusters ?? [],
     startAdornment: <EventIcon />,
+    defaultValue: props.defaultValue,
   })
 }
 export default ExternalLossFirm

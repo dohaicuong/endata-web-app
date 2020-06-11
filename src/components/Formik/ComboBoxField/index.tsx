@@ -66,6 +66,23 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
   const { error, touched } = meta
   const isError = Boolean(touched && error)
 
+  React.useEffect(() => {
+    if (props.defaultValue) {
+      const currentOption = options.find(option => {
+        return String(option.value) === String(props.defaultValue)
+      })
+
+      const option: any = multiple ? [currentOption] : currentOption
+      setValue(option)
+
+      const formValue = !multiple
+        ? option.value
+        : option.map((x: any) => x.value)
+      helpers.setValue(formValue)
+    }
+    // eslint-disable-next-line
+  }, [])
+
   return (
     // @ts-ignore
     <Autocomplete

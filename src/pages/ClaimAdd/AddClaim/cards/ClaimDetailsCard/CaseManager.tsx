@@ -9,6 +9,7 @@ import { CaseManager_options$key } from './__generated__/CaseManager_options.gra
 
 type CaseManagerProps = {
   options: CaseManager_options$key | null
+  defaultValue?: any
 }
 const CaseManager: React.FC<CaseManagerProps> = props => {
   const options = useFragment(
@@ -32,6 +33,7 @@ const CaseManager: React.FC<CaseManagerProps> = props => {
     options: options?.managers ?? [],
     required: true,
     startAdornment: <EventIcon />,
+    defaultValue: props.defaultValue,
   })
 }
 export default CaseManager

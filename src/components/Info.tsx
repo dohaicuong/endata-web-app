@@ -12,6 +12,7 @@ const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
   rowsMax = 3,
   className,
   startAdornment,
+  variant,
   ...props
 }) => {
   const classes = useStyles()
