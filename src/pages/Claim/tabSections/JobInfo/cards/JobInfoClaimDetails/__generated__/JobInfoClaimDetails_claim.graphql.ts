@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type JobInfoClaimDetails_claim = {
-    readonly " $fragmentRefs": FragmentRefs<"JobInfoClaimDetailsRow1_claim" | "JobInfoClaimDetailsRow2_claim" | "JobInfoClaimDetailsRow3_claim">;
+    readonly " $fragmentRefs": FragmentRefs<"JobInfoClaimDetailsRow1_claim" | "JobInfoClaimDetailsRow2_claim" | "JobInfoClaimDetailsRow3_claim" | "JobInfoClaimDetailsRow4_claim" | "JobInfoClaimDetailsRow5_claim" | "JobInfoClaimDetailsRow6_claim">;
     readonly " $refType": "JobInfoClaimDetails_claim";
 };
 export type JobInfoClaimDetails_claim$data = JobInfoClaimDetails_claim;
@@ -35,9 +35,24 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "JobInfoClaimDetailsRow3_claim"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JobInfoClaimDetailsRow4_claim"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JobInfoClaimDetailsRow5_claim"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JobInfoClaimDetailsRow6_claim"
     }
   ],
   "type": "ClaimJob"
 };
-(node as any).hash = 'd1e778cf37874f13c9104715a4d2a0cf';
+(node as any).hash = 'f9e1df6b4e0dc18cf03bfaed24dcf0ef';
 export default node;

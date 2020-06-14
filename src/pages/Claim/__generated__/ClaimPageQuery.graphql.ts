@@ -147,6 +147,19 @@ fragment ClaimInfoCard_user on AuthenticatedUser {
   userType
 }
 
+fragment JobInfoActions_actions on ClaimJobAction {
+  updateClaim {
+    label
+    isDisabled
+    isDisplay
+    id
+  }
+}
+
+fragment JobInfoClaimDescription_claim on ClaimJob {
+  claimDescription
+}
+
 fragment JobInfoClaimDetailsRow1_claim on ClaimJob {
   insurer {
     companyName
@@ -208,19 +221,210 @@ fragment JobInfoClaimDetailsRow2_claim on ClaimJob {
 
 fragment JobInfoClaimDetailsRow3_claim on ClaimJob {
   lodgeDate
+  incidentDetail {
+    hold
+  }
+  insurer {
+    quickrepair
+  }
+  building {
+    toCollectExcess
+    excessValue
+    sumInsured
+  }
+}
+
+fragment JobInfoClaimDetailsRow4_claim on ClaimJob {
+  insurer {
+    companyName
+  }
+  incidentDetail {
+    eventType {
+      eventTypeId
+    }
+    cATCode {
+      cATCodeId
+    }
+  }
+  contents {
+    toCollectExcess
+    excessValue
+    sumInsured
+  }
+}
+
+fragment JobInfoClaimDetailsRow5_claim on ClaimJob {
+  insurer {
+    policyTypeSuppliersView
+    policyCoverSuppliersView
+  }
+  policyType {
+    policyTypeId
+  }
+  policyCover {
+    policyCoverId
+  }
+  restoration {
+    toCollectExcess
+    excessValue
+    sumInsured
+  }
+}
+
+fragment JobInfoClaimDetailsRow6_claim on ClaimJob {
+  insurer {
+    enableMultipleRisks
+    additionalRefNo
+    useInternalAssessor
+    cm2nd
+  }
+  riskname
+  additionalRefNumber
+  homeAssessor {
+    assesorId
+    id
+  }
+  brc {
+    managerId
+    id
+  }
 }
 
 fragment JobInfoClaimDetails_claim on ClaimJob {
   ...JobInfoClaimDetailsRow1_claim
   ...JobInfoClaimDetailsRow2_claim
   ...JobInfoClaimDetailsRow3_claim
+  ...JobInfoClaimDetailsRow4_claim
+  ...JobInfoClaimDetailsRow5_claim
+  ...JobInfoClaimDetailsRow6_claim
+}
+
+fragment JobInfoCustomerInfoRow1_claim on ClaimJob {
+  insured {
+    salutation
+    name
+    email
+  }
+}
+
+fragment JobInfoCustomerInfoRow2_claim on ClaimJob {
+  insurer {
+    setupcustomerlogin
+  }
+  incidentDetail {
+    riskAddress {
+      line1
+      line2
+    }
+  }
+  requireCustomLogin
+  customLoginEmail
+}
+
+fragment JobInfoCustomerInfoRow3_claim on ClaimJob {
+  incidentDetail {
+    riskAddress {
+      suburb
+      state
+      postcode
+    }
+    habitableProperty
+    category
+  }
+  insurer {
+    removeHabitableAsbestos
+    hideCategoryOfClaim
+  }
+}
+
+fragment JobInfoCustomerInfoRow4_claim on ClaimJob {
+  insured {
+    phone1
+    phone2
+  }
+  view {
+    actions {
+      cashSettle {
+        label
+        isDisplay
+        isDisabled
+        id
+      }
+      claimFinalise {
+        label
+        isDisplay
+        isDisabled
+        id
+      }
+    }
+  }
+}
+
+fragment JobInfoCustomerInfoRow5_claim on ClaimJob {
+  insured {
+    phone3
+    fax
+  }
+}
+
+fragment JobInfoCustomerInfo_claim on ClaimJob {
+  ...JobInfoCustomerInfoRow1_claim
+  ...JobInfoCustomerInfoRow2_claim
+  ...JobInfoCustomerInfoRow3_claim
+  ...JobInfoCustomerInfoRow4_claim
+  ...JobInfoCustomerInfoRow5_claim
+}
+
+fragment JobInfoPostalAddress_claim on ClaimJob {
+  insured {
+    postalAddress {
+      line1
+      line2
+      suburb
+      state
+      postcode
+    }
+  }
+}
+
+fragment JobInfoTenantInfo_claim on ClaimJob {
+  tenantDetails {
+    name
+    phone1
+    phone2
+    phone3
+  }
 }
 
 fragment JobInfo_claim on ClaimJob {
   insurer {
     companyId
   }
+  incidentDetail {
+    riskAddress {
+      postcode
+    }
+  }
+  building {
+    scopingSupplier {
+      companyId
+    }
+  }
+  restoration {
+    scopingSupplier {
+      companyId
+    }
+  }
+  view {
+    actions {
+      ...JobInfoActions_actions
+    }
+  }
   ...JobInfoClaimDetails_claim
+  ...JobInfoCustomerInfo_claim
+  ...JobInfoPostalAddress_claim
+  ...JobInfoTenantInfo_claim
+  ...JobInfoClaimDescription_claim
 }
 */
 
@@ -261,7 +465,70 @@ v4 = {
   "name": "companyId",
   "storageKey": null
 },
-v5 = [
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "line1",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "suburb",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "state",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "postcode",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "line2",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "phone1",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "phone2",
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "phone3",
+  "storageKey": null
+},
+v14 = [
   {
     "alias": null,
     "args": null,
@@ -270,49 +537,53 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v15 = {
   "alias": null,
   "args": null,
   "concreteType": "ClaimStatus",
   "kind": "LinkedField",
   "name": "claimStatus",
   "plural": false,
-  "selections": (v5/*: any*/),
+  "selections": (v14/*: any*/),
   "storageKey": null
 },
-v7 = [
-  (v3/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "companyPhone1",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "companyPhone2",
-    "storageKey": null
-  }
-],
-v8 = {
+v16 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "companyPhone1",
+  "storageKey": null
+},
+v17 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "companyPhone2",
+  "storageKey": null
+},
+v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "toCollectExcess",
   "storageKey": null
 },
-v9 = {
+v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "excessValue",
   "storageKey": null
 },
-v10 = [
-  (v6/*: any*/),
+v20 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "sumInsured",
+  "storageKey": null
+},
+v21 = [
+  (v15/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -320,7 +591,12 @@ v10 = [
     "kind": "LinkedField",
     "name": "scopingSupplier",
     "plural": false,
-    "selections": (v7/*: any*/),
+    "selections": [
+      (v3/*: any*/),
+      (v16/*: any*/),
+      (v17/*: any*/),
+      (v4/*: any*/)
+    ],
     "storageKey": null
   },
   {
@@ -330,7 +606,11 @@ v10 = [
     "kind": "LinkedField",
     "name": "authorisedSupplier",
     "plural": false,
-    "selections": (v7/*: any*/),
+    "selections": [
+      (v3/*: any*/),
+      (v16/*: any*/),
+      (v17/*: any*/)
+    ],
     "storageKey": null
   },
   {
@@ -368,7 +648,7 @@ v10 = [
             "kind": "LinkedField",
             "name": "quoteJobStatus",
             "plural": false,
-            "selections": (v5/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": null
           },
           (v2/*: any*/)
@@ -379,8 +659,46 @@ v10 = [
     ],
     "storageKey": null
   },
-  (v8/*: any*/),
-  (v9/*: any*/)
+  (v18/*: any*/),
+  (v19/*: any*/),
+  (v20/*: any*/)
+],
+v22 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "label",
+  "storageKey": null
+},
+v23 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isDisabled",
+  "storageKey": null
+},
+v24 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isDisplay",
+  "storageKey": null
+},
+v25 = [
+  (v22/*: any*/),
+  (v24/*: any*/),
+  (v23/*: any*/),
+  (v2/*: any*/)
+],
+v26 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "managerId",
+    "storageKey": null
+  },
+  (v2/*: any*/)
 ];
 return {
   "fragment": {
@@ -475,6 +793,62 @@ return {
                 "kind": "ScalarField",
                 "name": "contentsref",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "quickrepair",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "enableMultipleRisks",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "additionalRefNo",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "useInternalAssessor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cm2nd",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "setupcustomerlogin",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "removeHabitableAsbestos",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hideCategoryOfClaim",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -502,34 +876,11 @@ return {
                 "name": "riskAddress",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "line1",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "suburb",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "state",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "postcode",
-                    "storageKey": null
-                  }
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -546,6 +897,13 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "eventName",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "eventTypeId",
                     "storageKey": null
                   }
                 ],
@@ -565,6 +923,13 @@ return {
                     "kind": "ScalarField",
                     "name": "cATCodeName",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cATCodeId",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -574,6 +939,27 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "incidentDate",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hold",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "habitableProperty",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "category",
                 "storageKey": null
               }
             ],
@@ -587,39 +973,45 @@ return {
             "name": "insured",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "phone1",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "phone2",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "phone3",
-                "storageKey": null
-              },
+              (v10/*: any*/),
+              (v11/*: any*/),
+              (v12/*: any*/),
+              (v13/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "email",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "salutation",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "fax",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Address",
+                "kind": "LinkedField",
+                "name": "postalAddress",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/),
+                  (v9/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/)
+                ],
                 "storageKey": null
               }
             ],
@@ -646,6 +1038,13 @@ return {
                 "kind": "ScalarField",
                 "name": "policyTypeName",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "policyTypeId",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -664,6 +1063,13 @@ return {
                 "kind": "ScalarField",
                 "name": "policyCoverName",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "policyCoverId",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -675,7 +1081,7 @@ return {
             "kind": "LinkedField",
             "name": "building",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v21/*: any*/),
             "storageKey": null
           },
           {
@@ -685,7 +1091,7 @@ return {
             "kind": "LinkedField",
             "name": "restoration",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v21/*: any*/),
             "storageKey": null
           },
           {
@@ -703,9 +1109,67 @@ return {
                 "name": "portfolioType",
                 "storageKey": null
               },
-              (v6/*: any*/),
-              (v8/*: any*/),
-              (v9/*: any*/)
+              (v15/*: any*/),
+              (v18/*: any*/),
+              (v19/*: any*/),
+              (v20/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ClaimJobView",
+            "kind": "LinkedField",
+            "name": "view",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ClaimJobAction",
+                "kind": "LinkedField",
+                "name": "actions",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "updateClaim",
+                    "plural": false,
+                    "selections": [
+                      (v22/*: any*/),
+                      (v23/*: any*/),
+                      (v24/*: any*/),
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "cashSettle",
+                    "plural": false,
+                    "selections": (v25/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "claimFinalise",
+                    "plural": false,
+                    "selections": (v25/*: any*/),
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -716,16 +1180,7 @@ return {
             "kind": "LinkedField",
             "name": "caseManager",
             "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "managerId",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
+            "selections": (v26/*: any*/),
             "storageKey": null
           },
           {
@@ -752,6 +1207,85 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "contentsRefNum",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "riskname",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "additionalRefNumber",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "InternalAssesor",
+            "kind": "LinkedField",
+            "name": "homeAssessor",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "assesorId",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ClaimManager",
+            "kind": "LinkedField",
+            "name": "brc",
+            "plural": false,
+            "selections": (v26/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "requireCustomLogin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "customLoginEmail",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Contact",
+            "kind": "LinkedField",
+            "name": "tenantDetails",
+            "plural": false,
+            "selections": [
+              (v10/*: any*/),
+              (v11/*: any*/),
+              (v12/*: any*/),
+              (v13/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "claimDescription",
             "storageKey": null
           }
         ],
@@ -783,7 +1317,7 @@ return {
     "metadata": {},
     "name": "ClaimPageQuery",
     "operationKind": "query",
-    "text": "query ClaimPageQuery(\n  $where: ENDataEntityKey!\n) {\n  claimJob(where: $where) {\n    id\n    ...ClaimInfoCard_info\n    ...JobInfo_claim\n  }\n  currentUser {\n    ...ClaimInfoCard_user\n    id\n  }\n}\n\nfragment ClaimInfoCard_info on ClaimJob {\n  insurer {\n    companyName\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  refNumber\n  incidentDetail {\n    riskAddress {\n      line1\n      suburb\n      state\n      postcode\n    }\n    eventType {\n      eventName\n    }\n    cATCode {\n      cATCodeName\n    }\n  }\n  insured {\n    name\n    phone1\n    phone2\n    phone3\n    email\n  }\n  lodgeDate\n  policyType {\n    policyTypeName\n  }\n  policyCover {\n    policyCoverName\n  }\n  building {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  restoration {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  contents {\n    portfolioType\n    claimStatus {\n      statusName\n    }\n    toCollectExcess\n    excessValue\n  }\n}\n\nfragment ClaimInfoCard_user on AuthenticatedUser {\n  userType\n}\n\nfragment JobInfoClaimDetailsRow1_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    incidentDate\n  }\n  caseManager {\n    managerId\n    id\n  }\n  externalLossAdjuster {\n    companyId\n  }\n}\n\nfragment JobInfoClaimDetailsRow2_claim on ClaimJob {\n  hasContents\n  insurer {\n    contentsref\n  }\n  refNumber\n  contentsRefNum\n  building {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n  restoration {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n}\n\nfragment JobInfoClaimDetailsRow3_claim on ClaimJob {\n  lodgeDate\n}\n\nfragment JobInfoClaimDetails_claim on ClaimJob {\n  ...JobInfoClaimDetailsRow1_claim\n  ...JobInfoClaimDetailsRow2_claim\n  ...JobInfoClaimDetailsRow3_claim\n}\n\nfragment JobInfo_claim on ClaimJob {\n  insurer {\n    companyId\n  }\n  ...JobInfoClaimDetails_claim\n}\n"
+    "text": "query ClaimPageQuery(\n  $where: ENDataEntityKey!\n) {\n  claimJob(where: $where) {\n    id\n    ...ClaimInfoCard_info\n    ...JobInfo_claim\n  }\n  currentUser {\n    ...ClaimInfoCard_user\n    id\n  }\n}\n\nfragment ClaimInfoCard_info on ClaimJob {\n  insurer {\n    companyName\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  refNumber\n  incidentDetail {\n    riskAddress {\n      line1\n      suburb\n      state\n      postcode\n    }\n    eventType {\n      eventName\n    }\n    cATCode {\n      cATCodeName\n    }\n  }\n  insured {\n    name\n    phone1\n    phone2\n    phone3\n    email\n  }\n  lodgeDate\n  policyType {\n    policyTypeName\n  }\n  policyCover {\n    policyCoverName\n  }\n  building {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  restoration {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  contents {\n    portfolioType\n    claimStatus {\n      statusName\n    }\n    toCollectExcess\n    excessValue\n  }\n}\n\nfragment ClaimInfoCard_user on AuthenticatedUser {\n  userType\n}\n\nfragment JobInfoActions_actions on ClaimJobAction {\n  updateClaim {\n    label\n    isDisabled\n    isDisplay\n    id\n  }\n}\n\nfragment JobInfoClaimDescription_claim on ClaimJob {\n  claimDescription\n}\n\nfragment JobInfoClaimDetailsRow1_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    incidentDate\n  }\n  caseManager {\n    managerId\n    id\n  }\n  externalLossAdjuster {\n    companyId\n  }\n}\n\nfragment JobInfoClaimDetailsRow2_claim on ClaimJob {\n  hasContents\n  insurer {\n    contentsref\n  }\n  refNumber\n  contentsRefNum\n  building {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n  restoration {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n}\n\nfragment JobInfoClaimDetailsRow3_claim on ClaimJob {\n  lodgeDate\n  incidentDetail {\n    hold\n  }\n  insurer {\n    quickrepair\n  }\n  building {\n    toCollectExcess\n    excessValue\n    sumInsured\n  }\n}\n\nfragment JobInfoClaimDetailsRow4_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    eventType {\n      eventTypeId\n    }\n    cATCode {\n      cATCodeId\n    }\n  }\n  contents {\n    toCollectExcess\n    excessValue\n    sumInsured\n  }\n}\n\nfragment JobInfoClaimDetailsRow5_claim on ClaimJob {\n  insurer {\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  policyType {\n    policyTypeId\n  }\n  policyCover {\n    policyCoverId\n  }\n  restoration {\n    toCollectExcess\n    excessValue\n    sumInsured\n  }\n}\n\nfragment JobInfoClaimDetailsRow6_claim on ClaimJob {\n  insurer {\n    enableMultipleRisks\n    additionalRefNo\n    useInternalAssessor\n    cm2nd\n  }\n  riskname\n  additionalRefNumber\n  homeAssessor {\n    assesorId\n    id\n  }\n  brc {\n    managerId\n    id\n  }\n}\n\nfragment JobInfoClaimDetails_claim on ClaimJob {\n  ...JobInfoClaimDetailsRow1_claim\n  ...JobInfoClaimDetailsRow2_claim\n  ...JobInfoClaimDetailsRow3_claim\n  ...JobInfoClaimDetailsRow4_claim\n  ...JobInfoClaimDetailsRow5_claim\n  ...JobInfoClaimDetailsRow6_claim\n}\n\nfragment JobInfoCustomerInfoRow1_claim on ClaimJob {\n  insured {\n    salutation\n    name\n    email\n  }\n}\n\nfragment JobInfoCustomerInfoRow2_claim on ClaimJob {\n  insurer {\n    setupcustomerlogin\n  }\n  incidentDetail {\n    riskAddress {\n      line1\n      line2\n    }\n  }\n  requireCustomLogin\n  customLoginEmail\n}\n\nfragment JobInfoCustomerInfoRow3_claim on ClaimJob {\n  incidentDetail {\n    riskAddress {\n      suburb\n      state\n      postcode\n    }\n    habitableProperty\n    category\n  }\n  insurer {\n    removeHabitableAsbestos\n    hideCategoryOfClaim\n  }\n}\n\nfragment JobInfoCustomerInfoRow4_claim on ClaimJob {\n  insured {\n    phone1\n    phone2\n  }\n  view {\n    actions {\n      cashSettle {\n        label\n        isDisplay\n        isDisabled\n        id\n      }\n      claimFinalise {\n        label\n        isDisplay\n        isDisabled\n        id\n      }\n    }\n  }\n}\n\nfragment JobInfoCustomerInfoRow5_claim on ClaimJob {\n  insured {\n    phone3\n    fax\n  }\n}\n\nfragment JobInfoCustomerInfo_claim on ClaimJob {\n  ...JobInfoCustomerInfoRow1_claim\n  ...JobInfoCustomerInfoRow2_claim\n  ...JobInfoCustomerInfoRow3_claim\n  ...JobInfoCustomerInfoRow4_claim\n  ...JobInfoCustomerInfoRow5_claim\n}\n\nfragment JobInfoPostalAddress_claim on ClaimJob {\n  insured {\n    postalAddress {\n      line1\n      line2\n      suburb\n      state\n      postcode\n    }\n  }\n}\n\nfragment JobInfoTenantInfo_claim on ClaimJob {\n  tenantDetails {\n    name\n    phone1\n    phone2\n    phone3\n  }\n}\n\nfragment JobInfo_claim on ClaimJob {\n  insurer {\n    companyId\n  }\n  incidentDetail {\n    riskAddress {\n      postcode\n    }\n  }\n  building {\n    scopingSupplier {\n      companyId\n    }\n  }\n  restoration {\n    scopingSupplier {\n      companyId\n    }\n  }\n  view {\n    actions {\n      ...JobInfoActions_actions\n    }\n  }\n  ...JobInfoClaimDetails_claim\n  ...JobInfoCustomerInfo_claim\n  ...JobInfoPostalAddress_claim\n  ...JobInfoTenantInfo_claim\n  ...JobInfoClaimDescription_claim\n}\n"
   }
 };
 })();

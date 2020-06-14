@@ -28,6 +28,7 @@ const AddClaimRoot: React.FC<AddClaimRootProps> = props => {
         }
 
         ...ClaimDetailsCard_optionData
+
         ...QuotingBuildersCard_options
           @arguments(companyId: $companyId, postcode: $postcode)
         ...QuotingRestorersCard_options
@@ -38,6 +39,10 @@ const AddClaimRoot: React.FC<AddClaimRootProps> = props => {
   )
 
   const { values, setFieldValue } = useFormikContext<any>()
+  const isBuilding = values?.meta?.portfolio?.includes('Building')
+  const isRestoration = values?.meta?.portfolio?.includes('Restoration')
+  const selectedPostcode = values?.incidentDetail?.riskAddress?.postcode ?? 0
+
   const toProvideSiteReport = values?.meta?.toProvideSiteReport
   React.useEffect(() => {
     setFieldValue('portfolios[0].toProvideSiteReport', toProvideSiteReport)
@@ -64,14 +69,24 @@ const AddClaimRoot: React.FC<AddClaimRootProps> = props => {
           <React.Suspense
             fallback={<Card title="Quoting Builders">Loading...</Card>}
           >
-            <QuotingBuildersCard options={data} meta={data.company} />
+            <QuotingBuildersCard
+              options={data}
+              meta={data.company}
+              isBuilding={isBuilding}
+              selectedPostcode={selectedPostcode}
+            />
           </React.Suspense>
         </Grid>
         <Grid item xs={6}>
           <React.Suspense
             fallback={<Card title="Quoting Restorers">Loading...</Card>}
           >
-            <QuotingRestorersCard options={data} meta={data.company} />
+            <QuotingRestorersCard
+              options={data}
+              meta={data.company}
+              isRestoration={isRestoration}
+              selectedPostcode={selectedPostcode}
+            />
           </React.Suspense>
         </Grid>
         <Grid item xs={12}>

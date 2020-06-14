@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Field } from 'formik'
+import { Field, useField, useFormikContext } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { TextFieldProps, CircularProgress } from '@material-ui/core'
 import { InputAdornment } from '@material-ui/core'
@@ -34,7 +34,14 @@ const FormikTextField: React.FC<FormikTextFieldProps> = ({
   loading = false,
   ...props
 }) => {
-  const isDisabled = loading || disabled
+  const { isSubmitting } = useFormikContext()
+  const isDisabled = loading || disabled || isSubmitting
+
+  const [, , { setValue }] = useField(props.name)
+  React.useEffect(() => {
+    if (props.defaultValue) setValue(props.defaultChecked)
+    // eslint-disable-next-line
+  }, [props.defaultValue])
 
   return (
     <Field

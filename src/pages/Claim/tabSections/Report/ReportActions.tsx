@@ -22,6 +22,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
   return (
     <Paper className={classes.actionRoot}>
       <Button
+        className={classes.actionButton}
         color="primary"
         variant="outlined"
         size="large"

@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type JobInfoClaimDetails_optionData = {
-    readonly " $fragmentRefs": FragmentRefs<"JobInfoClaimDetailsRow1_optionData" | "JobInfoClaimDetailsRow2_meta">;
+    readonly " $fragmentRefs": FragmentRefs<"JobInfoClaimDetailsRow1_optionData" | "JobInfoClaimDetailsRow2_meta" | "JobInfoClaimDetailsRow4_optionData" | "JobInfoClaimDetailsRow5_optionData" | "JobInfoClaimDetailsRow6_optionData">;
     readonly " $refType": "JobInfoClaimDetails_optionData";
 };
 export type JobInfoClaimDetails_optionData$data = JobInfoClaimDetails_optionData;
@@ -30,9 +30,24 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "JobInfoClaimDetailsRow2_meta"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JobInfoClaimDetailsRow4_optionData"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JobInfoClaimDetailsRow5_optionData"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JobInfoClaimDetailsRow6_optionData"
     }
   ],
   "type": "Query"
 };
-(node as any).hash = '4ef18c475b895f49acf2e039f2ffbe64';
+(node as any).hash = '0236579b0249bf186d33ebefe707214d';
 export default node;

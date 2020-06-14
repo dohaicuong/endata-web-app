@@ -15,6 +15,9 @@ import { QuotingBuildersCard_meta$key } from './__generated__/QuotingBuildersCar
 type QuotingBuildersCardProps = {
   options: QuotingBuildersCard_options$key | null
   meta: QuotingBuildersCard_meta$key | null
+
+  isBuilding: boolean
+  selectedPostcode: any
 }
 const QuotingBuildersCard: React.FC<QuotingBuildersCardProps> = props => {
   const meta = useFragment(
@@ -56,9 +59,9 @@ const QuotingBuildersCard: React.FC<QuotingBuildersCardProps> = props => {
   const fieldName = 'portfolios[0].quotingSupplierIds'
   const suppliersOptions = (options?.quotingBuilders ?? null) as Option[] | null
 
-  const { values, setFieldValue } = useFormikContext<any>()
-  const isBuilding = values?.meta?.portfolio?.includes('Building')
-  const selectedPostcode = values?.incidentDetail?.riskAddress?.postcode ?? 0
+  const { setFieldValue } = useFormikContext<any>()
+  const isBuilding = props.isBuilding // values?.meta?.portfolio?.includes('Building')
+  const selectedPostcode = props.selectedPostcode // values?.incidentDetail?.riskAddress?.postcode ?? 0
 
   const isDisabled = !isBuilding || !selectedPostcode
   const isSupplier = Boolean(options?.quotingBuilders?.length)

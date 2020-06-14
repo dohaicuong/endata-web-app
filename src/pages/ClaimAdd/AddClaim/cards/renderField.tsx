@@ -14,8 +14,10 @@ const renderField = ({
 
   return (
     <Grid item xs={xs} md={md} key={props.name}>
-      {!unMountOn && (
+      {!unMountOn ? (
         <Comp {...props} fullWidth variant={variant || 'outlined'} />
+      ) : (
+        ''
       )}
     </Grid>
   )

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import renderField from 'pages/ClaimAdd/AddClaim/cards/renderField'
 import RefNumberField from 'components/FormikCustom/RefNumberField'
 import Info from 'components/Info'
 import LinkIcon from '@material-ui/icons/Link'
@@ -9,6 +8,8 @@ import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfoClaimDetailsRow2_claim$key } from './__generated__/JobInfoClaimDetailsRow2_claim.graphql'
 import { JobInfoClaimDetailsRow2_meta$key } from './__generated__/JobInfoClaimDetailsRow2_meta.graphql'
+import FormGridField from 'components/FormGridField'
+import { useFormikContext } from 'formik'
 
 type JobInfoClaimDetailsRow2Props = {
   claim: JobInfoClaimDetailsRow2_claim$key | null
@@ -97,34 +98,43 @@ const JobInfoClaimDetailsRow2: React.FC<JobInfoClaimDetailsRow2Props> = props =>
     return authorisedRestorer || scopingRestorer || 'N/a'
   }, [userType, quotingRestorer, authorisedRestorer, scopingRestorer])
 
+  const { setFieldValue } = useFormikContext()
+  React.useEffect(() => {
+    setFieldValue('refNumber', claim?.refNumber, false)
+    setFieldValue('contentsRefNum', claim?.contentsRefNum, false)
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <>
-      {renderField({
-        component: RefNumberField,
-        label: 'Insurance Ref #',
-        name: 'refNumber',
-        required: true,
-        startAdornment: <LinkIcon />,
-        defaultValue: claim?.refNumber,
-      })}
-      {renderField({
-        component: RefNumberField,
-        label: 'Contents Ref #',
-        name: 'contentsRefNum',
-        startAdornment: <LinkIcon />,
-        unMountOn: !claim?.insurer?.contentsref || !claim.hasContents,
-        defaultValue: claim?.contentsRefNum,
-      })}
-      {renderField({
-        component: Info,
-        label: 'Builder Allocated',
-        value: allocatedBuilder,
-      })}
-      {renderField({
-        component: Info,
-        label: 'Restorer Allocated',
-        value: allocatedRestorer,
-      })}
+      <FormGridField
+        component={
+          <RefNumberField
+            label="Insurance Ref #"
+            name="refNumber"
+            required={true}
+            startAdornment={<LinkIcon />}
+          />
+        }
+      />
+      <FormGridField
+        unMountOn={!claim?.insurer?.contentsref || !claim.hasContents}
+        component={
+          <RefNumberField
+            label="Contents Ref #"
+            name="contentsRefNum"
+            startAdornment={<LinkIcon />}
+          />
+        }
+      />
+      <FormGridField
+        component={<Info label="Builder Allocated" value={allocatedBuilder} />}
+      />
+      <FormGridField
+        component={
+          <Info label="Restorer Allocated" value={allocatedRestorer} />
+        }
+      />
     </>
   )
 }

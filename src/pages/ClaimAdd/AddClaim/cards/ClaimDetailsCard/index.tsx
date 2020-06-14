@@ -13,24 +13,25 @@ import RefNumberField from 'components/FormikCustom/RefNumberField'
 import DateField from 'components/Formik/DateField'
 import InfoField from 'components/Formik/InfoField'
 import SwitchField from 'components/Formik/SwitchField'
+import MoneyField from 'components/FormikCustom/MoneyField'
 
 import EventIcon from '@material-ui/icons/Event'
 import LinkIcon from '@material-ui/icons/Link'
 import FaceIcon from '@material-ui/icons/Face'
+import RestorePageIcon from '@material-ui/icons/RestorePage'
 
-import InsuranceCompany from './InsuranceCompany'
-import CaseManager from './CaseManager'
-import ExternalLossFirm from './ExternalLossFirm'
 import { useFormikContext } from 'formik'
-import Builder from './Builder'
-import Restorer from './Restorer'
-import MoneyField from 'components/FormikCustom/MoneyField'
-import EventType from './EventType'
-import CatCode from './CatCode'
-import Distributor from './Distributor'
-import PdsReference from './PdsReference'
-import SpecialistReview from './SpecialistReview'
-import LossAdjuster from './LossAdjuster'
+
+import CaseManagerComboBox from 'dataComponents/CaseManagerComboBox'
+import ExternalLossAdjusterComboBox from 'dataComponents/ExternalLossAdjusterComboBox'
+import BuilderComboBox from 'dataComponents/BuilderComboBox'
+import RestorerComboBox from 'dataComponents/RestorerComboBox'
+import EventTypeComboBox from 'dataComponents/EventTypeComboBox'
+import CatCodeComboBox from 'dataComponents/CatCodeComboBox'
+import DistributorComboBox from 'dataComponents/DistributorComboBox'
+import PdsReferenceComboBox from 'dataComponents/PdsReferenceComboBox'
+import SpecialistReviewComboBox from 'dataComponents/SpecialistReviewComboBox'
+import InsuranceCompanyInfo from 'dataComponents/InsuranceCompanyInfo'
 
 type ClaimDetailsCardProps = {
   company: ClaimDetailsCard_company$key | null
@@ -41,6 +42,9 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
   const hasBuilding = values?.meta?.portfolio?.includes('Building')
   const hasContents = values?.meta?.portfolio?.includes('Contents')
   const hasRestoration = values?.meta?.portfolio?.includes('Restoration')
+
+  const selectedPostcode =
+    values?.incidentDetail?.riskAddress?.postcode ?? undefined
 
   const company = useFragment(
     graphql`
@@ -54,7 +58,7 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
         useInternalAssessor
         enableMultipleRisks
         cm2nd
-        ...InsuranceCompany_company
+        ...InsuranceCompanyInfo_company
       }
     `,
     props.company
@@ -63,30 +67,43 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
   const optionData = useFragment(
     graphql`
       fragment ClaimDetailsCard_optionData on Query {
-        ...CaseManager_options
-        ...ExternalLossFirm_options
-          @arguments(companyId: $companyId, postcode: $postcode)
-        ...Builder_options
-          @arguments(companyId: $companyId, postcode: $postcode)
-        ...Restorer_options
-          @arguments(companyId: $companyId, postcode: $postcode)
-        ...EventType_options
-        ...CatCode_options
-        ...Distributor_options
-        ...PdsReference_options
-        ...SpecialistReview_options
-        ...LossAdjuster_options
         me: currentUser {
           userType
         }
+
+        # Case Managers
+        ...CaseManagerComboBox_data @arguments(companyIds: $companyId)
+        # External Loss Adjusting Firm
+        ...ExternalLossAdjusterComboBox_data
+          @arguments(companyIds: $companyId, postcode: $postcode)
+        # Builder
+        ...BuilderComboBox_data
+          @arguments(companyIds: $companyId, postcode: $postcode)
+        # Restorer
+        ...RestorerComboBox_data
+          @arguments(companyIds: $companyId, postcode: $postcode)
+        # Event type
+        ...EventTypeComboBox_data @arguments(companyIds: $companyId)
+        # Cat code
+        ...CatCodeComboBox_data @arguments(companyIds: $companyId)
+        # Distributor
+        ...DistributorComboBox_data @arguments(companyIds: $companyId)
+        # PDS reference
+        ...PdsReferenceComboBox_data @arguments(companyIds: $companyId)
+        # Specialist review
+        ...SpecialistReviewComboBoxProps_data @arguments(companyIds: $companyId)
+        # BC/BRC/Loss Adjuster
+        ...CaseManagerComboBox_data @arguments(companyIds: $companyId)
       }
     `,
     props.optionData
   )
 
-  const renderFieldWithLoader = (component: any) => {
+  const renderFieldWithLoader = (label: string, component: any) => {
     return (
-      <React.Suspense fallback={<FieldLoading />}>{component}</React.Suspense>
+      <React.Suspense fallback={<FieldLoading label={label} />}>
+        {component}
+      </React.Suspense>
     )
   }
 
@@ -94,7 +111,11 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
     <Card title="Claim Details">
       <Grid container spacing={3}>
         {/* ROW 1 */}
-        <InsuranceCompany company={company} />
+        {renderField({
+          component: InsuranceCompanyInfo,
+          company: company,
+          label: 'Insurance Company',
+        })}
         {renderField({
           component: DateField,
           label: 'Incident Date',
@@ -102,8 +123,23 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
           required: true,
           startAdornment: <EventIcon />,
         })}
-        <CaseManager options={optionData} />
-        {renderFieldWithLoader(<ExternalLossFirm options={optionData} />)}
+        {renderField({
+          component: CaseManagerComboBox,
+          label: 'Case Manager',
+          name: 'casemanagerId',
+          required: true,
+          data: optionData,
+        })}
+        {renderFieldWithLoader(
+          'External Loss Adjusting Firm',
+          renderField({
+            component: ExternalLossAdjusterComboBox,
+            label: 'External Loss Adjusting Firm',
+            name: 'externalLossAdjusterId',
+            data: optionData,
+            selectedPostcode,
+          })
+        )}
 
         {/* ROW 2 */}
         {renderField({
@@ -121,10 +157,28 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
           startAdornment: <LinkIcon />,
         })}
         {renderFieldWithLoader(
-          <Builder options={optionData} hasBuilding={hasBuilding} />
+          'Builder',
+          renderField({
+            component: BuilderComboBox,
+            label: 'Builder',
+            name: 'portfolios[0].scopingSupplierId',
+            disabled: !hasBuilding || !selectedPostcode,
+            required: true,
+            data: optionData,
+            selectedPostcode,
+          })
         )}
         {renderFieldWithLoader(
-          <Restorer options={optionData} hasRestoration={hasRestoration} />
+          'Restorer',
+          renderField({
+            component: RestorerComboBox,
+            label: 'Restorer',
+            name: 'portfolios[2].scopingSupplierId',
+            disabled: !hasRestoration || !selectedPostcode,
+            required: true,
+            data: optionData,
+            selectedPostcode,
+          })
         )}
 
         {/* ROW 3 */}
@@ -172,8 +226,20 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
           required: hasBuilding,
           disabled: !hasBuilding,
         })}
-        <EventType options={optionData} />
-        <CatCode options={optionData} />
+        {renderField({
+          component: EventTypeComboBox,
+          data: optionData,
+          label: 'Event Type',
+          name: 'incidentDetail.eventTypeId',
+          required: true,
+        })}
+        {renderField({
+          component: CatCodeComboBox,
+          data: optionData,
+          label: 'Catastrophe Code',
+          name: 'incidentDetail.catCodeId',
+          required: true,
+        })}
         {renderField({
           md: 2,
           component: SwitchField,
@@ -205,14 +271,22 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
         })}
 
         {/* ROW 5 */}
-        <Distributor
-          options={optionData}
-          unMountOn={!company?.policyTypeSuppliersView}
-        />
-        <PdsReference
-          options={optionData}
-          unMountOn={!company?.policyCoverSuppliersView}
-        />
+        {renderField({
+          component: DistributorComboBox,
+          data: optionData,
+          label: 'Distributor',
+          name: 'policyTypeId',
+          required: true,
+          unMountOn: !company?.policyTypeSuppliersView,
+        })}
+        {renderField({
+          component: PdsReferenceComboBox,
+          data: optionData,
+          label: 'PDS Reference',
+          name: 'policyCoverId',
+          required: true,
+          unMountOn: !company?.policyCoverSuppliersView,
+        })}
         {renderField({
           md: 2,
           component: SwitchField,
@@ -260,18 +334,27 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
           name: 'additionalRefNumber',
           startAdornment: <LinkIcon />,
         })}
-        <SpecialistReview
-          options={optionData}
-          unMountOn={!company?.useInternalAssessor}
-        />
+        {renderField({
+          component: SpecialistReviewComboBox,
+          data: optionData,
+          label: 'Specialist Review',
+          name: 'homeAssessorId',
+          required: true,
+          // unMountOn: !company?.useInternalAssessor,
+        })}
 
         {/* ROW 7 */}
-        <LossAdjuster
-          options={optionData}
-          unMountOn={
-            !company?.cm2nd || optionData?.me?.userType !== 'Administrator'
-          }
-        />
+        {renderField({
+          component: CaseManagerComboBox,
+          label: 'BC/BRC/Loss Adjuster',
+          name: 'brcId',
+          required: true,
+          unMountOn:
+            !company?.cm2nd || optionData?.me?.userType !== 'Administrator',
+          startAdornment: <RestorePageIcon />,
+          data: optionData,
+        })}
+
         {renderField({
           label: 'Risk Name',
           name: 'riskname',
@@ -284,10 +367,11 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
 }
 export default ClaimDetailsCard
 
-const FieldLoading = () => {
+const FieldLoading = ({ label }: any) => {
   return renderField({
     component: ComboBoxField,
     name: 'loading',
+    label,
     options: [],
     startAdornment: <EventIcon />,
     loading: true,

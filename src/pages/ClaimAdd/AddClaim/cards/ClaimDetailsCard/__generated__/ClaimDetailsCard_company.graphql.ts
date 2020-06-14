@@ -13,7 +13,7 @@ export type ClaimDetailsCard_company = {
     readonly useInternalAssessor: boolean;
     readonly enableMultipleRisks: boolean | null;
     readonly cm2nd: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"InsuranceCompany_company">;
+    readonly " $fragmentRefs": FragmentRefs<"InsuranceCompanyInfo_company">;
     readonly " $refType": "ClaimDetailsCard_company";
 };
 export type ClaimDetailsCard_company$data = ClaimDetailsCard_company;
@@ -96,10 +96,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "InsuranceCompany_company"
+      "name": "InsuranceCompanyInfo_company"
     }
   ],
   "type": "CompanyProfile"
 };
-(node as any).hash = '0edd4c5b9dc41d94393e518cf81fad8b';
+(node as any).hash = '0e1b7c09b1c79bd2bee124697852f52c';
 export default node;

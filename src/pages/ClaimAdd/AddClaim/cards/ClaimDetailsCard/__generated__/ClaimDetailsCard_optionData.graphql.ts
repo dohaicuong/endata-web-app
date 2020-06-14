@@ -8,7 +8,7 @@ export type ClaimDetailsCard_optionData = {
     readonly me: {
         readonly userType: UserType;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"CaseManager_options" | "ExternalLossFirm_options" | "Builder_options" | "Restorer_options" | "EventType_options" | "CatCode_options" | "Distributor_options" | "PdsReference_options" | "SpecialistReview_options" | "LossAdjuster_options">;
+    readonly " $fragmentRefs": FragmentRefs<"CaseManagerComboBox_data" | "ExternalLossAdjusterComboBox_data" | "BuilderComboBox_data" | "RestorerComboBox_data" | "EventTypeComboBox_data" | "CatCodeComboBox_data" | "DistributorComboBox_data" | "PdsReferenceComboBox_data" | "SpecialistReviewComboBoxProps_data">;
     readonly " $refType": "ClaimDetailsCard_optionData";
 };
 export type ClaimDetailsCard_optionData$data = ClaimDetailsCard_optionData;
@@ -20,12 +20,16 @@ export type ClaimDetailsCard_optionData$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Variable",
-    "name": "companyId",
-    "variableName": "companyId"
-  },
+var v0 = {
+  "kind": "Variable",
+  "name": "companyIds",
+  "variableName": "companyId"
+},
+v1 = [
+  (v0/*: any*/)
+],
+v2 = [
+  (v0/*: any*/),
   {
     "kind": "Variable",
     "name": "postcode",
@@ -68,58 +72,53 @@ return {
       "storageKey": null
     },
     {
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "FragmentSpread",
-      "name": "CaseManager_options"
+      "name": "CaseManagerComboBox_data"
     },
     {
-      "args": (v0/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "FragmentSpread",
-      "name": "ExternalLossFirm_options"
+      "name": "ExternalLossAdjusterComboBox_data"
     },
     {
-      "args": (v0/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "FragmentSpread",
-      "name": "Builder_options"
+      "name": "BuilderComboBox_data"
     },
     {
-      "args": (v0/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "FragmentSpread",
-      "name": "Restorer_options"
+      "name": "RestorerComboBox_data"
     },
     {
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "FragmentSpread",
-      "name": "EventType_options"
+      "name": "EventTypeComboBox_data"
     },
     {
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "FragmentSpread",
-      "name": "CatCode_options"
+      "name": "CatCodeComboBox_data"
     },
     {
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "FragmentSpread",
-      "name": "Distributor_options"
+      "name": "DistributorComboBox_data"
     },
     {
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "FragmentSpread",
-      "name": "PdsReference_options"
+      "name": "PdsReferenceComboBox_data"
     },
     {
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "FragmentSpread",
-      "name": "SpecialistReview_options"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "LossAdjuster_options"
+      "name": "SpecialistReviewComboBoxProps_data"
     }
   ],
   "type": "Query"
 };
 })();
-(node as any).hash = '3a3fa350b25e8aad5652d1b914effe91';
+(node as any).hash = 'b6c657c5bc9738dcc41582283663e34d';
 export default node;

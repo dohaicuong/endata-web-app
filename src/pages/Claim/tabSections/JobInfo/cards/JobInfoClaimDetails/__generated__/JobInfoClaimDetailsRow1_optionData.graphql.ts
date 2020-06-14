@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type JobInfoClaimDetailsRow1_optionData = {
-    readonly " $fragmentRefs": FragmentRefs<"CaseManager_options" | "ExternalLossFirm_options">;
+    readonly " $fragmentRefs": FragmentRefs<"CaseManagerComboBox_data" | "ExternalLossAdjusterComboBox_data">;
     readonly " $refType": "JobInfoClaimDetailsRow1_optionData";
 };
 export type JobInfoClaimDetailsRow1_optionData$data = JobInfoClaimDetailsRow1_optionData;
@@ -15,7 +15,15 @@ export type JobInfoClaimDetailsRow1_optionData$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "companyIds",
+    "variableName": "companyId"
+  }
+];
+return {
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -28,23 +36,18 @@ const node: ReaderFragment = {
   "name": "JobInfoClaimDetailsRow1_optionData",
   "selections": [
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
-      "name": "CaseManager_options"
+      "name": "CaseManagerComboBox_data"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "companyId",
-          "variableName": "companyId"
-        }
-      ],
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
-      "name": "ExternalLossFirm_options"
+      "name": "ExternalLossAdjusterComboBox_data"
     }
   ],
   "type": "Query"
 };
-(node as any).hash = 'b067a0897c1f35de94ee9fd48c9e1c7c';
+})();
+(node as any).hash = '504b7a24e0f3a7d867507d5dfcd60fab';
 export default node;

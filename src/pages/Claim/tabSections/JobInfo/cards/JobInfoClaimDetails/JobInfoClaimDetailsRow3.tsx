@@ -1,13 +1,14 @@
 import React from 'react'
 
-import renderField from 'pages/ClaimAdd/AddClaim/cards/renderField'
-import RefNumberField from 'components/FormikCustom/RefNumberField'
 import Info from 'components/Info'
-import LinkIcon from '@material-ui/icons/Link'
+import SwitchField from 'components/Formik/SwitchField'
 
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfoClaimDetailsRow3_claim$key } from './__generated__/JobInfoClaimDetailsRow3_claim.graphql'
+import MoneyField from 'components/FormikCustom/MoneyField'
+import FormGridField from 'components/FormGridField'
+import { useFormikContext } from 'formik'
 
 type JobInfoClaimDetailsRow3Props = {
   claim: JobInfoClaimDetailsRow3_claim$key | null
@@ -17,18 +18,95 @@ const JobInfoClaimDetailsRow3: React.FC<JobInfoClaimDetailsRow3Props> = props =>
     graphql`
       fragment JobInfoClaimDetailsRow3_claim on ClaimJob {
         lodgeDate
+
+        incidentDetail {
+          hold
+        }
+        insurer {
+          quickrepair
+        }
+
+        building {
+          toCollectExcess
+          excessValue
+          sumInsured
+        }
       }
     `,
     props.claim
   )
 
+  const { setFieldValue } = useFormikContext()
+  React.useEffect(() => {
+    setFieldValue('hold', claim?.incidentDetail?.hold ?? false, false)
+    setFieldValue(
+      'portfolios[0].toCollectExcess',
+      claim?.building?.toCollectExcess ?? false,
+      false
+    )
+    setFieldValue(
+      'portfolios[0].excessValue',
+      claim?.building?.excessValue ?? 0,
+      false
+    )
+    setFieldValue(
+      'portfolios[0].sumInsured',
+      claim?.building?.sumInsured ?? 0,
+      false
+    )
+    // eslint-disable-next-line
+  }, [])
+
+  const isCollectBuildingExcess = claim?.building?.toCollectExcess !== null
   return (
     <>
-      {renderField({
-        component: Info,
-        label: 'FNOL',
-        value: claim?.lodgeDate,
-      })}
+      <FormGridField
+        component={<Info label="FNOL" name="hold" value={claim?.lodgeDate} />}
+      />
+      <FormGridField
+        unMountOn={!claim?.insurer?.quickrepair}
+        component={
+          <SwitchField label="Scope & Repair (Quick Repair)" name="hold" />
+        }
+      />
+      <FormGridField
+        md={2}
+        component={
+          <SwitchField
+            label="Builder Collect Excess"
+            name="portfolios[0].toCollectExcess"
+            disabled={!isCollectBuildingExcess}
+          />
+        }
+      />
+      <FormGridField
+        md={2}
+        component={
+          <MoneyField
+            label="Excess"
+            name="portfolios[0].excessValue"
+            required={isCollectBuildingExcess}
+            disabled={!isCollectBuildingExcess}
+            fixedDecimal={false}
+            decimalScale={0}
+            format="#########"
+          />
+        }
+      />
+      <FormGridField
+        md={2}
+        component={
+          <MoneyField
+            label="Sum Insured"
+            name="portfolios[0].sumInsured"
+            required={isCollectBuildingExcess}
+            disabled={!isCollectBuildingExcess}
+            fixedDecimal={false}
+            decimalScale={0}
+            format="#########"
+          />
+        }
+      />
     </>
   )
 }

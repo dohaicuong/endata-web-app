@@ -1,15 +1,17 @@
 import React from 'react'
 
-import renderField from 'pages/ClaimAdd/AddClaim/cards/renderField'
+import { parse } from 'date-fns'
+import FormGridField from 'components/FormGridField'
 import Info from 'components/Info'
 import DateField from 'components/Formik/DateField'
-import CaseManager from 'pages/ClaimAdd/AddClaim/cards/ClaimDetailsCard/CaseManager'
-import ExternalLossFirm from 'pages/ClaimAdd/AddClaim/cards/ClaimDetailsCard/ExternalLossFirm'
+import CaseManagerComboBox from 'dataComponents/CaseManagerComboBox'
+import ExternalLossAdjusterComboBox from 'dataComponents/ExternalLossAdjusterComboBox'
 
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfoClaimDetailsRow1_claim$key } from './__generated__/JobInfoClaimDetailsRow1_claim.graphql'
 import { JobInfoClaimDetailsRow1_optionData$key } from './__generated__/JobInfoClaimDetailsRow1_optionData.graphql'
+import { useFormikContext } from 'formik'
 
 type JobInfoClaimDetailsRow1Props = {
   claim: JobInfoClaimDetailsRow1_claim$key | null
@@ -39,35 +41,68 @@ const JobInfoClaimDetailsRow1: React.FC<JobInfoClaimDetailsRow1Props> = props =>
   const optionData = useFragment(
     graphql`
       fragment JobInfoClaimDetailsRow1_optionData on Query {
-        ...CaseManager_options
-        ...ExternalLossFirm_options @arguments(companyId: $companyId)
+        ...CaseManagerComboBox_data @arguments(companyIds: $companyId)
+        ...ExternalLossAdjusterComboBox_data @arguments(companyIds: $companyId)
       }
     `,
     props.optionData
   )
 
+  const { setFieldValue } = useFormikContext()
+  React.useEffect(() => {
+    setFieldValue(
+      'incidentDate',
+      parse(
+        String(claim?.incidentDetail?.incidentDate),
+        'dd/MM/yyyy',
+        new Date()
+      ),
+      false
+    )
+    setFieldValue('casemanagerId', claim?.caseManager?.managerId, false)
+    setFieldValue(
+      'externalLossAdjusterId',
+      claim?.externalLossAdjuster?.companyId,
+      false
+    )
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <>
-      {renderField({
-        component: Info,
-        label: 'Insurance Company',
-        value: claim?.insurer?.companyName,
-      })}
-      {renderField({
-        component: DateField,
-        label: 'Incident Date',
-        name: 'incidentDate',
-        required: true,
-        maxDate: new Date(),
-        defaultValue: claim?.incidentDetail?.incidentDate,
-      })}
-      <CaseManager
-        options={optionData}
-        defaultValue={claim?.caseManager?.managerId}
+      <FormGridField
+        component={
+          <Info label="Insurance Company" value={claim?.insurer?.companyName} />
+        }
       />
-      <ExternalLossFirm
-        options={optionData}
-        defaultValue={claim?.externalLossAdjuster?.companyId}
+      <FormGridField
+        component={
+          <DateField
+            label="Incident Date"
+            name="incidentDate"
+            required={true}
+            maxDate={new Date()}
+          />
+        }
+      />
+      <FormGridField
+        component={
+          <CaseManagerComboBox
+            label="Case Manager"
+            name="casemanagerId"
+            required={true}
+            data={optionData}
+          />
+        }
+      />
+      <FormGridField
+        component={
+          <ExternalLossAdjusterComboBox
+            label="External Loss Adjusting Firm"
+            name="externalLossAdjusterId"
+            data={optionData}
+          />
+        }
       />
     </>
   )
