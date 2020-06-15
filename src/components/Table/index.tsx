@@ -234,13 +234,13 @@ const Table: React.FC<TableProps> = ({
           <MuiTable stickyHeader {...getTableProps()}>
             <TableHead>
               <React.Suspense fallback="loading...">
-                {headerGroups.map(headerGroup => (
-                  <TableRow {...headerGroup.getHeaderGroupProps()}>
+                {headerGroups.map((headerGroup, index) => (
+                  <TableRow {...headerGroup.getHeaderGroupProps()} key={index}>
                     {headerGroup.headers.map((column, index) => {
                       return (
                         <TableCell
-                          key={index}
                           {...column.getHeaderProps()}
+                          key={index}
                           className={classes.tableHeaderCell}
                         >
                           {column.render('Header')}
@@ -260,16 +260,14 @@ const Table: React.FC<TableProps> = ({
                   return (
                     <React.Fragment key={row.id}>
                       <TableRow
-                        onClick={onRowClick ? () => onRowClick(row) : () => {}}
                         className={classes.tableRow}
                         {...row.getRowProps()}
                       >
                         {row.cells.map((cell, index) => {
-
                           return (
                             <TableCell
-                              key={index}
                               {...cell.getCellProps()}
+                              key={index}
                               className={classes.tableBodyCell}
                             >
                               {cell.value !== undefined

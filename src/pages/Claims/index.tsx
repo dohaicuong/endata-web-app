@@ -15,7 +15,7 @@ const ClaimsPage: React.FC = () => {
   const filterWhere =
     filterValues &&
     Object.fromEntries(
-      Object.entries(filterValues).filter(([key, value]) => value)
+      Object.entries(filterValues).filter(([_, value]) => value)
     )
   const where = {
     ...filterWhere,
