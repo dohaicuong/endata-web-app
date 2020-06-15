@@ -151,7 +151,7 @@ const JobInfo: React.FC<JobInfoProps> = props => {
     >
       <Form>
         <JobInfoActions actions={claim?.view?.actions ?? null} />
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ marginTop: 4 }}>
           <Grid item xs={12}>
             <ClaimDetailsCard claim={claim} optionData={optionData} />
           </Grid>
