@@ -80,7 +80,7 @@ const JobInfoClaimDetailsRow5: React.FC<JobInfoClaimDetailsRow5Props> = props =>
   return (
     <>
       <FormGridField
-        unMountOn={claim?.insurer?.policyTypeSuppliersView ?? false}
+        unMountOn={!claim?.insurer?.policyTypeSuppliersView ?? false}
         component={
           <DistributorComboBox
             label="Distributor"
@@ -91,7 +91,7 @@ const JobInfoClaimDetailsRow5: React.FC<JobInfoClaimDetailsRow5Props> = props =>
         }
       />
       <FormGridField
-        unMountOn={claim?.insurer?.policyCoverSuppliersView ?? false}
+        unMountOn={!claim?.insurer?.policyCoverSuppliersView ?? false}
         component={
           <PdsReferenceComboBox
             label="PDS Reference"
