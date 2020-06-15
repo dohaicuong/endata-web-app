@@ -260,6 +260,7 @@ const Table: React.FC<TableProps> = ({
                   return (
                     <React.Fragment key={row.id}>
                       <TableRow
+                        onClick={onRowClick ? () => onRowClick(row) : undefined}
                         className={classes.tableRow}
                         {...row.getRowProps()}
                       >
