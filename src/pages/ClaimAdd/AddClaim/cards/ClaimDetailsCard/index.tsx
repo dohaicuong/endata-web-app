@@ -340,7 +340,7 @@ const ClaimDetailsCard: React.FC<ClaimDetailsCardProps> = props => {
           label: 'Specialist Review',
           name: 'homeAssessorId',
           required: true,
-          // unMountOn: !company?.useInternalAssessor,
+          unMountOn: !company?.useInternalAssessor,
         })}
 
         {/* ROW 7 */}
