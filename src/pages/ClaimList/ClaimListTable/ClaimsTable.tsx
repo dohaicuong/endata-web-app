@@ -10,14 +10,13 @@ import { graphql } from 'babel-plugin-relay/macro'
 import { ClaimsTable_user$key } from './__generated__/ClaimsTable_user.graphql'
 import { ClaimsTable_claims$key } from './__generated__/ClaimsTable_claims.graphql'
 import Table from './Table'
-import { IconButton, Grid } from '@material-ui/core'
+import { IconButton, Grid, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-
 
 type ClaimsTableProps = {
   user: ClaimsTable_user$key | null
   claims: ClaimsTable_claims$key | null
-  
+
   isLoadingMore: boolean
   loadMore: () => void
 }
@@ -43,60 +42,146 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
             hasBuilding
             hasContents
             hasRestoration
-            
+
             # Ins Ref #
             refNumber
             # Ins Company
-            insurer { companyName }
+            insurer {
+              companyName
+            }
             # FNOL
             lodgeDate
             # Request Date, Request
-            building { jobSuppliers { requestDate requestType } }
-            contents { jobSuppliers { requestDate requestType } }
-            restoration { jobSuppliers { requestDate requestType } }
+            building {
+              jobSuppliers {
+                requestDate
+                requestType
+              }
+            }
+            contents {
+              jobSuppliers {
+                requestDate
+                requestType
+              }
+            }
+            restoration {
+              jobSuppliers {
+                requestDate
+                requestType
+              }
+            }
             # Customer
-            insured { name }
+            insured {
+              name
+            }
             # Suburb, State
-            incidentDetail { riskAddress { suburb state } }
+            incidentDetail {
+              riskAddress {
+                suburb
+                state
+              }
+            }
             # Value
             building {
               authorisedValue
               scopedValue
-              jobSuppliers { quote { total }}
-            }
-            contents { jobSuppliers { quote { total }}}
-            restoration { jobSuppliers { quote { total }}}
-            # Status
-            building {
-              jobSuppliers { quote { quoteStatus { statusName }}}
-              claimStatus { statusName }
+              jobSuppliers {
+                quote {
+                  total
+                }
+              }
             }
             contents {
-              jobSuppliers { quote { quoteStatus { statusName }}}
-              claimStatus { statusName }
+              jobSuppliers {
+                quote {
+                  total
+                }
+              }
             }
             restoration {
-              jobSuppliers { quote { quoteStatus { statusName }}}
-              claimStatus { statusName }
+              jobSuppliers {
+                quote {
+                  total
+                }
+              }
+            }
+            # Status
+            building {
+              jobSuppliers {
+                quote {
+                  quoteStatus {
+                    statusName
+                  }
+                }
+              }
+              claimStatus {
+                statusName
+              }
+            }
+            contents {
+              jobSuppliers {
+                quote {
+                  quoteStatus {
+                    statusName
+                  }
+                }
+              }
+              claimStatus {
+                statusName
+              }
+            }
+            restoration {
+              jobSuppliers {
+                quote {
+                  quoteStatus {
+                    statusName
+                  }
+                }
+              }
+              claimStatus {
+                statusName
+              }
             }
             # Builder
             building {
-              authorisedSupplier { companyName }
-              scopingSupplier { companyName }
+              authorisedSupplier {
+                companyName
+              }
+              scopingSupplier {
+                companyName
+              }
             }
             # Building Status
-            building { claimStatus { statusName }}
+            building {
+              claimStatus {
+                statusName
+              }
+            }
             #Days
-            building { daysAtStatus }
+            building {
+              daysAtStatus
+            }
             # Restorer
             restoration {
-              authorisedSupplier { companyName }
-              scopingSupplier { companyName }
+              authorisedSupplier {
+                companyName
+              }
+              scopingSupplier {
+                companyName
+              }
             }
             # Restoration Status
-            restoration { claimStatus { statusName }}
+            restoration {
+              claimStatus {
+                statusName
+              }
+            }
             # Content Status
-            contents { claimStatus { statusName }}
+            contents {
+              claimStatus {
+                statusName
+              }
+            }
           }
         }
       }
@@ -106,52 +191,64 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
   const tableData = claims?.edges?.map(edge => {
     const claim = edge?.node
 
-    const portfolios = ['Building', 'Contents', 'Restoration']
-      .filter((_, index) => {
+    const portfolios = ['Building', 'Contents', 'Restoration'].filter(
+      (_, index) => {
         if (!claim?.hasBuilding && index === 0) return false
         if (!claim?.hasContents && index === 1) return false
         if (!claim?.hasRestoration && index === 2) return false
         return true
-      })
+      }
+    )
     const requestDate =
-      userType === 'Builder' ? claim?.building?.jobSuppliers?.[0]?.requestDate :
-      userType === 'Restorer' ? claim?.restoration?.jobSuppliers?.[0]?.requestDate :
-      userType === 'ContentSupplier' ? claim?.contents?.jobSuppliers?.[0]?.requestDate :
-      null
-    const request = 
-      userType === 'Builder' ? claim?.building?.jobSuppliers?.[0]?.requestType :
-      userType === 'Restorer' ? claim?.restoration?.jobSuppliers?.[0]?.requestType :
-      userType === 'ContentSupplier' ? claim?.contents?.jobSuppliers?.[0]?.requestType :
-      null
+      userType === 'Builder'
+        ? claim?.building?.jobSuppliers?.[0]?.requestDate
+        : userType === 'Restorer'
+        ? claim?.restoration?.jobSuppliers?.[0]?.requestDate
+        : userType === 'ContentSupplier'
+        ? claim?.contents?.jobSuppliers?.[0]?.requestDate
+        : null
+    const request =
+      userType === 'Builder'
+        ? claim?.building?.jobSuppliers?.[0]?.requestType
+        : userType === 'Restorer'
+        ? claim?.restoration?.jobSuppliers?.[0]?.requestType
+        : userType === 'ContentSupplier'
+        ? claim?.contents?.jobSuppliers?.[0]?.requestType
+        : null
 
     const value =
-      userType === 'Administrator' ? claim?.building?.authorisedValue || claim?.building?.scopedValue :
-      userType === 'Builder' ? claim?.building?.jobSuppliers?.[0]?.quote?.total :
-      userType === 'Restorer' ? claim?.restoration?.jobSuppliers?.[0]?.quote?.total :
-      userType === 'ContentSupplier' ? claim?.contents?.jobSuppliers?.[0]?.quote?.total :
-      null
-    const status = 
+      userType === 'Administrator'
+        ? claim?.building?.authorisedValue || claim?.building?.scopedValue
+        : userType === 'Builder'
+        ? claim?.building?.jobSuppliers?.[0]?.quote?.total
+        : userType === 'Restorer'
+        ? claim?.restoration?.jobSuppliers?.[0]?.quote?.total
+        : userType === 'ContentSupplier'
+        ? claim?.contents?.jobSuppliers?.[0]?.quote?.total
+        : null
+    const status =
       userType === 'Builder'
         ? claim?.building?.jobSuppliers?.[0]?.quote?.quoteStatus?.statusName ||
           claim?.building?.claimStatus?.statusName
-      : userType === 'Restorer'
-        ? claim?.restoration?.jobSuppliers?.[0]?.quote?.quoteStatus?.statusName ||
-          claim?.restoration?.claimStatus?.statusName
-      : userType === 'ContentSupplier'
+        : userType === 'Restorer'
+        ? claim?.restoration?.jobSuppliers?.[0]?.quote?.quoteStatus
+            ?.statusName || claim?.restoration?.claimStatus?.statusName
+        : userType === 'ContentSupplier'
         ? claim?.contents?.jobSuppliers?.[0]?.quote?.quoteStatus?.statusName ||
           claim?.contents?.claimStatus?.statusName
-      : null
+        : null
 
     const builder =
       claim?.building?.authorisedSupplier?.companyName ||
       claim?.building?.scopingSupplier?.companyName ||
       null
-    const restorer = 
+    const restorer =
       claim?.restoration?.authorisedSupplier?.companyName ||
       claim?.restoration?.scopingSupplier?.companyName ||
       null
 
     return {
+      id: claim?.id,
       portfolios,
       refNumber: claim?.refNumber,
       companyName: claim?.insurer?.companyName,
@@ -205,7 +302,7 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
   const onScroll = async ({
     target: { scrollTop, offsetHeight, scrollHeight },
   }: any) => {
-    if(props.isLoadingMore) return null
+    if (props.isLoadingMore) return null
 
     const fetchOffset = 150
     const scrollPosition = scrollTop + offsetHeight - 5
@@ -214,88 +311,109 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
     }
   }
 
+  const totalCount = claims?.totalCount ?? 0
   return (
-    <Table
-      isLoading={props.isLoadingMore}
-      onRowClick={onRowClick}
-      onScroll={onScroll}
-      tableColumns={tableColumns}
-      tableData={tableData}
-      renderRowSubComponent={renderRowSubComponent}
-    />
+    <>
+      <Typography variant="subtitle1">
+        Found {totalCount} {`${totalCount < 2 ? 'claim' : 'claims'}`}
+      </Typography>
+      <Table
+        isLoading={props.isLoadingMore}
+        onRowClick={onRowClick}
+        onScroll={onScroll}
+        tableColumns={tableColumns}
+        tableData={tableData}
+        renderRowSubComponent={renderRowSubComponent}
+      />
+    </>
   )
 }
 export default ClaimsTable
 
-const getTableColumns = (userType: any) => [
-  {
-    Header: 'Type', accessor: 'portfolios',
-    Cell: ({ row, value }: any) => {
-      const { onClick, toggleProps } = row.getToggleRowExpandedProps({
-        style: { padding: 8 },
-      })
-      const props = {
-        ...toggleProps,
-        onClick: (e: any) => {
+const getTableColumns = (userType: any) =>
+  [
+    {
+      Header: 'Type',
+      accessor: 'portfolios',
+      Cell: ({ row, value }: any) => {
+        const { onClick, toggleProps } = row.getToggleRowExpandedProps({
+          style: { padding: 8 },
+        })
+        const handleClick = (e: any) => {
           e.stopPropagation()
           e.preventDefault()
           onClick(e)
-        },
-      }
+        }
 
-      return (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton {...props} style={{ padding: 8 }}>
-            {row.isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
-          <span style={{ marginRight: 8, width: 10, fontWeight: 600 }}>
-            {parseInt(row.id) + 1}
-          </span>
-          {value.map((portfolio: any) => (
-            <PortfolioIcon key={portfolio} portfolio={portfolio} />
-          ))}
-        </div>
-      )
-    }
-  },
-  { Header: 'Ins Ref #', accessor: 'refNumber' },
-  { Header: 'Ins Company', accessor: 'companyName' },
-  { show: userType === 'Administrator', Header: 'FNOL', accessor: 'fnol' },
-  { show: userType !== 'Administrator', Header: 'Request Date', accessor: 'requestDate' },
-  { show: userType !== 'Administrator', Header: 'Request', accessor: 'request' },
-  { Header: 'Customer', accessor: 'customerName' },
-  { Header: 'Suburb', accessor: 'suburb' },
-  { Header: 'State', accessor: 'state' },
-  { Header: 'Value', accessor: 'value' },
-  { show: userType !== 'Administrator', Header: 'Status', accessor: 'status' },
-  {
-    show: userType === 'Administrator' || userType === 'Restorer',
-    Header: 'Builder',
-    accessor: 'builder',
-  },
-  {
-    show: userType === 'Administrator',
-    Header: 'Building Status',
-    accessor: 'buildingStatus',
-  },
-  {
-    show: userType === 'Administrator',
-    Header: 'Days',
-    accessor: 'daysAtStatus',
-  },
-  {
-    show: userType === 'Administrator' || userType === 'Builder',
-    Header: 'Restorer',
-    accessor: 'restorer',
-  },
-  {
-    show: userType === 'Administrator',
-    Header: 'Restoration Status',
-    accessor: 'restorationStatus',
-  },
-  {
-    show: userType === 'Administrator',
-    Header: 'Content Status',
-    accessor: 'contentsStatus',
-  },
-].filter(column => column.show !== false)
+        return (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton
+              {...toggleProps}
+              onClick={handleClick}
+              style={{ padding: 8 }}
+            >
+              {row.isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </IconButton>
+            <span style={{ marginRight: 8, width: 10, fontWeight: 600 }}>
+              {parseInt(row.id) + 1}
+            </span>
+            {value.map((portfolio: any) => (
+              <PortfolioIcon key={portfolio} portfolio={portfolio} />
+            ))}
+          </div>
+        )
+      },
+    },
+    { Header: 'Ins Ref #', accessor: 'refNumber' },
+    { Header: 'Ins Company', accessor: 'companyName' },
+    { show: userType === 'Administrator', Header: 'FNOL', accessor: 'fnol' },
+    {
+      show: userType !== 'Administrator',
+      Header: 'Request Date',
+      accessor: 'requestDate',
+    },
+    {
+      show: userType !== 'Administrator',
+      Header: 'Request',
+      accessor: 'request',
+    },
+    { Header: 'Customer', accessor: 'customerName' },
+    { Header: 'Suburb', accessor: 'suburb' },
+    { Header: 'State', accessor: 'state' },
+    { Header: 'Value', accessor: 'value' },
+    {
+      show: userType !== 'Administrator',
+      Header: 'Status',
+      accessor: 'status',
+    },
+    {
+      show: userType === 'Administrator' || userType === 'Restorer',
+      Header: 'Builder',
+      accessor: 'builder',
+    },
+    {
+      show: userType === 'Administrator',
+      Header: 'Building Status',
+      accessor: 'buildingStatus',
+    },
+    {
+      show: userType === 'Administrator',
+      Header: 'Days',
+      accessor: 'daysAtStatus',
+    },
+    {
+      show: userType === 'Administrator' || userType === 'Builder',
+      Header: 'Restorer',
+      accessor: 'restorer',
+    },
+    {
+      show: userType === 'Administrator',
+      Header: 'Restoration Status',
+      accessor: 'restorationStatus',
+    },
+    {
+      show: userType === 'Administrator',
+      Header: 'Content Status',
+      accessor: 'contentsStatus',
+    },
+  ].filter(column => column.show !== false)

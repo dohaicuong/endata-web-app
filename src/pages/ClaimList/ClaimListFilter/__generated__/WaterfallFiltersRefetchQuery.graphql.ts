@@ -25,27 +25,27 @@ export type ClaimStatusVolumeWhere = {
     states?: Array<State | null> | null;
     claimPortfolioType: PortfolioType;
 };
-export type ClaimListFilter_waterfallFiltersRefetchQueryVariables = {
+export type WaterfallFiltersRefetchQueryVariables = {
     waterfallWhere?: ClaimStatusVolumeWhere | null;
 };
-export type ClaimListFilter_waterfallFiltersRefetchQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"ClaimListFilter_waterfallFilters">;
+export type WaterfallFiltersRefetchQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"WaterfallView_waterfallFilters">;
 };
-export type ClaimListFilter_waterfallFiltersRefetchQuery = {
-    readonly response: ClaimListFilter_waterfallFiltersRefetchQueryResponse;
-    readonly variables: ClaimListFilter_waterfallFiltersRefetchQueryVariables;
+export type WaterfallFiltersRefetchQuery = {
+    readonly response: WaterfallFiltersRefetchQueryResponse;
+    readonly variables: WaterfallFiltersRefetchQueryVariables;
 };
 
 
 
 /*
-query ClaimListFilter_waterfallFiltersRefetchQuery(
+query WaterfallFiltersRefetchQuery(
   $waterfallWhere: ClaimStatusVolumeWhere = {claimPortfolioType: Building}
 ) {
-  ...ClaimListFilter_waterfallFilters_Yc3zi
+  ...WaterfallView_waterfallFilters_Yc3zi
 }
 
-fragment ClaimListFilter_waterfallFilters_Yc3zi on Query {
+fragment WaterfallView_waterfallFilters_Yc3zi on Query {
   currentUser {
     waterfallFilters(where: $waterfallWhere) {
       id
@@ -85,7 +85,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ClaimListFilter_waterfallFiltersRefetchQuery",
+    "name": "WaterfallFiltersRefetchQuery",
     "selections": [
       {
         "args": [
@@ -96,7 +96,7 @@ return {
           }
         ],
         "kind": "FragmentSpread",
-        "name": "ClaimListFilter_waterfallFilters"
+        "name": "WaterfallView_waterfallFilters"
       }
     ],
     "type": "Query"
@@ -105,7 +105,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ClaimListFilter_waterfallFiltersRefetchQuery",
+    "name": "WaterfallFiltersRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -182,14 +182,14 @@ return {
   "params": {
     "id": null,
     "metadata": {
-      "derivedFrom": "ClaimListFilter_waterfallFilters",
+      "derivedFrom": "WaterfallView_waterfallFilters",
       "isRefetchableQuery": true
     },
-    "name": "ClaimListFilter_waterfallFiltersRefetchQuery",
+    "name": "WaterfallFiltersRefetchQuery",
     "operationKind": "query",
-    "text": "query ClaimListFilter_waterfallFiltersRefetchQuery(\n  $waterfallWhere: ClaimStatusVolumeWhere = {claimPortfolioType: Building}\n) {\n  ...ClaimListFilter_waterfallFilters_Yc3zi\n}\n\nfragment ClaimListFilter_waterfallFilters_Yc3zi on Query {\n  currentUser {\n    waterfallFilters(where: $waterfallWhere) {\n      id\n      items {\n        value: id\n        label\n        claimCount\n        color\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query WaterfallFiltersRefetchQuery(\n  $waterfallWhere: ClaimStatusVolumeWhere = {claimPortfolioType: Building}\n) {\n  ...WaterfallView_waterfallFilters_Yc3zi\n}\n\nfragment WaterfallView_waterfallFilters_Yc3zi on Query {\n  currentUser {\n    waterfallFilters(where: $waterfallWhere) {\n      id\n      items {\n        value: id\n        label\n        claimCount\n        color\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9501fd2df540197d6671bd49b0c7c3bd';
+(node as any).hash = '1afbf52748172a3f80d67dc4d9d9b823';
 export default node;

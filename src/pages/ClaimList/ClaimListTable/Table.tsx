@@ -1,6 +1,16 @@
 import React from 'react'
 import { useTable, useExpanded } from 'react-table'
-import { Table as MuiTable, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, makeStyles, CircularProgress } from '@material-ui/core'
+import {
+  Table as MuiTable,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableContainer,
+  Paper,
+  makeStyles,
+  CircularProgress,
+} from '@material-ui/core'
 
 type TableProps = {
   tableColumns: any
@@ -10,7 +20,14 @@ type TableProps = {
   onScroll?: any
   isLoading?: boolean
 }
-const Table: React.FC<TableProps> = ({ tableColumns, tableData, renderRowSubComponent, onRowClick, onScroll, isLoading = false }) => {
+const Table: React.FC<TableProps> = ({
+  tableColumns,
+  tableData,
+  renderRowSubComponent,
+  onRowClick,
+  onScroll,
+  isLoading = false,
+}) => {
   const tableClasses = useStyles()
   const {
     getTableProps,
@@ -24,7 +41,7 @@ const Table: React.FC<TableProps> = ({ tableColumns, tableData, renderRowSubComp
       columns: tableColumns,
       data: tableData,
     },
-    useExpanded,
+    useExpanded
   )
 
   return (
@@ -34,13 +51,24 @@ const Table: React.FC<TableProps> = ({ tableColumns, tableData, renderRowSubComp
           <CircularProgress />
         </div>
       )}
-      <TableContainer className={tableClasses.tableContainer} onScroll={onScroll}>
+      <TableContainer
+        className={tableClasses.tableContainer}
+        onScroll={onScroll}
+      >
         <MuiTable stickyHeader {...getTableProps()}>
           <TableHead>
-            {headerGroups.map(headerGroup => (
-              <TableRow {...headerGroup.getHeaderGroupProps()} className={tableClasses.tableRow}>
-                {headerGroup.headers.map(column => (
-                  <TableCell {...column.getHeaderProps()} className={tableClasses.tableHeaderCell}>
+            {headerGroups.map((headerGroup, index) => (
+              <TableRow
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.getHeaderGroupProps().key}
+                className={tableClasses.tableRow}
+              >
+                {headerGroup.headers.map((column, index) => (
+                  <TableCell
+                    {...column.getHeaderProps()}
+                    key={column.getHeaderProps().key}
+                    className={tableClasses.tableHeaderCell}
+                  >
                     {column.render('Header')}
                   </TableCell>
                 ))}
@@ -59,19 +87,17 @@ const Table: React.FC<TableProps> = ({ tableColumns, tableData, renderRowSubComp
                     className={tableClasses.tableRow}
                     {...row.getRowProps()}
                   >
-                  {row.cells.map((cell, index) => {
-                    return (
-                      <TableCell
-                        {...cell.getCellProps()}
-                        key={index}
-                        className={tableClasses.tableBodyCell}
-                      >
-                        {cell.value !== undefined
-                          ? cell.render('Cell')
-                          : '-'}
-                      </TableCell>
-                    )
-                  })}
+                    {row.cells.map((cell, index) => {
+                      return (
+                        <TableCell
+                          {...cell.getCellProps()}
+                          key={index}
+                          className={tableClasses.tableBodyCell}
+                        >
+                          {cell.value !== undefined ? cell.render('Cell') : '-'}
+                        </TableCell>
+                      )
+                    })}
                   </TableRow>
                   {isExpanded && (
                     <TableRow>

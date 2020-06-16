@@ -38,7 +38,7 @@ const routes: AppRouteProps[] = [
   {
     exact: true,
     private: true,
-    path: '/claims',
+    path: '/claim-list',
     component: lazy(() =>
       import(/* webpackChunkName: "ClaimsPage" */ 'pages/Claims')
     ),
@@ -46,7 +46,7 @@ const routes: AppRouteProps[] = [
   {
     exact: true,
     private: true,
-    path: '/claim-list',
+    path: '/claims',
     component: lazy(() =>
       import(/* webpackChunkName: "ClaimListPage" */ 'pages/ClaimList')
     ),

@@ -3,13 +3,12 @@ import { useFragment, useRefetchableFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import FilterGroup from 'components/FilterGroup'
 import { Grid, Paper } from '@material-ui/core'
-import PortfolioFilter, {
-  PortfolioType,
-} from 'components/PortfolioFilter/PortfolioFilter'
+import PortfolioFilter from 'components/PortfolioFilter/PortfolioFilter'
 import { ClaimListHeaderWaterfallRefetchQuery } from './__generated__/ClaimListHeaderWaterfallRefetchQuery.graphql'
 import WaterfallFilter from 'components/WaterfallFilter'
 import { ClaimListHeader_filters$key } from './__generated__/ClaimListHeader_filters.graphql'
 import { ClaimListHeaderWaterfall_WaterfallFilters$key } from './__generated__/ClaimListHeaderWaterfall_WaterfallFilters.graphql'
+import { PortfolioType } from 'pages/ClaimList/ClaimListTable/__generated__/ClaimListTablePaginationQuery.graphql'
 
 type ClaimListHeaderProps = {
   setFilterValues: (values: any) => void

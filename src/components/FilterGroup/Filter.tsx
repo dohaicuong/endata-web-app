@@ -21,11 +21,11 @@ const FilterWrapper: React.FC<any> = props => {
 }
 const Filter: React.FC<FilterProps> = ({ type, ...props }) => {
   return (
-    <div>
+    <>
       {type === 'ComboBox' && <ComboBoxField {...props} />}
       {type === 'Search' && <SearchField {...props} />}
       {type === 'Date' && <DateField {...props} />}
-    </div>
+    </>
   )
 }
 

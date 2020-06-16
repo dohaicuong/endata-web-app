@@ -88,7 +88,7 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
   return (
     <Autocomplete
       {...props}
-      value={value}
+      value={value || []}
       onChange={handleValueChange}
       disabled={loading || disabled || readOnly || isSubmitting}
       multiple={multiple}

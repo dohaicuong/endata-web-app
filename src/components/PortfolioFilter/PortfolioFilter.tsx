@@ -1,6 +1,7 @@
 import React from 'react'
 import { Paper, Button } from '@material-ui/core'
 import PortfolioIcon from 'components/PortfolioIcon'
+import { PortfolioType } from 'pages/Claim/__generated__/ClaimInfoCard_info.graphql'
 
 export type PortfolioFilterProps = {
   portfolios: PortfolioType[]
@@ -8,7 +9,6 @@ export type PortfolioFilterProps = {
   value: PortfolioType
   setValue: (value: PortfolioType) => void
 }
-export type PortfolioType = 'Building' | 'Contents' | 'Restoration'
 
 const PortfolioFilter: React.FC<PortfolioFilterProps> = ({
   portfolios,

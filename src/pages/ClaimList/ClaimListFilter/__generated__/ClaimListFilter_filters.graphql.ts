@@ -18,6 +18,7 @@ export type ClaimListFilter_filters = {
             } | null> | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"WaterfallView_waterfallFilters">;
     readonly " $refType": "ClaimListFilter_filters";
 };
 export type ClaimListFilter_filters$data = ClaimListFilter_filters;
@@ -111,10 +112,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "WaterfallView_waterfallFilters"
     }
   ],
   "type": "Query"
 };
 })();
-(node as any).hash = 'b5138281f887403e8a40fbfd9afad7a6';
+(node as any).hash = '373d348f55a059244e093c89a955db2e';
 export default node;

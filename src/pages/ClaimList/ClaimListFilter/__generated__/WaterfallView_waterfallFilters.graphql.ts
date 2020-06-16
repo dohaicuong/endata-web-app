@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ClaimListFilter_waterfallFilters = {
+export type WaterfallView_waterfallFilters = {
     readonly currentUser: {
         readonly waterfallFilters: ReadonlyArray<{
             readonly id: string;
@@ -15,12 +15,12 @@ export type ClaimListFilter_waterfallFilters = {
             }>;
         }> | null;
     } | null;
-    readonly " $refType": "ClaimListFilter_waterfallFilters";
+    readonly " $refType": "WaterfallView_waterfallFilters";
 };
-export type ClaimListFilter_waterfallFilters$data = ClaimListFilter_waterfallFilters;
-export type ClaimListFilter_waterfallFilters$key = {
-    readonly " $data"?: ClaimListFilter_waterfallFilters$data;
-    readonly " $fragmentRefs": FragmentRefs<"ClaimListFilter_waterfallFilters">;
+export type WaterfallView_waterfallFilters$data = WaterfallView_waterfallFilters;
+export type WaterfallView_waterfallFilters$key = {
+    readonly " $data"?: WaterfallView_waterfallFilters$data;
+    readonly " $fragmentRefs": FragmentRefs<"WaterfallView_waterfallFilters">;
 };
 
 
@@ -41,10 +41,10 @@ const node: ReaderFragment = {
     "refetch": {
       "connection": null,
       "fragmentPathInResult": [],
-      "operation": require('./ClaimListFilter_waterfallFiltersRefetchQuery.graphql.ts')
+      "operation": require('./WaterfallFiltersRefetchQuery.graphql.ts')
     }
   },
-  "name": "ClaimListFilter_waterfallFilters",
+  "name": "WaterfallView_waterfallFilters",
   "selections": [
     {
       "alias": null,
@@ -123,5 +123,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '9501fd2df540197d6671bd49b0c7c3bd';
+(node as any).hash = '1afbf52748172a3f80d67dc4d9d9b823';
 export default node;

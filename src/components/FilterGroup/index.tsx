@@ -18,6 +18,7 @@ interface FilterGroupProps {
   ) => React.ReactElement
   onChange?: (values: any) => void
   SubView?: any
+  onViewChange?: (isSub: boolean) => void
 }
 const FilterGroup: React.FC<FilterGroupProps> = ({
   filters,
@@ -68,6 +69,7 @@ const FilterGroupDisplay: React.FC<FilterGroupDisplayProps> = ({
   filterRender,
   firstRowFilters = 6,
   SubView,
+  onViewChange,
 }) => {
   const [filterMore, setFilterMore] = React.useState(false)
   const [isSubview, setIsSubView] = React.useState(false)
@@ -83,6 +85,11 @@ const FilterGroupDisplay: React.FC<FilterGroupDisplayProps> = ({
     ) : (
       filterRender(Filter, filter, index)
     )
+
+  const handleViewChange = () => {
+    setIsSubView(pre => !pre)
+    if (onViewChange) onViewChange(isSubview)
+  }
 
   return (
     <Form style={{ width: '100%' }}>
@@ -122,7 +129,7 @@ const FilterGroupDisplay: React.FC<FilterGroupDisplayProps> = ({
             {SubView && (
               <IconButton
                 style={{ padding: 6, marginLeft: 'auto' }}
-                onClick={() => setIsSubView(pre => !pre)}
+                onClick={handleViewChange}
               >
                 {isSubview ? <ChevronLeftIcon /> : <ChevronRightIcon />}
               </IconButton>
