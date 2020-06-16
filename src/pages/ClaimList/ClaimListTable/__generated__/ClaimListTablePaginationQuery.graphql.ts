@@ -72,106 +72,119 @@ query ClaimListTablePaginationQuery(
 
 fragment ClaimListTable_data_mjR8k on Query {
   currentUser {
-    userType
+    ...ClaimsTable_user
     id
   }
   claimConnection: claimJobs(first: $count, after: $cursor, where: $where) {
-    totalCount
+    ...ClaimsTable_claims
     edges {
-      node {
-        hasBuilding
-        hasContents
-        hasRestoration
-        refNumber
-        insurer {
-          companyName
-        }
-        lodgeDate
-        building {
-          jobSuppliers {
-            requestDate
-            requestType
-            id
-            quote {
-              total
-              id
-              quoteStatus {
-                statusName
-              }
-            }
-          }
-          authorisedValue
-          scopedValue
-          claimStatus {
-            statusName
-          }
-          authorisedSupplier {
-            companyName
-          }
-          scopingSupplier {
-            companyName
-          }
-          daysAtStatus
-        }
-        contents {
-          jobSuppliers {
-            requestDate
-            requestType
-            id
-            quote {
-              total
-              id
-              quoteStatus {
-                statusName
-              }
-            }
-          }
-          claimStatus {
-            statusName
-          }
-        }
-        restoration {
-          jobSuppliers {
-            requestDate
-            requestType
-            id
-            quote {
-              total
-              id
-              quoteStatus {
-                statusName
-              }
-            }
-          }
-          claimStatus {
-            statusName
-          }
-          authorisedSupplier {
-            companyName
-          }
-          scopingSupplier {
-            companyName
-          }
-        }
-        insured {
-          name
-        }
-        incidentDetail {
-          riskAddress {
-            suburb
-            state
-          }
-        }
-        id
-        __typename
-      }
       cursor
+      node {
+        __typename
+        id
+      }
     }
     pageInfo {
       endCursor
       hasNextPage
     }
   }
+}
+
+fragment ClaimsTable_claims on ClaimJobConnection {
+  totalCount
+  edges {
+    node {
+      id
+      hasBuilding
+      hasContents
+      hasRestoration
+      refNumber
+      insurer {
+        companyName
+      }
+      lodgeDate
+      building {
+        jobSuppliers {
+          requestDate
+          requestType
+          id
+          quote {
+            total
+            id
+            quoteStatus {
+              statusName
+            }
+          }
+        }
+        authorisedValue
+        scopedValue
+        claimStatus {
+          statusName
+        }
+        authorisedSupplier {
+          companyName
+        }
+        scopingSupplier {
+          companyName
+        }
+        daysAtStatus
+      }
+      contents {
+        jobSuppliers {
+          requestDate
+          requestType
+          id
+          quote {
+            total
+            id
+            quoteStatus {
+              statusName
+            }
+          }
+        }
+        claimStatus {
+          statusName
+        }
+      }
+      restoration {
+        jobSuppliers {
+          requestDate
+          requestType
+          id
+          quote {
+            total
+            id
+            quoteStatus {
+              statusName
+            }
+          }
+        }
+        claimStatus {
+          statusName
+        }
+        authorisedSupplier {
+          companyName
+        }
+        scopingSupplier {
+          companyName
+        }
+      }
+      insured {
+        name
+      }
+      incidentDetail {
+        riskAddress {
+          suburb
+          state
+        }
+      }
+    }
+  }
+}
+
+fragment ClaimsTable_user on AuthenticatedUser {
+  userType
 }
 */
 
@@ -407,6 +420,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -570,7 +584,6 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -640,9 +653,9 @@ return {
     },
     "name": "ClaimListTablePaginationQuery",
     "operationKind": "query",
-    "text": "query ClaimListTablePaginationQuery(\n  $count: Int = 30\n  $cursor: String\n  $where: ClaimJobFilter\n) {\n  ...ClaimListTable_data_mjR8k\n}\n\nfragment ClaimListTable_data_mjR8k on Query {\n  currentUser {\n    userType\n    id\n  }\n  claimConnection: claimJobs(first: $count, after: $cursor, where: $where) {\n    totalCount\n    edges {\n      node {\n        hasBuilding\n        hasContents\n        hasRestoration\n        refNumber\n        insurer {\n          companyName\n        }\n        lodgeDate\n        building {\n          jobSuppliers {\n            requestDate\n            requestType\n            id\n            quote {\n              total\n              id\n              quoteStatus {\n                statusName\n              }\n            }\n          }\n          authorisedValue\n          scopedValue\n          claimStatus {\n            statusName\n          }\n          authorisedSupplier {\n            companyName\n          }\n          scopingSupplier {\n            companyName\n          }\n          daysAtStatus\n        }\n        contents {\n          jobSuppliers {\n            requestDate\n            requestType\n            id\n            quote {\n              total\n              id\n              quoteStatus {\n                statusName\n              }\n            }\n          }\n          claimStatus {\n            statusName\n          }\n        }\n        restoration {\n          jobSuppliers {\n            requestDate\n            requestType\n            id\n            quote {\n              total\n              id\n              quoteStatus {\n                statusName\n              }\n            }\n          }\n          claimStatus {\n            statusName\n          }\n          authorisedSupplier {\n            companyName\n          }\n          scopingSupplier {\n            companyName\n          }\n        }\n        insured {\n          name\n        }\n        incidentDetail {\n          riskAddress {\n            suburb\n            state\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ClaimListTablePaginationQuery(\n  $count: Int = 30\n  $cursor: String\n  $where: ClaimJobFilter\n) {\n  ...ClaimListTable_data_mjR8k\n}\n\nfragment ClaimListTable_data_mjR8k on Query {\n  currentUser {\n    ...ClaimsTable_user\n    id\n  }\n  claimConnection: claimJobs(first: $count, after: $cursor, where: $where) {\n    ...ClaimsTable_claims\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ClaimsTable_claims on ClaimJobConnection {\n  totalCount\n  edges {\n    node {\n      id\n      hasBuilding\n      hasContents\n      hasRestoration\n      refNumber\n      insurer {\n        companyName\n      }\n      lodgeDate\n      building {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        authorisedValue\n        scopedValue\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n        daysAtStatus\n      }\n      contents {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n      }\n      restoration {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n      }\n      insured {\n        name\n      }\n      incidentDetail {\n        riskAddress {\n          suburb\n          state\n        }\n      }\n    }\n  }\n}\n\nfragment ClaimsTable_user on AuthenticatedUser {\n  userType\n}\n"
   }
 };
 })();
-(node as any).hash = 'c203b34aca569e01a7f9af27d06282d1';
+(node as any).hash = '03bd22e169da21b947c80f266fe35615';
 export default node;
