@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Field } from 'formik'
+import { Field, useField } from 'formik'
 import { DatePicker } from 'formik-material-ui-pickers' // DatePickerProps
 // import { DatePickerProps } from '@material-ui/pickers'
 import { InputAdornment } from '@material-ui/core'
@@ -20,6 +20,13 @@ const DateField: React.FC<any> = ({
   endAdornment,
   ...props
 }) => {
+  const [, , { setValue }] = useField(props.name)
+
+  React.useEffect(() => {
+    if (props.defaultValue) setValue(props.defaultValue)
+    // eslint-disable-next-line
+  }, [props.defaultValue])
+
   return (
     <Field
       component={DatePicker}

@@ -15,6 +15,9 @@ import { QuotingRestorersCard_meta$key } from './__generated__/QuotingRestorersC
 type QuotingRestorersCardProps = {
   options: QuotingRestorersCard_options$key | null
   meta: QuotingRestorersCard_meta$key | null
+
+  isRestoration: boolean
+  selectedPostcode: any
 }
 const QuotingRestorersCard: React.FC<QuotingRestorersCardProps> = props => {
   const meta = useFragment(
@@ -58,9 +61,9 @@ const QuotingRestorersCard: React.FC<QuotingRestorersCardProps> = props => {
     | Option[]
     | null
 
-  const { values, setFieldValue } = useFormikContext<any>()
-  const isRestoration = values?.meta?.portfolio?.includes('Restoration')
-  const selectedPostcode = values?.incidentDetail?.riskAddress?.postcode ?? 0
+  const { setFieldValue } = useFormikContext<any>()
+  const isRestoration = props.isRestoration // values?.meta?.portfolio?.includes('Restoration')
+  const selectedPostcode = props.selectedPostcode // values?.incidentDetail?.riskAddress?.postcode ?? 0
 
   const isDisabled = !isRestoration || !selectedPostcode
   const isSupplier = Boolean(options?.quotingRestorers?.length)

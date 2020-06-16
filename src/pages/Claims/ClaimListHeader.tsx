@@ -30,7 +30,7 @@ const ClaimListHeader: React.FC<ClaimListHeaderProps> = ({
   setPortfolio,
   ...props
 }) => {
-  const data = useFragment<ClaimListHeader_filters$key>(
+  const data = useFragment(
     graphql`
       fragment ClaimListHeader_filters on Query {
         currentUser {
@@ -52,7 +52,7 @@ const ClaimListHeader: React.FC<ClaimListHeaderProps> = ({
   )
   const [waterfallData, refetch] = useRefetchableFragment<
     ClaimListHeaderWaterfallRefetchQuery,
-    any
+    ClaimListHeaderWaterfall_WaterfallFilters$key
   >(
     graphql`
       fragment ClaimListHeaderWaterfall_WaterfallFilters on Query

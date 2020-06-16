@@ -6,7 +6,7 @@ import {
   CircularProgress,
 } from '@material-ui/core'
 
-interface CardProps extends MuiPaperProps {
+export interface CardProps extends MuiPaperProps {
   title?: any
   loading?: boolean
 }

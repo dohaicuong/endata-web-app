@@ -31,6 +31,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.0",
     "@types/react-table": "^7.0.19",
+    "@types/relay-runtime": "^9.1.0",
     "@uppy/aws-s3": "^1.6.5",
     "@uppy/core": "^1.10.5",
     "@uppy/react": "^1.7.0",

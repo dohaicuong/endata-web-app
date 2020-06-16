@@ -22,7 +22,6 @@ import { CustomerDetailsCard_company$key } from './__generated__/CustomerDetails
 import CheckboxGroupField from 'components/Formik/CheckboxGroupField'
 
 import states from 'resources/data/states'
-console.log(states)
 
 export type CustomerDetailsCardProps = {
   company: CustomerDetailsCard_company$key | null

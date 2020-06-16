@@ -25,13 +25,15 @@ const ClaimPage: React.FC = () => {
   React.useEffect(() => {
     if (isExact) push(`${url}/job-info`)
   }, [isExact, url, push])
+
+  // const [companyId, setCompanyId] = React.useState([''])
   const data = useLazyLoadQuery<ClaimPageQuery>(
     graphql`
       query ClaimPageQuery($where: ENDataEntityKey!) {
         claimJob(where: $where) {
           id
-          description: claimDescription
           ...ClaimInfoCard_info
+          ...JobInfo_claim
         }
         currentUser {
           ...ClaimInfoCard_user
@@ -42,8 +44,14 @@ const ClaimPage: React.FC = () => {
       where: {
         id: claimId,
       },
+      // companyId,
     }
   )
+
+  // const insurerId = String(data.claimJob?.insurer?.companyId ?? 0)
+  // React.useEffect(() => {
+  //   if (insurerId) setCompanyId([insurerId])
+  // }, [insurerId])
 
   return (
     <ErrorBoundary fallback={<>Claim Error</>}>
@@ -60,7 +68,13 @@ const ClaimPage: React.FC = () => {
                       key={path}
                       path={`${url}${path}`}
                       {...tab}
-                      render={props => <Comp {...props} claimId={claimId} />}
+                      render={props => (
+                        <Comp
+                          {...props}
+                          claimId={claimId}
+                          claim={data.claimJob}
+                        />
+                      )}
                     />
                   ))}
                 </Switch>

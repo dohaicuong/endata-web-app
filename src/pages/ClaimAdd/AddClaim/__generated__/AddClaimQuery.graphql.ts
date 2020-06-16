@@ -39,15 +39,15 @@ fragment AddClaimRoot_data on Query {
   ...QuotingRestorersCard_options_2W2fkl
 }
 
-fragment Builder_options_2W2fkl on Query {
-  builders: claimFilterOptions(where: {subject: "suppliers", insurers: $companyId, postcode: $postcode, portfolios: [Building]}) {
+fragment BuilderComboBox_data_1u8e06 on Query {
+  builders: claimFilterOptions(where: {subject: "suppliers", portfolios: [Building], insurers: $companyId, postcode: $postcode}) {
     label: name
     value
     id
   }
 }
 
-fragment CaseManager_options on Query {
+fragment CaseManagerComboBox_data_3znApl on Query {
   managers: claimFilterOptions(where: {subject: "managers", insurers: $companyId}) {
     label: name
     value
@@ -55,7 +55,7 @@ fragment CaseManager_options on Query {
   }
 }
 
-fragment CatCode_options on Query {
+fragment CatCodeComboBox_data_3znApl on Query {
   catCodes: claimFilterOptions(where: {subject: "catCodes", insurers: $companyId}) {
     label: name
     value
@@ -73,24 +73,23 @@ fragment ClaimDetailsCard_company on CompanyProfile {
   useInternalAssessor
   enableMultipleRisks
   cm2nd
-  ...InsuranceCompany_company
+  ...InsuranceCompanyInfo_company
 }
 
 fragment ClaimDetailsCard_optionData on Query {
-  ...CaseManager_options
-  ...ExternalLossFirm_options_2W2fkl
-  ...Builder_options_2W2fkl
-  ...Restorer_options_2W2fkl
-  ...EventType_options
-  ...CatCode_options
-  ...Distributor_options
-  ...PdsReference_options
-  ...SpecialistReview_options
-  ...LossAdjuster_options
   me: currentUser {
     userType
     id
   }
+  ...CaseManagerComboBox_data_3znApl
+  ...ExternalLossAdjusterComboBox_data_1u8e06
+  ...BuilderComboBox_data_1u8e06
+  ...RestorerComboBox_data_1u8e06
+  ...EventTypeComboBox_data_3znApl
+  ...CatCodeComboBox_data_3znApl
+  ...DistributorComboBox_data_3znApl
+  ...PdsReferenceComboBox_data_3znApl
+  ...SpecialistReviewComboBoxProps_data_3znApl
 }
 
 fragment CustomerDetailsCard_company on CompanyProfile {
@@ -99,15 +98,15 @@ fragment CustomerDetailsCard_company on CompanyProfile {
   hideCategoryOfClaim
 }
 
-fragment Distributor_options on Query {
-  distributors: claimFilterOptions(where: {subject: "policyCovers", insurers: $companyId}) {
+fragment DistributorComboBox_data_3znApl on Query {
+  distributors: claimFilterOptions(where: {subject: "policyTypes", insurers: $companyId}) {
     label: name
     value
     id
   }
 }
 
-fragment EventType_options on Query {
+fragment EventTypeComboBox_data_3znApl on Query {
   eventTypes: claimFilterOptions(where: {subject: "eventTypes", insurers: $companyId}) {
     label: name
     value
@@ -115,7 +114,7 @@ fragment EventType_options on Query {
   }
 }
 
-fragment ExternalLossFirm_options_2W2fkl on Query {
+fragment ExternalLossAdjusterComboBox_data_1u8e06 on Query {
   adjusters: claimFilterOptions(where: {subject: "adjusters", insurers: $companyId, postcode: $postcode}) {
     label: name
     value
@@ -123,19 +122,11 @@ fragment ExternalLossFirm_options_2W2fkl on Query {
   }
 }
 
-fragment InsuranceCompany_company on CompanyProfile {
+fragment InsuranceCompanyInfo_company on CompanyProfile {
   companyName
 }
 
-fragment LossAdjuster_options on Query {
-  managers: claimFilterOptions(where: {subject: "managers", insurers: $companyId}) {
-    label: name
-    value
-    id
-  }
-}
-
-fragment PdsReference_options on Query {
+fragment PdsReferenceComboBox_data_3znApl on Query {
   pdsReferences: claimFilterOptions(where: {subject: "policyCovers", insurers: $companyId}) {
     label: name
     value
@@ -167,15 +158,15 @@ fragment QuotingRestorersCard_options_2W2fkl on Query {
   }
 }
 
-fragment Restorer_options_2W2fkl on Query {
-  restorers: claimFilterOptions(where: {subject: "suppliers", insurers: $companyId, postcode: $postcode, portfolios: [Restoration]}) {
+fragment RestorerComboBox_data_1u8e06 on Query {
+  restorers: claimFilterOptions(where: {subject: "suppliers", portfolios: [Restoration], insurers: $companyId, postcode: $postcode}) {
     label: name
     value
     id
   }
 }
 
-fragment SpecialistReview_options on Query {
+fragment SpecialistReviewComboBoxProps_data_3znApl on Query {
   internalAssessors: claimFilterOptions(where: {subject: "internalAssessors", insurers: $companyId}) {
     label: name
     value
@@ -206,16 +197,16 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Variable",
-  "name": "insurers",
-  "variableName": "companyId"
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "kind": "Variable",
+  "name": "insurers",
+  "variableName": "companyId"
 },
 v3 = [
   {
@@ -232,7 +223,7 @@ v3 = [
     "name": "value",
     "storageKey": null
   },
-  (v2/*: any*/)
+  (v1/*: any*/)
 ],
 v4 = {
   "kind": "Variable",
@@ -247,7 +238,7 @@ v5 = {
 v6 = [
   {
     "fields": [
-      (v1/*: any*/),
+      (v2/*: any*/),
       {
         "kind": "Literal",
         "name": "portfolios",
@@ -265,7 +256,7 @@ v6 = [
 v7 = [
   {
     "fields": [
-      (v1/*: any*/),
+      (v2/*: any*/),
       {
         "kind": "Literal",
         "name": "portfolios",
@@ -275,20 +266,6 @@ v7 = [
       },
       (v4/*: any*/),
       (v5/*: any*/)
-    ],
-    "kind": "ObjectValue",
-    "name": "where"
-  }
-],
-v8 = [
-  {
-    "fields": [
-      (v1/*: any*/),
-      {
-        "kind": "Literal",
-        "name": "subject",
-        "value": "policyCovers"
-      }
     ],
     "kind": "ObjectValue",
     "name": "where"
@@ -435,11 +412,30 @@ return {
         "storageKey": null
       },
       {
+        "alias": "me",
+        "args": null,
+        "concreteType": "AuthenticatedUser",
+        "kind": "LinkedField",
+        "name": "currentUser",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userType",
+            "storageKey": null
+          },
+          (v1/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
         "alias": "managers",
         "args": [
           {
             "fields": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Literal",
                 "name": "subject",
@@ -462,7 +458,7 @@ return {
         "args": [
           {
             "fields": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               (v4/*: any*/),
               {
                 "kind": "Literal",
@@ -506,7 +502,7 @@ return {
         "args": [
           {
             "fields": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Literal",
                 "name": "subject",
@@ -529,7 +525,7 @@ return {
         "args": [
           {
             "fields": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Literal",
                 "name": "subject",
@@ -549,7 +545,20 @@ return {
       },
       {
         "alias": "distributors",
-        "args": (v8/*: any*/),
+        "args": [
+          {
+            "fields": [
+              (v2/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "subject",
+                "value": "policyTypes"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "where"
+          }
+        ],
         "concreteType": "FilterOption",
         "kind": "LinkedField",
         "name": "claimFilterOptions",
@@ -559,7 +568,20 @@ return {
       },
       {
         "alias": "pdsReferences",
-        "args": (v8/*: any*/),
+        "args": [
+          {
+            "fields": [
+              (v2/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "subject",
+                "value": "policyCovers"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "where"
+          }
+        ],
         "concreteType": "FilterOption",
         "kind": "LinkedField",
         "name": "claimFilterOptions",
@@ -572,7 +594,7 @@ return {
         "args": [
           {
             "fields": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Literal",
                 "name": "subject",
@@ -588,25 +610,6 @@ return {
         "name": "claimFilterOptions",
         "plural": true,
         "selections": (v3/*: any*/),
-        "storageKey": null
-      },
-      {
-        "alias": "me",
-        "args": null,
-        "concreteType": "AuthenticatedUser",
-        "kind": "LinkedField",
-        "name": "currentUser",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "userType",
-            "storageKey": null
-          },
-          (v2/*: any*/)
-        ],
         "storageKey": null
       },
       {
@@ -636,7 +639,7 @@ return {
     "metadata": {},
     "name": "AddClaimQuery",
     "operationKind": "query",
-    "text": "query AddClaimQuery(\n  $companyId: [ID!]\n  $compId: ID!\n  $postcode: String\n) {\n  ...AddClaimRoot_data\n}\n\nfragment AddClaimRoot_data on Query {\n  company(where: {portfolioType: Building, id: $compId}) {\n    ...CustomerDetailsCard_company\n    ...ClaimDetailsCard_company\n    ...QuotingBuildersCard_meta\n    ...QuotingRestorersCard_meta\n  }\n  ...ClaimDetailsCard_optionData\n  ...QuotingBuildersCard_options_2W2fkl\n  ...QuotingRestorersCard_options_2W2fkl\n}\n\nfragment Builder_options_2W2fkl on Query {\n  builders: claimFilterOptions(where: {subject: \"suppliers\", insurers: $companyId, postcode: $postcode, portfolios: [Building]}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment CaseManager_options on Query {\n  managers: claimFilterOptions(where: {subject: \"managers\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment CatCode_options on Query {\n  catCodes: claimFilterOptions(where: {subject: \"catCodes\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment ClaimDetailsCard_company on CompanyProfile {\n  companyName\n  contentsref\n  quickrepair\n  policyTypeSuppliersView\n  policyCoverSuppliersView\n  isToProvideSiteReportView\n  useInternalAssessor\n  enableMultipleRisks\n  cm2nd\n  ...InsuranceCompany_company\n}\n\nfragment ClaimDetailsCard_optionData on Query {\n  ...CaseManager_options\n  ...ExternalLossFirm_options_2W2fkl\n  ...Builder_options_2W2fkl\n  ...Restorer_options_2W2fkl\n  ...EventType_options\n  ...CatCode_options\n  ...Distributor_options\n  ...PdsReference_options\n  ...SpecialistReview_options\n  ...LossAdjuster_options\n  me: currentUser {\n    userType\n    id\n  }\n}\n\nfragment CustomerDetailsCard_company on CompanyProfile {\n  removeHabitableAsbestos\n  setupcustomerlogin\n  hideCategoryOfClaim\n}\n\nfragment Distributor_options on Query {\n  distributors: claimFilterOptions(where: {subject: \"policyCovers\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment EventType_options on Query {\n  eventTypes: claimFilterOptions(where: {subject: \"eventTypes\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment ExternalLossFirm_options_2W2fkl on Query {\n  adjusters: claimFilterOptions(where: {subject: \"adjusters\", insurers: $companyId, postcode: $postcode}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment InsuranceCompany_company on CompanyProfile {\n  companyName\n}\n\nfragment LossAdjuster_options on Query {\n  managers: claimFilterOptions(where: {subject: \"managers\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment PdsReference_options on Query {\n  pdsReferences: claimFilterOptions(where: {subject: \"policyCovers\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment QuotingBuildersCard_meta on CompanyProfile {\n  quotesperclaim\n}\n\nfragment QuotingBuildersCard_options_2W2fkl on Query {\n  quotingBuilders: claimFilterOptions(where: {subject: \"suppliers\", insurers: $companyId, postcode: $postcode, portfolios: [Building]}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment QuotingRestorersCard_meta on CompanyProfile {\n  quotesperclaim\n}\n\nfragment QuotingRestorersCard_options_2W2fkl on Query {\n  quotingRestorers: claimFilterOptions(where: {subject: \"suppliers\", insurers: $companyId, postcode: $postcode, portfolios: [Restoration]}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment Restorer_options_2W2fkl on Query {\n  restorers: claimFilterOptions(where: {subject: \"suppliers\", insurers: $companyId, postcode: $postcode, portfolios: [Restoration]}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment SpecialistReview_options on Query {\n  internalAssessors: claimFilterOptions(where: {subject: \"internalAssessors\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n"
+    "text": "query AddClaimQuery(\n  $companyId: [ID!]\n  $compId: ID!\n  $postcode: String\n) {\n  ...AddClaimRoot_data\n}\n\nfragment AddClaimRoot_data on Query {\n  company(where: {portfolioType: Building, id: $compId}) {\n    ...CustomerDetailsCard_company\n    ...ClaimDetailsCard_company\n    ...QuotingBuildersCard_meta\n    ...QuotingRestorersCard_meta\n  }\n  ...ClaimDetailsCard_optionData\n  ...QuotingBuildersCard_options_2W2fkl\n  ...QuotingRestorersCard_options_2W2fkl\n}\n\nfragment BuilderComboBox_data_1u8e06 on Query {\n  builders: claimFilterOptions(where: {subject: \"suppliers\", portfolios: [Building], insurers: $companyId, postcode: $postcode}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment CaseManagerComboBox_data_3znApl on Query {\n  managers: claimFilterOptions(where: {subject: \"managers\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment CatCodeComboBox_data_3znApl on Query {\n  catCodes: claimFilterOptions(where: {subject: \"catCodes\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment ClaimDetailsCard_company on CompanyProfile {\n  companyName\n  contentsref\n  quickrepair\n  policyTypeSuppliersView\n  policyCoverSuppliersView\n  isToProvideSiteReportView\n  useInternalAssessor\n  enableMultipleRisks\n  cm2nd\n  ...InsuranceCompanyInfo_company\n}\n\nfragment ClaimDetailsCard_optionData on Query {\n  me: currentUser {\n    userType\n    id\n  }\n  ...CaseManagerComboBox_data_3znApl\n  ...ExternalLossAdjusterComboBox_data_1u8e06\n  ...BuilderComboBox_data_1u8e06\n  ...RestorerComboBox_data_1u8e06\n  ...EventTypeComboBox_data_3znApl\n  ...CatCodeComboBox_data_3znApl\n  ...DistributorComboBox_data_3znApl\n  ...PdsReferenceComboBox_data_3znApl\n  ...SpecialistReviewComboBoxProps_data_3znApl\n}\n\nfragment CustomerDetailsCard_company on CompanyProfile {\n  removeHabitableAsbestos\n  setupcustomerlogin\n  hideCategoryOfClaim\n}\n\nfragment DistributorComboBox_data_3znApl on Query {\n  distributors: claimFilterOptions(where: {subject: \"policyTypes\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment EventTypeComboBox_data_3znApl on Query {\n  eventTypes: claimFilterOptions(where: {subject: \"eventTypes\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment ExternalLossAdjusterComboBox_data_1u8e06 on Query {\n  adjusters: claimFilterOptions(where: {subject: \"adjusters\", insurers: $companyId, postcode: $postcode}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment InsuranceCompanyInfo_company on CompanyProfile {\n  companyName\n}\n\nfragment PdsReferenceComboBox_data_3znApl on Query {\n  pdsReferences: claimFilterOptions(where: {subject: \"policyCovers\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment QuotingBuildersCard_meta on CompanyProfile {\n  quotesperclaim\n}\n\nfragment QuotingBuildersCard_options_2W2fkl on Query {\n  quotingBuilders: claimFilterOptions(where: {subject: \"suppliers\", insurers: $companyId, postcode: $postcode, portfolios: [Building]}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment QuotingRestorersCard_meta on CompanyProfile {\n  quotesperclaim\n}\n\nfragment QuotingRestorersCard_options_2W2fkl on Query {\n  quotingRestorers: claimFilterOptions(where: {subject: \"suppliers\", insurers: $companyId, postcode: $postcode, portfolios: [Restoration]}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment RestorerComboBox_data_1u8e06 on Query {\n  restorers: claimFilterOptions(where: {subject: \"suppliers\", portfolios: [Restoration], insurers: $companyId, postcode: $postcode}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment SpecialistReviewComboBoxProps_data_3znApl on Query {\n  internalAssessors: claimFilterOptions(where: {subject: \"internalAssessors\", insurers: $companyId}) {\n    label: name\n    value\n    id\n  }\n}\n"
   }
 };
 })();

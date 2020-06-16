@@ -38,6 +38,11 @@ const FormikSwitch: React.FC<FormikSwitchProps> = ({
   const { error, touched } = meta
   const isError = Boolean(touched && error)
 
+  React.useEffect(() => {
+    if (props.defaultChecked) helpers.setValue(props.defaultChecked)
+    // eslint-disable-next-line
+  }, [props.defaultChecked])
+
   return (
     <FormControl component="fieldset" className={classes.root} error={isError}>
       <FormLabel component="legend" className={classes.label}>
@@ -48,13 +53,13 @@ const FormikSwitch: React.FC<FormikSwitchProps> = ({
           labelPlacement="end"
           className={classes.root}
           label={field.value ? onLabel : offLabel}
+          onClick={() => helpers.setValue(!field.value)}
           control={
             <Switch
               // color="primary"
               {...props}
               disabled={isSubmitting || disabled || readOnly}
               checked={field.value}
-              onClick={() => helpers.setValue(!field.value)}
             />
           }
         />

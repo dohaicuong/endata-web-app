@@ -44,6 +44,14 @@ const routes: AppRouteProps[] = [
     ),
   },
   {
+    exact: true,
+    private: true,
+    path: '/claim-list',
+    component: lazy(() =>
+      import(/* webpackChunkName: "ClaimListPage" */ 'pages/ClaimList')
+    ),
+  },
+  {
     exact: false,
     private: true,
     path: '/claim/:claimId',

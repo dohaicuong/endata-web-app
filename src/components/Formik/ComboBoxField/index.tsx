@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 
 import { useField, useFormikContext } from 'formik'
@@ -65,8 +66,26 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
 
   const { error, touched } = meta
   const isError = Boolean(touched && error)
+
+  React.useEffect(() => {
+    if (props.defaultValue) {
+      const currentOption = options.find(option => {
+        return String(option.value) === String(props.defaultValue)
+      })
+
+      const option: any = multiple ? [currentOption] : currentOption
+      if (!option) return null
+      setValue(option)
+
+      const formValue = !multiple
+        ? option.value
+        : option.map((x: any) => x.value)
+      helpers.setValue(formValue)
+    }
+    // eslint-disable-next-line
+  }, [])
+
   return (
-    // @ts-ignore
     <Autocomplete
       {...props}
       value={value}
@@ -75,7 +94,6 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
       multiple={multiple}
       disableCloseOnSelect={multiple}
       filterSelectedOptions={!multiple}
-      // @ts-ignore
       options={options}
       getOptionLabel={(option: any) => option.label || ''}
       groupBy={(option: any) => option.group}
@@ -93,12 +111,10 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
         )
 
         return (
-          // @ts-ignore
           <TextField
             error={isError}
             helperText={isError ? error : null}
             fullWidth={fullWidth}
-            // {...field}
             {...props}
             {...params}
             InputProps={{

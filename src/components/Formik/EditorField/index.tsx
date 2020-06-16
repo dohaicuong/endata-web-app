@@ -11,11 +11,18 @@ const EditorField = ({ name, label, placeholder, disabled, ...props }: any) => {
   const [field, meta, helpers] = useField(name)
   const { error, touched } = meta
   const isError = Boolean(touched && error)
+  const fieldValue = React.useMemo(() => field.value, [field.value])
 
-  const initialValue = field.value
-    ? RichTextEditor.createValueFromString(field.value, 'html')
+  const initialValue = fieldValue
+    ? RichTextEditor.createValueFromString(fieldValue, 'html')
     : RichTextEditor.createEmptyValue()
   const [value, setValue] = React.useState<any>(initialValue)
+
+  React.useEffect(() => {
+    if (!touched && fieldValue) {
+      setValue(RichTextEditor.createValueFromString(fieldValue, 'html'))
+    }
+  }, [fieldValue, touched])
 
   return (
     <FormControl error={isError} style={{ width: '100%' }} id={field.name}>
