@@ -52,7 +52,10 @@ const WaterfallView: React.FC<WaterfallViewProps> = props => {
   // refetch waterfall filter when where filter changed
   const whereString = JSON.stringify(props.where)
   React.useEffect(() => {
-    const { claimStatusStageIds, ...where } = props.where
+    const {
+      claimStatusStageIds, // eslint-disable-line @typescript-eslint/no-unused-vars
+      ...where
+    } = props.where
     refetch(
       {
         waterfallWhere: {

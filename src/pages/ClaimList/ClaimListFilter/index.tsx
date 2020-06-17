@@ -57,7 +57,7 @@ const ClaimListFilter: React.FC<ClaimListFilterProps> = props => {
         filters={claimFilters}
         onChange={values => {
           const cleanedValues = Object.fromEntries(
-            Object.entries(values).filter(([_, value]) => value)
+            Object.entries(values).filter(([, value]) => value)
           )
           props.setWhere({
             ...cleanedValues,
@@ -66,7 +66,10 @@ const ClaimListFilter: React.FC<ClaimListFilterProps> = props => {
         }}
         onViewChange={isSubview => {
           if (isSubview) {
-            const { claimStatusStageIds, ...where } = props.where
+            const {
+              claimStatusStageIds, // eslint-disable-line @typescript-eslint/no-unused-vars
+              ...where
+            } = props.where
             props.setWhere(where)
           } else {
             props.setWhere((pre: any) => ({

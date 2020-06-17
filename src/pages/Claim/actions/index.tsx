@@ -20,14 +20,9 @@ export const useClaimAction = () => {
 }
 
 type ActionProviderProps = {
-  claimId: string
   data: any
 }
-const ActionProvider: React.FC<ActionProviderProps> = ({
-  children,
-  claimId,
-  ...props
-}) => {
+const ActionProvider: React.FC<ActionProviderProps> = ({ children, ...props }) => {
   const [
     isNextActionOpen,
     handleNextActionOpen,

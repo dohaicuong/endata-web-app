@@ -60,7 +60,7 @@ const ClaimPage: React.FC = () => {
           <TabNavbar style={{ marginTop: 8 }} tabs={tabs} />
           <ErrorBoundary FallbackComponent={RouteErrorBoundary}>
             <React.Suspense fallback={<TabLoading />}>
-              <ActionProvider claimId={claimId} data={data}>
+              <ActionProvider data={data}>
                 <Switch>
                   {tabs.map(({ path, component: Comp, ...tab }) => (
                     <Route
