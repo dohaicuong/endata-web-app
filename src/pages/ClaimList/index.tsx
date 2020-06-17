@@ -2,6 +2,7 @@ import React from 'react'
 import { Container } from '@material-ui/core'
 import ClaimListFilter from './ClaimListFilter'
 import ClaimListTable from './ClaimListTable'
+import ClaimFloatActions from './ClaimFloatActions'
 import { CircularProgress } from '@material-ui/core'
 import { useLazyLoadQuery } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
@@ -49,6 +50,7 @@ const ClaimList = () => {
           <ClaimListTable data={data} where={where} />
         </React.Suspense>
       </Container>
+      <ClaimFloatActions />
     </>
   )
 }
