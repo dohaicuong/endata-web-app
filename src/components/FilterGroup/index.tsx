@@ -1,14 +1,13 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import Filter, { FilterProps } from './Filter'
-import { Grid, Collapse, IconButton, CircularProgress } from '@material-ui/core'
+import { Grid, Collapse, IconButton } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 interface FilterGroupProps {
-  loading?: boolean
   firstRowFilters?: number
   filters?: any
   filterRender?: (
@@ -20,27 +19,12 @@ interface FilterGroupProps {
   SubView?: any
   onViewChange?: (isSub: boolean) => void
 }
+
 const FilterGroup: React.FC<FilterGroupProps> = ({
   filters,
-  loading,
   onChange,
   ...props
 }) => {
-  if (loading)
-    return (
-      <div
-        style={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <CircularProgress />
-      </div>
-    )
-
   if (!filters) return null
   const initialValues = filters ? getInitialValues(filters) : {}
   return (

@@ -22,7 +22,7 @@ const ActionButton: React.FC<ActionButtonProps> = props => {
     props.action
   )
 
-  if(!action?.isDisplay) return null
+  if (!action?.isDisplay) return null
 
   return (
     <Button

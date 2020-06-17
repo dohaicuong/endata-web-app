@@ -98,7 +98,6 @@ const ClaimListHeader: React.FC<ClaimListHeaderProps> = ({
   return (
     <Paper style={{ padding: 16 }}>
       <FilterGroup
-        loading={false}
         firstRowFilters={6}
         filters={filters}
         onChange={values => {

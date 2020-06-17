@@ -141,12 +141,19 @@ fragment ClaimsTable_claims on ClaimJobConnection {
       }
       insured {
         name
+        phone1
+        phone2
+        phone3
+        email
       }
       incidentDetail {
         riskAddress {
           suburb
           state
+          line1
+          postcode
         }
+        incidentDate
       }
     }
   }
@@ -596,7 +603,35 @@ return {
                     "name": "insured",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/)
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phone1",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phone2",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phone3",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "email",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   },
@@ -629,8 +664,29 @@ return {
                             "kind": "ScalarField",
                             "name": "state",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "line1",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "postcode",
+                            "storageKey": null
                           }
                         ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "incidentDate",
                         "storageKey": null
                       }
                     ],
@@ -702,7 +758,7 @@ return {
     "metadata": {},
     "name": "ClaimListQuery",
     "operationKind": "query",
-    "text": "query ClaimListQuery {\n  ...ClaimListFilter_filters\n  ...ClaimListTable_data\n}\n\nfragment ClaimListFilter_filters on Query {\n  currentUser {\n    claimFilters {\n      id\n      type\n      label\n      name\n      options {\n        group\n        label\n        value: id\n        id\n      }\n    }\n    id\n  }\n  ...WaterfallView_waterfallFilters\n}\n\nfragment ClaimListTable_data on Query {\n  currentUser {\n    ...ClaimsTable_user\n    id\n  }\n  claimConnection: claimJobs(first: 30) {\n    ...ClaimsTable_claims\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ClaimsTable_claims on ClaimJobConnection {\n  totalCount\n  edges {\n    node {\n      id\n      hasBuilding\n      hasContents\n      hasRestoration\n      refNumber\n      insurer {\n        companyName\n      }\n      lodgeDate\n      building {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        authorisedValue\n        scopedValue\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n        daysAtStatus\n      }\n      contents {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n      }\n      restoration {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n      }\n      insured {\n        name\n      }\n      incidentDetail {\n        riskAddress {\n          suburb\n          state\n        }\n      }\n    }\n  }\n}\n\nfragment ClaimsTable_user on AuthenticatedUser {\n  userType\n}\n\nfragment WaterfallView_waterfallFilters on Query {\n  currentUser {\n    waterfallFilters(where: {claimPortfolioType: Building}) {\n      id\n      items {\n        value: id\n        label\n        claimCount\n        color\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ClaimListQuery {\n  ...ClaimListFilter_filters\n  ...ClaimListTable_data\n}\n\nfragment ClaimListFilter_filters on Query {\n  currentUser {\n    claimFilters {\n      id\n      type\n      label\n      name\n      options {\n        group\n        label\n        value: id\n        id\n      }\n    }\n    id\n  }\n  ...WaterfallView_waterfallFilters\n}\n\nfragment ClaimListTable_data on Query {\n  currentUser {\n    ...ClaimsTable_user\n    id\n  }\n  claimConnection: claimJobs(first: 30) {\n    ...ClaimsTable_claims\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ClaimsTable_claims on ClaimJobConnection {\n  totalCount\n  edges {\n    node {\n      id\n      hasBuilding\n      hasContents\n      hasRestoration\n      refNumber\n      insurer {\n        companyName\n      }\n      lodgeDate\n      building {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        authorisedValue\n        scopedValue\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n        daysAtStatus\n      }\n      contents {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n      }\n      restoration {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n      }\n      insured {\n        name\n        phone1\n        phone2\n        phone3\n        email\n      }\n      incidentDetail {\n        riskAddress {\n          suburb\n          state\n          line1\n          postcode\n        }\n        incidentDate\n      }\n    }\n  }\n}\n\nfragment ClaimsTable_user on AuthenticatedUser {\n  userType\n}\n\nfragment WaterfallView_waterfallFilters on Query {\n  currentUser {\n    waterfallFilters(where: {claimPortfolioType: Building}) {\n      id\n      items {\n        value: id\n        label\n        claimCount\n        color\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

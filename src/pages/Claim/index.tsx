@@ -30,9 +30,7 @@ const ClaimPage: React.FC = () => {
   const data = useLazyLoadQuery<ClaimPageQuery>(
     graphql`
       query ClaimPageQuery($claimId: ID!) {
-        claimJob(where: {
-          id: $claimId
-        }) {
+        claimJob(where: { id: $claimId }) {
           id
           ...ClaimInfoCard_info
           ...JobInfo_claim

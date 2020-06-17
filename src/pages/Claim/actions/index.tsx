@@ -23,13 +23,17 @@ type ActionProviderProps = {
   claimId: string
   data: any
 }
-const ActionProvider: React.FC<ActionProviderProps> = ({ children, claimId, ...props }) => {
+const ActionProvider: React.FC<ActionProviderProps> = ({
+  children,
+  claimId,
+  ...props
+}) => {
   const [
     isNextActionOpen,
     handleNextActionOpen,
     handleNextActionClose,
   ] = useNextStepAction({})
-  
+
   const data = useFragment(
     graphql`
       fragment actions_data on Query {
@@ -51,7 +55,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({ children, claimId, ...p
       >
         {children}
       </ActionContext.Provider>
-      
+
       <React.Suspense fallback={null}>
         <NextStepAction
           claimId={claimId}

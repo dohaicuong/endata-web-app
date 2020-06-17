@@ -1,8 +1,5 @@
 import React from 'react'
 import { ComboBoxFieldOption } from 'components/Formik/ComboBoxField'
-import ComboBoxField from 'components/Formik/ComboBoxField'
-import DateField from 'components/Formik/DateField'
-import SearchField from 'components/Formik/SearchField'
 
 export interface FilterProps {
   type: string
@@ -16,17 +13,22 @@ export interface FilterOption {
   value: string
 }
 
-const FilterWrapper: React.FC<any> = props => {
-  return <Filter {...props} />
+const FilterWrapper: React.FC<FilterProps> = props => {
+  return (
+    <React.Suspense fallback={null}>
+      <Filter {...props} />
+    </React.Suspense>
+  )
 }
 const Filter: React.FC<FilterProps> = ({ type, ...props }) => {
-  return (
-    <>
-      {type === 'ComboBox' && <ComboBoxField {...props} />}
-      {type === 'Search' && <SearchField {...props} />}
-      {type === 'Date' && <DateField {...props} />}
-    </>
+  console.log(props)
+  const Comp = React.useMemo(
+    () => React.lazy(() => import(`components/Formik/${type}Field`)),
+    [type]
   )
+  if (!Comp) return null
+
+  return <Comp {...props} />
 }
 
 export default FilterWrapper

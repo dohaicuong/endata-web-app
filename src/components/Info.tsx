@@ -13,6 +13,7 @@ const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
   className,
   startAdornment,
   variant,
+  fullWidth,
   ...props
 }) => {
   const classes = useStyles()
@@ -23,6 +24,7 @@ const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
       className={`${className} ${classes.root}`}
       multiline
       rowsMax={rowsMax}
+      fullWidth={fullWidth}
       InputProps={{
         ...InputProps,
         readOnly: true,

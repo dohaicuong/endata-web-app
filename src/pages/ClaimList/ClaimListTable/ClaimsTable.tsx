@@ -39,20 +39,19 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
         edges {
           node {
             id
-
+            # portfolio
             hasBuilding
             hasContents
             hasRestoration
-
-            # Ins Ref #
+            # ins ref #
             refNumber
-            # Ins Company
+            # ins company
             insurer {
               companyName
             }
-            # FNOL
+            # fnol
             lodgeDate
-            # Request Date, Request
+            # request date, request
             building {
               jobSuppliers {
                 requestDate
@@ -71,11 +70,11 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
                 requestType
               }
             }
-            # Customer
+            # customer
             insured {
               name
             }
-            # Suburb, State
+            # suburb, state
             incidentDetail {
               riskAddress {
                 suburb
@@ -86,6 +85,8 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
             building {
               authorisedValue
               scopedValue
+            }
+            building {
               jobSuppliers {
                 quote {
                   total
@@ -115,6 +116,8 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
                   }
                 }
               }
+            }
+            building {
               claimStatus {
                 statusName
               }
@@ -127,6 +130,8 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
                   }
                 }
               }
+            }
+            contents {
               claimStatus {
                 statusName
               }
@@ -139,6 +144,8 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
                   }
                 }
               }
+            }
+            restoration {
               claimStatus {
                 statusName
               }
@@ -152,16 +159,6 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
                 companyName
               }
             }
-            # Building Status
-            building {
-              claimStatus {
-                statusName
-              }
-            }
-            #Days
-            building {
-              daysAtStatus
-            }
             # Restorer
             restoration {
               authorisedSupplier {
@@ -171,16 +168,44 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
                 companyName
               }
             }
-            # Restoration Status
+            # building status
+            building {
+              claimStatus {
+                statusName
+              }
+            }
+            # days
+            building {
+              daysAtStatus
+            }
+            # restoration status
             restoration {
               claimStatus {
                 statusName
               }
             }
-            # Content Status
+            # content status
             contents {
               claimStatus {
                 statusName
+              }
+            }
+            # subRows
+            refNumber
+            insured {
+              name
+              phone1
+              phone2
+              phone3
+              email
+            }
+            incidentDetail {
+              incidentDate
+              riskAddress {
+                line1
+                suburb
+                state
+                postcode
               }
             }
           }
@@ -246,11 +271,17 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
       claim?.restoration?.authorisedSupplier?.companyName ||
       claim?.restoration?.scopingSupplier?.companyName ||
       null
-    // const insuredPhone = [claim.phone1, claim.phone2, claim.phone3].filter(x => x).join(', ')
+    const insuredPhone = [
+      claim?.insured?.phone1,
+      claim?.insured?.phone2,
+      claim?.insured?.phone3,
+    ]
+      .filter(x => x)
+      .join(', ')
 
-    // const incidentAddress =
-    //   claim?.incidentDetail?.riskAddress &&
-    //   `${line1} ${suburb} ${state}, ${postcode}`
+    const incidentAddress =
+      claim?.incidentDetail?.riskAddress &&
+      `${claim?.incidentDetail?.riskAddress?.line1} ${claim?.incidentDetail?.riskAddress?.suburb} ${claim?.incidentDetail?.riskAddress?.state}, ${claim?.incidentDetail?.riskAddress?.postcode}`
 
     return {
       id: claim?.id,
@@ -271,6 +302,11 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
       restorer,
       restorationStatus: claim?.building?.claimStatus?.statusName,
       contentsStatus: claim?.building?.claimStatus?.statusName,
+      insuredPhone,
+      incidentAddress,
+      email: claim?.insured?.email,
+      incidentDate: claim?.incidentDetail?.incidentDate,
+      name: claim?.insured?.name,
     }
   })
 
@@ -278,20 +314,20 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
   const renderRowSubComponent = React.useCallback(({ row: { original } }) => {
     const blocks = [
       { label: 'Ins Ref #', value: original.refNumber },
-      { label: 'Customer', value: original.insured?.name },
-      { label: 'Phone(s)', value: original._insuredPhone },
-      { label: 'Customer Email', value: original.insured?.email },
-      { label: 'Incident Date', value: original.incidentDetail?.incidentDate },
-      { label: 'Property/Risk Address', value: original._incidentAddress },
-      { label: 'Builder', value: original._claimBuilder },
-      { label: 'Restorer', value: original._claimRestorer },
+      { label: 'Customer', value: original.name },
+      { label: 'Phone(s)', value: original.insuredPhone },
+      { label: 'Customer Email', value: original.email },
+      { label: 'Incident Date', value: original.incidentDate },
+      { label: 'Property/Risk Address', value: original.incidentAddress },
+      { label: 'Builder', value: original.builder },
+      { label: 'Restorer', value: original.restorer },
     ]
 
     return (
       <Grid container spacing={2}>
         {blocks.map(({ label, value }) => (
           <Grid item xs={3} key={label}>
-            <Info label={label} value={value} />
+            <Info label={label} value={value} fullWidth />
           </Grid>
         ))}
       </Grid>
