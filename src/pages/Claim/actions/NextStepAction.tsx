@@ -1,16 +1,12 @@
 import React from 'react'
 import { Dialog, Grid } from '@material-ui/core'
+import PortfolioIcon from 'components/PortfolioIcon'
+import Info from 'components/Info'
 
-import {
-  useLazyLoadQuery,
-  useFragment,
-  useRefetchableFragment,
-} from 'react-relay/hooks'
+import { useRefetchableFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { NextStepActionRefetchQuery } from './__generated__/NextStepActionRefetchQuery.graphql'
 import { NextStepAction_data$key } from './__generated__/NextStepAction_data.graphql'
-import PortfolioIcon from 'components/PortfolioIcon'
-import Info from 'components/Info'
 
 export type NextStepActions = {
   handleOpen: () => void
@@ -19,7 +15,6 @@ export type NextStepActions = {
 export type NextStepActionProps = {
   open: boolean
   onClose: () => void
-  claimId: string
   data: NextStepAction_data$key | null
 }
 const NextStepAction: React.FC<NextStepActionProps> = ({
@@ -51,7 +46,7 @@ const NextStepAction: React.FC<NextStepActionProps> = ({
   )
   React.useEffect(() => {
     if (open) refetch({ isOpen: true })
-  }, [open])
+  }, [open, refetch])
 
   return (
     <Dialog onClose={onClose} open={open}>

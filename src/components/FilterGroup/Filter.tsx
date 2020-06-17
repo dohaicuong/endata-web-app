@@ -1,5 +1,5 @@
 import React from 'react'
-import { ComboBoxFieldOption } from 'components/Formik/ComboBoxField'
+import ComboBoxField, { ComboBoxFieldOption } from 'components/Formik/ComboBoxField'
 
 export interface FilterProps {
   type: string
@@ -15,7 +15,7 @@ export interface FilterOption {
 
 const FilterWrapper: React.FC<FilterProps> = props => {
   return (
-    <React.Suspense fallback={null}>
+    <React.Suspense fallback={<ComboBoxField loading variant='outlined' name='wating...' />}>
       <Filter {...props} />
     </React.Suspense>
   )

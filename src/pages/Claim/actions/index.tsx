@@ -58,7 +58,6 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
 
       <React.Suspense fallback={null}>
         <NextStepAction
-          claimId={claimId}
           open={isNextActionOpen}
           onClose={handleNextActionClose}
           data={data}
