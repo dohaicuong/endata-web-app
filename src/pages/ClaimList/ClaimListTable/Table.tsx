@@ -15,7 +15,7 @@ import {
 type TableProps = {
   tableColumns: any
   tableData: any
-  renderRowSubComponent: any
+  renderRowSubComponent?: any
   onRowClick?: any
   onScroll?: any
   isLoading?: boolean
@@ -76,6 +76,16 @@ const Table: React.FC<TableProps> = ({
             ))}
           </TableHead>
           <TableBody {...getTableBodyProps()}>
+            {!rows.length && (
+              <TableRow className={tableClasses.tableRow}>
+                <TableCell
+                  colSpan={flatColumns?.length ?? 4}
+                  className={tableClasses.tableBodyCell}
+                >
+                  No item found
+                </TableCell>
+              </TableRow>
+            )}
             {rows.map(row => {
               prepareRow(row)
               // @ts-ignore
@@ -140,13 +150,13 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     padding: theme.spacing(),
     textAlign: 'center',
-    minWidth: 150,
+    minWidth: 130,
     borderLeft: '1px solid #fff',
     borderRight: '1px solid #fff',
   },
   tableBodyCell: {
     textAlign: 'center',
-    padding: theme.spacing(),
+    padding: theme.spacing(0.5),
   },
   tableRow: {
     '&:nth-child(even)': {

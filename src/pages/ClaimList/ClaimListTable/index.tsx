@@ -1,7 +1,6 @@
 import React from 'react'
 
 import ClaimsTable from './ClaimsTable'
-
 import { graphql } from 'babel-plugin-relay/macro'
 import { usePaginationFragment } from 'react-relay/hooks'
 import {
@@ -15,7 +14,13 @@ type ClaimListTableProps = {
   where: ClaimJobFilter
 }
 const ClaimListTable: React.FC<ClaimListTableProps> = props => {
-  const { data, isLoadingNext, loadNext, refetch } = usePaginationFragment<
+  const {
+    data,
+    hasNext,
+    isLoadingNext,
+    loadNext,
+    refetch,
+  } = usePaginationFragment<
     ClaimListTablePaginationQuery,
     ClaimListTable_data$key
   >(
@@ -61,6 +66,7 @@ const ClaimListTable: React.FC<ClaimListTableProps> = props => {
       claims={data?.claimConnection ?? null}
       isLoadingMore={isLoadingNext}
       loadMore={() => loadNext(20)}
+      hasNext={hasNext}
     />
   )
 }
