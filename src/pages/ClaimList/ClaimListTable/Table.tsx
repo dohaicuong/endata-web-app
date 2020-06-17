@@ -43,7 +43,6 @@ const Table: React.FC<TableProps> = ({
     },
     useExpanded
   )
-console.log(tableData)
   return (
     <Paper className={tableClasses.paper}>
       {isLoading && (
@@ -101,7 +100,10 @@ console.log(tableData)
                   </TableRow>
                   {isExpanded && (
                     <TableRow>
-                      <TableCell colSpan={flatColumns.length}>
+                      <TableCell
+                        colSpan={flatColumns.length}
+                        className={tableClasses.tableSubCell}
+                      >
                         {renderRowSubComponent({ row })}
                       </TableCell>
                     </TableRow>
@@ -156,5 +158,8 @@ const useStyles = makeStyles(theme => ({
       background: theme.palette.grey[300],
     },
     flexWrap: 'nowrap',
+  },
+  tableSubCell: {
+    padding: '8px 16px',
   },
 }))

@@ -79,12 +79,19 @@ export type ClaimsTable_claims = {
             } | null;
             readonly insured: {
                 readonly name: string | null;
+                readonly phone1: string | null;
+                readonly phone2: string | null;
+                readonly phone3: string | null;
+                readonly email: string | null;
             } | null;
             readonly incidentDetail: {
                 readonly riskAddress: {
                     readonly suburb: string | null;
                     readonly state: State | null;
+                    readonly line1: string | null;
+                    readonly postcode: string | null;
                 } | null;
+                readonly incidentDate: unknown | null;
             } | null;
         } | null;
     } | null> | null;
@@ -359,6 +366,34 @@ return {
                   "kind": "ScalarField",
                   "name": "name",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "phone1",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "phone2",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "phone3",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "email",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -392,8 +427,29 @@ return {
                       "kind": "ScalarField",
                       "name": "state",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "line1",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "postcode",
+                      "storageKey": null
                     }
                   ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "incidentDate",
                   "storageKey": null
                 }
               ],
@@ -409,5 +465,5 @@ return {
   "type": "ClaimJobConnection"
 };
 })();
-(node as any).hash = 'f4512a86570d59f7174db5905308ea16';
+(node as any).hash = 'ed8bce1fbcd4b83653339f6d7e71d7cd';
 export default node;
