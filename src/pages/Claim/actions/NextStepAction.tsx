@@ -55,15 +55,33 @@ const NextStepAction: React.FC<NextStepActionProps> = ({
       {!data?.claimNextStep ? (
         'Loading...'
       ) : (
-        <Grid container justify="center" alignItems="center" className={classes.container}>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.container}
+        >
           {data?.claimNextStep.map((step, index) => {
             if (!step) return null
 
             return (
               <Grid item xs key={index}>
-                <PortfolioIcon portfolio={step.portfolioType as any} className={classes.portfolioIcon} />
-                <Info label={step.statusName} value={step.description} fullWidth rowsMax={8} />
-                <Info label="Next step" value={step.nextStep} fullWidth rowsMax={8} />
+                <PortfolioIcon
+                  portfolio={step.portfolioType as any}
+                  className={classes.portfolioIcon}
+                />
+                <Info
+                  label={step.statusName}
+                  value={step.description}
+                  fullWidth
+                  rowsMax={8}
+                />
+                <Info
+                  label="Next step"
+                  value={step.nextStep}
+                  fullWidth
+                  rowsMax={8}
+                />
               </Grid>
             )
           })}
@@ -78,13 +96,13 @@ const useStyles = makeStyles(theme => ({
     minWidth: '60%',
   },
   container: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   portfolioIcon: {
     margin: '0 auto 20px auto',
     display: 'flex',
     fontSize: '2.5rem',
-  }
+  },
 }))
 
 export type useNextStepActionProps = {
