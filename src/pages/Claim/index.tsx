@@ -29,8 +29,10 @@ const ClaimPage: React.FC = () => {
   // const [companyId, setCompanyId] = React.useState([''])
   const data = useLazyLoadQuery<ClaimPageQuery>(
     graphql`
-      query ClaimPageQuery($where: ENDataEntityKey!) {
-        claimJob(where: $where) {
+      query ClaimPageQuery($claimId: ID!) {
+        claimJob(where: {
+          id: $claimId
+        }) {
           id
           ...ClaimInfoCard_info
           ...JobInfo_claim
@@ -38,12 +40,11 @@ const ClaimPage: React.FC = () => {
         currentUser {
           ...ClaimInfoCard_user
         }
+        ...actions_data
       }
     `,
     {
-      where: {
-        id: claimId,
-      },
+      claimId,
       // companyId,
     }
   )
@@ -61,7 +62,7 @@ const ClaimPage: React.FC = () => {
           <TabNavbar style={{ marginTop: 8 }} tabs={tabs} />
           <ErrorBoundary FallbackComponent={RouteErrorBoundary}>
             <React.Suspense fallback={<TabLoading />}>
-              <ActionProvider>
+              <ActionProvider claimId={claimId} data={data}>
                 <Switch>
                   {tabs.map(({ path, component: Comp, ...tab }) => (
                     <Route

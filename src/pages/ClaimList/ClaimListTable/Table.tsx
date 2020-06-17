@@ -57,13 +57,13 @@ const Table: React.FC<TableProps> = ({
       >
         <MuiTable stickyHeader {...getTableProps()}>
           <TableHead>
-            {headerGroups.map((headerGroup, index) => (
+            {headerGroups.map(headerGroup => (
               <TableRow
                 {...headerGroup.getHeaderGroupProps()}
                 key={headerGroup.getHeaderGroupProps().key}
                 className={tableClasses.tableRow}
               >
-                {headerGroup.headers.map((column, index) => (
+                {headerGroup.headers.map(column => (
                   <TableCell
                     {...column.getHeaderProps()}
                     key={column.getHeaderProps().key}
@@ -150,7 +150,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     padding: theme.spacing(),
     textAlign: 'center',
-    minWidth: 130,
+    minWidth: 150,
     borderLeft: '1px solid #fff',
     borderRight: '1px solid #fff',
   },

@@ -7,11 +7,19 @@ import { JobNotesQuery } from './__generated__/JobNotesQuery.graphql'
 import PortfolioFilter from 'components/PortfolioFilter/PortfolioFilter'
 import { PortfolioType } from './JobNotesBody/__generated__/JobNotesBodyPaginationQuery.graphql'
 import { Grid } from '@material-ui/core'
+import JobNotesActions from './JobNotesActions'
 
 const JobNotes = ({ claimId }: any) => {
   const data = useLazyLoadQuery<JobNotesQuery>(
     graphql`
       query JobNotesQuery($claimId: ID!) {
+        claimJob(where: { id: $claimId }) {
+          view {
+            actions {
+              ...JobNotesActions_actions
+            }
+          }
+        }
         ...JobNotesBody_data @arguments(claimId: $claimId)
       }
     `,
@@ -23,8 +31,8 @@ const JobNotes = ({ claimId }: any) => {
 
   return (
     <>
-      <div>Job Notes Actions</div>
-      <Grid container>
+      <JobNotesActions actions={data.claimJob?.view?.actions ?? null} />
+      <Grid container style={{ marginTop: 8 }}>
         <Grid item>
           <PortfolioFilter
             isSelectAll

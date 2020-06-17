@@ -7,6 +7,13 @@ export type JobNotesQueryVariables = {
     claimId: string;
 };
 export type JobNotesQueryResponse = {
+    readonly claimJob: {
+        readonly view: {
+            readonly actions: {
+                readonly " $fragmentRefs": FragmentRefs<"JobNotesActions_actions">;
+            };
+        } | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"JobNotesBody_data">;
 };
 export type JobNotesQuery = {
@@ -20,7 +27,40 @@ export type JobNotesQuery = {
 query JobNotesQuery(
   $claimId: ID!
 ) {
+  claimJob(where: {id: $claimId}) {
+    view {
+      actions {
+        ...JobNotesActions_actions
+      }
+    }
+    id
+  }
   ...JobNotesBody_data_15qNS2
+}
+
+fragment ActionButton_action on ActionControl {
+  label
+  isDisabled
+  isDisplay
+}
+
+fragment JobNotesActions_actions on ClaimJobAction {
+  makeLossAdjusterInitialCall {
+    ...ActionButton_action
+    id
+  }
+  makeLossAdjusterAppointment {
+    ...ActionButton_action
+    id
+  }
+  awaitingInfo {
+    ...ActionButton_action
+    id
+  }
+  addJobNote {
+    ...ActionButton_action
+    id
+  }
 }
 
 fragment JobNotesBody_data_15qNS2 on Query {
@@ -59,12 +99,56 @@ var v0 = [
     "type": "ID!"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "fields": [
+      {
+        "kind": "Variable",
+        "name": "id",
+        "variableName": "claimId"
+      }
+    ],
+    "kind": "ObjectValue",
+    "name": "where"
+  }
+],
+v2 = {
   "kind": "Variable",
   "name": "claimId",
   "variableName": "claimId"
 },
-v2 = [
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "label",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isDisabled",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isDisplay",
+    "storageKey": null
+  },
+  (v3/*: any*/)
+],
+v5 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -72,7 +156,7 @@ v2 = [
   },
   {
     "fields": [
-      (v1/*: any*/),
+      (v2/*: any*/),
       {
         "kind": "Literal",
         "name": "portfolios",
@@ -91,8 +175,46 @@ return {
     "name": "JobNotesQuery",
     "selections": [
       {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "ClaimJob",
+        "kind": "LinkedField",
+        "name": "claimJob",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ClaimJobView",
+            "kind": "LinkedField",
+            "name": "view",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ClaimJobAction",
+                "kind": "LinkedField",
+                "name": "actions",
+                "plural": false,
+                "selections": [
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "JobNotesActions_actions"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
         "args": [
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "kind": "FragmentSpread",
         "name": "JobNotesBody_data"
@@ -107,8 +229,82 @@ return {
     "name": "JobNotesQuery",
     "selections": [
       {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "ClaimJob",
+        "kind": "LinkedField",
+        "name": "claimJob",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ClaimJobView",
+            "kind": "LinkedField",
+            "name": "view",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ClaimJobAction",
+                "kind": "LinkedField",
+                "name": "actions",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "makeLossAdjusterInitialCall",
+                    "plural": false,
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "makeLossAdjusterAppointment",
+                    "plural": false,
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "awaitingInfo",
+                    "plural": false,
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ActionControl",
+                    "kind": "LinkedField",
+                    "name": "addJobNote",
+                    "plural": false,
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
         "alias": "jobNoteConnection",
-        "args": (v2/*: any*/),
+        "args": (v5/*: any*/),
         "concreteType": "ClaimNoteConnection",
         "kind": "LinkedField",
         "name": "claimNotes",
@@ -130,13 +326,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -251,7 +441,7 @@ return {
       },
       {
         "alias": "jobNoteConnection",
-        "args": (v2/*: any*/),
+        "args": (v5/*: any*/),
         "filters": [
           "claimId",
           "portfolios"
@@ -268,9 +458,9 @@ return {
     "metadata": {},
     "name": "JobNotesQuery",
     "operationKind": "query",
-    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  ...JobNotesBody_data_15qNS2\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    view {\n      actions {\n        ...JobNotesActions_actions\n      }\n    }\n    id\n  }\n  ...JobNotesBody_data_15qNS2\n}\n\nfragment ActionButton_action on ActionControl {\n  label\n  isDisabled\n  isDisplay\n}\n\nfragment JobNotesActions_actions on ClaimJobAction {\n  makeLossAdjusterInitialCall {\n    ...ActionButton_action\n    id\n  }\n  makeLossAdjusterAppointment {\n    ...ActionButton_action\n    id\n  }\n  awaitingInfo {\n    ...ActionButton_action\n    id\n  }\n  addJobNote {\n    ...ActionButton_action\n    id\n  }\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '124279b1b9cede21507b8bd4b10553ed';
+(node as any).hash = '25c8030bbded59de182ff0f3e21093dd';
 export default node;

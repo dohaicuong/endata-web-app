@@ -191,7 +191,6 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
   )
   const tableData = claims?.edges?.map(edge => {
     const claim = edge?.node
-    console.log(claim)
     const portfolios = ['Building', 'Contents', 'Restoration'].filter(
       (_, index) => {
         if (!claim?.hasBuilding && index === 0) return false
