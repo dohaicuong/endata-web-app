@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from '@material-ui/core'
 import ClaimListFilter from './ClaimListFilter'
 import ClaimListTable from './ClaimListTable'
-
+import { CircularProgress } from '@material-ui/core'
 import { useLazyLoadQuery } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { ClaimListQuery } from './__generated__/ClaimListQuery.graphql'
@@ -22,13 +22,14 @@ const ClaimList = () => {
 
   return (
     <>
-      <React.Suspense fallback="Filter loading...">
-        <ClaimListFilter
-          filters={data}
-          // waterfallFilters={data}
-          where={where}
-          setWhere={setWhere}
-        />
+      <React.Suspense
+        fallback={
+          <CircularProgress
+            style={{ position: 'absolute', top: '50%', left: '50%' }}
+          />
+        }
+      >
+        <ClaimListFilter filters={data} where={where} setWhere={setWhere} />
       </React.Suspense>
       <Container
         maxWidth="xl"
@@ -38,7 +39,13 @@ const ClaimList = () => {
           marginTop: 8,
         }}
       >
-        <React.Suspense fallback="Table loading...">
+        <React.Suspense
+          fallback={
+            <CircularProgress
+              style={{ position: 'absolute', top: '50%', left: '50%' }}
+            />
+          }
+        >
           <ClaimListTable data={data} where={where} />
         </React.Suspense>
       </Container>

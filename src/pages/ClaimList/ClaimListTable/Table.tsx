@@ -43,7 +43,7 @@ const Table: React.FC<TableProps> = ({
     },
     useExpanded
   )
-
+console.log(tableData)
   return (
     <Paper className={tableClasses.paper}>
       {isLoading && (
@@ -140,13 +140,13 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     padding: theme.spacing(),
     textAlign: 'center',
-    minWidth: 150,
+    minWidth: 130,
     borderLeft: '1px solid #fff',
     borderRight: '1px solid #fff',
   },
   tableBodyCell: {
     textAlign: 'center',
-    padding: theme.spacing(),
+    padding: theme.spacing(0.5),
   },
   tableRow: {
     '&:nth-child(even)': {

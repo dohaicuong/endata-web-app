@@ -18,6 +18,7 @@ type ClaimsTableProps = {
   claims: ClaimsTable_claims$key | null
 
   isLoadingMore: boolean
+  hasNext: boolean
   loadMore: () => void
 }
 const ClaimsTable: React.FC<ClaimsTableProps> = props => {
@@ -190,7 +191,7 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
   )
   const tableData = claims?.edges?.map(edge => {
     const claim = edge?.node
-
+console.log(claim)
     const portfolios = ['Building', 'Contents', 'Restoration'].filter(
       (_, index) => {
         if (!claim?.hasBuilding && index === 0) return false
@@ -246,6 +247,11 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
       claim?.restoration?.authorisedSupplier?.companyName ||
       claim?.restoration?.scopingSupplier?.companyName ||
       null
+    // const insuredPhone = [claim.phone1, claim.phone2, claim.phone3].filter(x => x).join(', ')
+
+    // const incidentAddress =
+    //   claim?.incidentDetail?.riskAddress &&
+    //   `${line1} ${suburb} ${state}, ${postcode}`
 
     return {
       id: claim?.id,
@@ -306,7 +312,7 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
 
     const fetchOffset = 150
     const scrollPosition = scrollTop + offsetHeight - 5
-    if (scrollHeight - scrollPosition < fetchOffset) {
+    if (props.hasNext && scrollHeight - scrollPosition < fetchOffset) {
       await props.loadMore()
     }
   }

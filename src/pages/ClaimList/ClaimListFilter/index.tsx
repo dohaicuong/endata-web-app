@@ -1,19 +1,16 @@
 import React from 'react'
 import { Paper, Grid } from '@material-ui/core'
 import PortfolioFilter from 'components/PortfolioFilter/PortfolioFilter'
-
+import { CircularProgress } from '@material-ui/core'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { ClaimListFilter_filters$key } from './__generated__/ClaimListFilter_filters.graphql'
-// import { WaterfallFiltersRefetchQuery } from './__generated__/WaterfallFiltersRefetchQuery.graphql'
-// import { ClaimListFilter_WaterfallFilters$key } from './__generated__/ClaimListFilter_WaterfallFilters.graphql'
 
 import FilterGroup from 'components/FilterGroup'
 import WaterfallView from './WaterfallView'
 
 type ClaimListFilterProps = {
   filters: ClaimListFilter_filters$key
-  // waterfallFilters: ClaimListFilter_WaterfallFilters$key
 
   where: any
   setWhere: (where: any) => void
@@ -96,7 +93,13 @@ const ClaimListFilter: React.FC<ClaimListFilterProps> = props => {
             </Grid>
 
             <Grid item xs>
-              <React.Suspense fallback="Waterfilter loading...">
+              <React.Suspense
+                fallback={
+                  <CircularProgress
+                    style={{ position: 'absolute', top: '10%', left: '50%' }}
+                  />
+                }
+              >
                 <WaterfallView
                   waterfallFilters={filters}
                   waterfallStatus={waterfallStatus}
