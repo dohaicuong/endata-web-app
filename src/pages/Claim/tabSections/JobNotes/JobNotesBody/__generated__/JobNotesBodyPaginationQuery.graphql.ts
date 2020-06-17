@@ -22,7 +22,7 @@ export type JobNotesBodyPaginationQuery = {
 
 /*
 query JobNotesBodyPaginationQuery(
-  $count: Int = 30
+  $count: Int = 500
   $cursor: String
   $claimId: ID!
   $portfolios: [PortfolioType]
@@ -34,8 +34,17 @@ fragment JobNotesBody_data_16lzxw on Query {
   jobNoteConnection: claimNotes(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {
     edges {
       node {
-        portfolioType
         id
+        portfolioType
+        logDate
+        user {
+          company {
+            companyName
+          }
+          userName
+        }
+        private
+        message
         __typename
       }
       cursor
@@ -51,7 +60,7 @@ fragment JobNotesBody_data_16lzxw on Query {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": 30,
+    "defaultValue": 500,
     "kind": "LocalArgument",
     "name": "count",
     "type": "Int"
@@ -167,6 +176,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "portfolioType",
                     "storageKey": null
                   },
@@ -174,7 +190,57 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "id",
+                    "name": "logDate",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "User",
+                    "kind": "LinkedField",
+                    "name": "user",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CompanyProfile",
+                        "kind": "LinkedField",
+                        "name": "company",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "companyName",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "userName",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "private",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "message",
                     "storageKey": null
                   },
                   {
@@ -247,9 +313,9 @@ return {
     },
     "name": "JobNotesBodyPaginationQuery",
     "operationKind": "query",
-    "text": "query JobNotesBodyPaginationQuery(\n  $count: Int = 30\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...JobNotesBody_data_16lzxw\n}\n\nfragment JobNotesBody_data_16lzxw on Query {\n  jobNoteConnection: claimNotes(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        portfolioType\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query JobNotesBodyPaginationQuery(\n  $count: Int = 500\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...JobNotesBody_data_16lzxw\n}\n\nfragment JobNotesBody_data_16lzxw on Query {\n  jobNoteConnection: claimNotes(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '518d3d844c46df05701a7c450239841e';
+(node as any).hash = '446c584cb4737f34bd38dfd277accbf1';
 export default node;

@@ -24,11 +24,20 @@ query JobNotesQuery(
 }
 
 fragment JobNotesBody_data_15qNS2 on Query {
-  jobNoteConnection: claimNotes(first: 30, where: {claimId: $claimId}) {
+  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {
     edges {
       node {
-        portfolioType
         id
+        portfolioType
+        logDate
+        user {
+          company {
+            companyName
+          }
+          userName
+        }
+        private
+        message
         __typename
       }
       cursor
@@ -59,7 +68,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 30
+    "value": 500
   },
   {
     "fields": [
@@ -125,6 +134,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "portfolioType",
                     "storageKey": null
                   },
@@ -132,7 +148,57 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "id",
+                    "name": "logDate",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "User",
+                    "kind": "LinkedField",
+                    "name": "user",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CompanyProfile",
+                        "kind": "LinkedField",
+                        "name": "company",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "companyName",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "userName",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "private",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "message",
                     "storageKey": null
                   },
                   {
@@ -202,7 +268,7 @@ return {
     "metadata": {},
     "name": "JobNotesQuery",
     "operationKind": "query",
-    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  ...JobNotesBody_data_15qNS2\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 30, where: {claimId: $claimId}) {\n    edges {\n      node {\n        portfolioType\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  ...JobNotesBody_data_15qNS2\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

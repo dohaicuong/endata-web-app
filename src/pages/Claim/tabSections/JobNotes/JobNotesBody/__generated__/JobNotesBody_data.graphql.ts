@@ -8,7 +8,17 @@ export type JobNotesBody_data = {
     readonly jobNoteConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly id: string;
                 readonly portfolioType: PortfolioType | null;
+                readonly logDate: unknown | null;
+                readonly user: {
+                    readonly company: {
+                        readonly companyName: string;
+                    } | null;
+                    readonly userName: string;
+                } | null;
+                readonly private: unknown | null;
+                readonly message: string;
             } | null;
         } | null> | null;
     } | null;
@@ -29,7 +39,7 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
+      "defaultValue": 500,
       "kind": "LocalArgument",
       "name": "count",
       "type": "Int"
@@ -106,7 +116,71 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "portfolioType",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "logDate",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "User",
+                  "kind": "LinkedField",
+                  "name": "user",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CompanyProfile",
+                      "kind": "LinkedField",
+                      "name": "company",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "companyName",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "userName",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "private",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "message",
                   "storageKey": null
                 },
                 {
@@ -161,5 +235,5 @@ return {
   "type": "Query"
 };
 })();
-(node as any).hash = '518d3d844c46df05701a7c450239841e';
+(node as any).hash = '446c584cb4737f34bd38dfd277accbf1';
 export default node;

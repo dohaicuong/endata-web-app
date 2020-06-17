@@ -24,7 +24,7 @@ const JobNotes = ({ claimId }: any) => {
   return (
     <>
       <div>Job Notes Actions</div>
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid item>
           <PortfolioFilter
             isSelectAll
@@ -34,11 +34,8 @@ const JobNotes = ({ claimId }: any) => {
           />
         </Grid>
         <Grid item xs>
-          <React.Suspense fallback='Loading...'>
-            <JobNotesBody
-              data={data}
-              portfolio={portfolio}
-            />
+          <React.Suspense fallback="Loading...">
+            <JobNotesBody data={data} portfolio={portfolio} />
           </React.Suspense>
         </Grid>
       </Grid>
