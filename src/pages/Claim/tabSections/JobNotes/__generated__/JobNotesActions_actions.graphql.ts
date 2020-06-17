@@ -10,6 +10,9 @@ export type JobNotesActions_actions = {
     readonly makeLossAdjusterAppointment: {
         readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
     };
+    readonly updateReserve: {
+        readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
+    };
     readonly awaitingInfo: {
         readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
     };
@@ -65,6 +68,16 @@ return {
       "args": null,
       "concreteType": "ActionControl",
       "kind": "LinkedField",
+      "name": "updateReserve",
+      "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ActionControl",
+      "kind": "LinkedField",
       "name": "awaitingInfo",
       "plural": false,
       "selections": (v0/*: any*/),
@@ -84,5 +97,5 @@ return {
   "type": "ClaimJobAction"
 };
 })();
-(node as any).hash = '6f0d2cbfc195a026fe81049d21721c8e';
+(node as any).hash = '93837750164f34098ffa9e82001a5e48';
 export default node;

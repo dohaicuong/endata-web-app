@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dialog, Grid } from '@material-ui/core'
+import { Dialog, Grid, makeStyles } from '@material-ui/core'
 import PortfolioIcon from 'components/PortfolioIcon'
 import Info from 'components/Info'
 
@@ -22,6 +22,8 @@ const NextStepAction: React.FC<NextStepActionProps> = ({
   onClose,
   ...props
 }) => {
+  const classes = useStyles()
+
   const [data, refetch] = useRefetchableFragment<
     NextStepActionRefetchQuery,
     NextStepAction_data$key
@@ -49,19 +51,19 @@ const NextStepAction: React.FC<NextStepActionProps> = ({
   }, [open, refetch])
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} classes={{ paper: classes.paper }}>
       {!data?.claimNextStep ? (
         'Loading...'
       ) : (
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify="center" alignItems="center" className={classes.container}>
           {data?.claimNextStep.map((step, index) => {
             if (!step) return null
 
             return (
               <Grid item xs key={index}>
-                <PortfolioIcon portfolio={step.portfolioType as any} />
-                <Info label={step.statusName} value={step.description} />
-                <Info label="Next step" value={step.nextStep} />
+                <PortfolioIcon portfolio={step.portfolioType as any} className={classes.portfolioIcon} />
+                <Info label={step.statusName} value={step.description} fullWidth rowsMax={8} />
+                <Info label="Next step" value={step.nextStep} fullWidth rowsMax={8} />
               </Grid>
             )
           })}
@@ -71,6 +73,19 @@ const NextStepAction: React.FC<NextStepActionProps> = ({
   )
 }
 export default NextStepAction
+const useStyles = makeStyles(theme => ({
+  paper: {
+    minWidth: '60%',
+  },
+  container: {
+    padding: theme.spacing(2)
+  },
+  portfolioIcon: {
+    margin: '0 auto 20px auto',
+    display: 'flex',
+    fontSize: '2.5rem',
+  }
+}))
 
 export type useNextStepActionProps = {
   defaultOpen?: boolean

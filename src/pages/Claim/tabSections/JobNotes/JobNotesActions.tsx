@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { makeStyles, Paper, Button } from '@material-ui/core'
 import { useClaimAction } from 'pages/Claim/actions'
+import ActionButton from 'dataComponents/ActionButton'
+
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
-import ActionButton from 'dataComponents/ActionButton'
 import { JobNotesActions_actions$key } from './__generated__/JobNotesActions_actions.graphql'
 
 type JobNotesActionsProps = {
@@ -22,7 +24,9 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
         makeLossAdjusterAppointment {
           ...ActionButton_action
         }
-
+        updateReserve {
+          ...ActionButton_action
+        }
         awaitingInfo {
           ...ActionButton_action
         }
@@ -33,8 +37,6 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
     `,
     props.actions
   )
-
-  console.log(actions)
 
   return (
     <Paper className={classes.actionRoot}>
@@ -50,7 +52,7 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
       <div className={classes.pad} />
       <ActionButton action={actions?.makeLossAdjusterInitialCall ?? null} />
       <ActionButton action={actions?.makeLossAdjusterAppointment ?? null} />
-      {/* <ActionButton label='Change Appointment' /> */}
+      <ActionButton action={actions?.updateReserve ?? null} />
       <ActionButton action={actions?.awaitingInfo ?? null} />
       <ActionButton action={actions?.addJobNote ?? null} />
     </Paper>
