@@ -148,6 +148,7 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
           {multiple && (
             <Checkbox
               icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+              color="primary"
               checkedIcon={<CheckBoxIcon fontSize="small" />}
               style={{ marginRight: 8 }}
               checked={selected}

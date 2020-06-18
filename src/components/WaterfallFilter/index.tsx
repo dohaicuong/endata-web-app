@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core'
-import CheckIcon from '@material-ui/icons/Check'
 
 export type WaterfallFilterProps = {
   value: any
@@ -46,19 +45,34 @@ const WaterfallFilter: React.FC<WaterfallFilterProps> = ({
                   fontWeight: 600,
                   border: '1px solid rgba(0, 0, 0, 0.12)',
                   display: 'flex',
-                  background: color,
-                  color: 'rgba(0, 0, 0, 0.87)',
-                  // background: selected === value ? '#444' : color,
-                  // color: selected === value ? '#fff' : 'rgba(0, 0, 0, 0.87)',
+                  // background: color,
+                  // color: 'rgba(0, 0, 0, 0.87)',
+                  background:
+                    selected === value ? 'rgba(0, 0, 0, 0.87)' : color,
+                  color: selected === value ? '#fff' : 'rgba(0, 0, 0, 0.87)',
                 }}
                 // variant='contained'
-                onClick={() => setValue(value)}
+                onClick={() =>
+                  !selected
+                    ? setValue(value)
+                    : selected !== value
+                    ? setValue(value)
+                    : setValue(null)
+                }
                 fullWidth
               >
-                <span style={{ flexGrow: 1 }}>
-                  {claimCount} | {label}
-                </span>
-                {selected === value && <CheckIcon />}
+                <div
+                  style={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <div> {label} </div>
+                  <div style={{ justifyContent:'' }}>
+                    <span>{claimCount}</span>
+                  </div>
+                </div>
               </Button>
             </Grid>
           ))}

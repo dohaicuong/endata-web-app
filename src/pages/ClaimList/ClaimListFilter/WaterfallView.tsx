@@ -51,6 +51,12 @@ const WaterfallView: React.FC<WaterfallViewProps> = props => {
 
   // refetch waterfall filter when where filter changed
   const whereString = JSON.stringify(props.where)
+  const getWaterfallWhere = (where: any) => {
+    ['status', 'portfolios', 'suppliers'].forEach(e => {
+      Object.keys(where).indexOf(e) !== -1 && delete where[e]
+    })
+    return where
+  }
   React.useEffect(() => {
     const {
       claimStatusStageIds, // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -59,7 +65,7 @@ const WaterfallView: React.FC<WaterfallViewProps> = props => {
     refetch(
       {
         waterfallWhere: {
-          ...where,
+          ...getWaterfallWhere(where),
           claimPortfolioType: portfolio,
         },
       },
