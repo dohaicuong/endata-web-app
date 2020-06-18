@@ -45,7 +45,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
           }
         }}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onSubmit={values => {}}
+        onSubmit={() => {}}
       >
         <Form>
           <Grid container spacing={1}>
