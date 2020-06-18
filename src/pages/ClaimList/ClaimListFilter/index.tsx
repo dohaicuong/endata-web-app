@@ -38,11 +38,8 @@ const ClaimListFilter: React.FC<ClaimListFilterProps> = props => {
     <FilterInputGroup
       filters={filters.currentUser?.claimFilters}
       onChange={values => {
-        const cleanedValues = Object.fromEntries(
-          Object.entries(values).filter(([, value]) => value)
-        )
         props.setWhere({
-          ...cleanedValues,
+          ...values,
           claimStatusStageIds: waterfallStatus,
         })
       }}

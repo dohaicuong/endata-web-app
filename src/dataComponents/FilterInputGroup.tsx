@@ -37,7 +37,12 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
         initialValues={{}}
         validateOnChange
         validate={values => {
-          if (onChange) onChange(values)
+          if (onChange) {
+            const cleanedValues = Object.fromEntries(
+              Object.entries(values).filter(([, value]) => value)
+            )
+            onChange(cleanedValues)
+          }
         }}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onSubmit={values => {}}
