@@ -28,17 +28,17 @@ const DashboardPage: React.FC = () => {
 
   return (
     <ErrorBoundary fallback={<>Dashboard Error</>}>
-      <React.Suspense fallback='Filter loading...'>
+      <React.Suspense fallback="Filter loading...">
         <FilterInputGroup
           filters={data.currentUser?.dashboardFilters}
           onChange={values => console.log(values)}
         />
         {/* <TableFilter data={data} value={value} setValue={setValue} /> */}
       </React.Suspense>
-      <React.Suspense fallback='KPI loading...'>
+      <React.Suspense fallback="KPI loading...">
         {/* <KPITable data={data} /> */}
       </React.Suspense>
-      <React.Suspense fallback='Widgets loading...'>
+      <React.Suspense fallback="Widgets loading...">
         {/* <Widgets data={data} /> */}
       </React.Suspense>
     </ErrorBoundary>

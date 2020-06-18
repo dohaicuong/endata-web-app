@@ -23,7 +23,7 @@ const FilterInput: React.FC<FilterInputProps> = props => {
     `,
     props.data
   )
-  
+
   const [filterType, isMultiple] = (data?.type ?? '').split('_')
   const Filter = React.useMemo(
     () => React.lazy(() => import(`components/Formik/${filterType}Field`)),
@@ -32,14 +32,15 @@ const FilterInput: React.FC<FilterInputProps> = props => {
 
   if (!Filter) return null
   return (
-    <React.Suspense fallback={<ComboBoxField loading variant="outlined" name="wating..." />}>
+    <React.Suspense
+      fallback={<ComboBoxField loading variant="outlined" name="wating..." />}
+    >
       <Filter
         name={data?.name}
         label={data?.label}
         options={data?.options ?? []}
         multiple={isMultiple ? true : false}
-
-        variant='outlined'
+        variant="outlined"
         fullWidth
       />
     </React.Suspense>

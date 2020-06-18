@@ -10,11 +10,16 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 type FilterInputGroupProps = {
   filters: any
   onChange?: (values: any) => void
-  
+
   subview?: any
   onViewChange?: (isSub: boolean) => void
 }
-const FilterInputGroup: React.FC<FilterInputGroupProps> = ({ filters, onChange, onViewChange, subview }) => {
+const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
+  filters,
+  onChange,
+  onViewChange,
+  subview,
+}) => {
   const [isExpand, setIsExpand] = React.useState(false)
   const [isSubview, setIsSubView] = React.useState(false)
   const handleViewChange = () => {
@@ -25,14 +30,14 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({ filters, onChange, 
   const firstRowFilters = 6
   const firstRow = filters.slice(0, firstRowFilters)
   const secondRow = filters.slice(firstRowFilters)
-  
+
   return (
     <Paper style={{ padding: 16 }}>
       <Formik
         initialValues={{}}
         validateOnChange
         validate={values => {
-          if(onChange) onChange(values)
+          if (onChange) onChange(values)
         }}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onSubmit={values => {}}
@@ -40,15 +45,15 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({ filters, onChange, 
         <Form>
           <Grid container spacing={1}>
             <Grid item xs>
-              {isSubview
-                ? <>{subview}</>
-                : (
+              {isSubview ? (
+                <>{subview}</>
+              ) : (
                 <>
                   <Grid container spacing={2}>
                     {firstRow?.map((data: any, index: number) => (
                       <Grid item xs={2} key={index}>
                         <FilterInput data={data} />
-                      </Grid>  
+                      </Grid>
                     ))}
                   </Grid>
                   <Collapse
@@ -60,7 +65,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({ filters, onChange, 
                       {secondRow?.map((data: any, index: number) => (
                         <Grid item xs={2} key={index}>
                           <FilterInput data={data} />
-                        </Grid>  
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -68,7 +73,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({ filters, onChange, 
               )}
             </Grid>
             <Grid item>
-              <Grid container direction='column'>
+              <Grid container direction="column">
                 {Boolean(subview) && (
                   <Grid item xs={6} style={{ minHeight: 48 }}>
                     <IconButton
