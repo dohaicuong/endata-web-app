@@ -56,7 +56,7 @@ const ClaimListTable: React.FC<ClaimListTableProps> = props => {
 
   const whereString = JSON.stringify(props.where)
   React.useEffect(() => {
-    refetch({ where: props.where }, { fetchPolicy: 'store-and-network' })
+    if(Object.keys(whereString).length) refetch({ where: props.where }, { fetchPolicy: 'store-and-network' })
     // eslint-disable-next-line
   }, [whereString, refetch])
 
