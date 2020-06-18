@@ -49,7 +49,7 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
       // TODO
       const currentValue = multiple
         ? // eslint-disable-next-line
-        options.filter(option => fieldValue.includes(option.value))
+        options.filter(option => fieldValue?.includes(option.value))
         : // eslint-disable-next-line
         options.find(option => option.value == fieldValue)
 
