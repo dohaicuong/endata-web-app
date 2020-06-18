@@ -69,7 +69,7 @@ const WaterfallFilter: React.FC<WaterfallFilterProps> = ({
                   }}
                 >
                   <div> {label} </div>
-                  <div style={{ justifyContent:'' }}>
+                  <div style={{ justifyContent: '' }}>
                     <span>{claimCount}</span>
                   </div>
                 </div>
