@@ -153,7 +153,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     padding: theme.spacing(),
     textAlign: 'center',
-    minWidth: 150,
+    minWidth: 130,
     borderLeft: '1px solid #fff',
     borderRight: '1px solid #fff',
   },
