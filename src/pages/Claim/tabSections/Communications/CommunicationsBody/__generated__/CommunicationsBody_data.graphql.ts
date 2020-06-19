@@ -28,6 +28,7 @@ export type CommunicationsBody_data = {
                         readonly isDisplay: boolean;
                     };
                 };
+                readonly " $fragmentRefs": FragmentRefs<"CommunicationAcknowledge_communication">;
             } | null;
         } | null> | null;
     } | null;
@@ -261,6 +262,11 @@ return {
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CommunicationAcknowledge_communication"
                 }
               ],
               "storageKey": null
@@ -307,5 +313,5 @@ return {
   "type": "Query"
 };
 })();
-(node as any).hash = '419e623a14e5f4ef42683207398f4732';
+(node as any).hash = '6d6857af1a2f46699448e90bbf8fda71';
 export default node;

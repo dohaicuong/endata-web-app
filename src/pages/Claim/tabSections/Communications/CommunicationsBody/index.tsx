@@ -2,6 +2,7 @@ import React from 'react'
 import { usePaginationFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import Table from 'pages/ClaimList/ClaimListTable/Table'
+import CommunicationAcknowledge from 'dataComponents/claimActions/CommunicationAcknowledge'
 import {
   CommunicationsBodyPaginationQuery,
   PortfolioType,
@@ -57,6 +58,7 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
                   isDisplay
                 }
               }
+              ...CommunicationAcknowledge_communication
             }
           }
         }
@@ -78,7 +80,7 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
       user: node?.senderName,
       receiver: node?.recieverCompanyName,
       privacy: node?.private ? 'Private' : 'Public',
-      Acknowledged: '123',
+      acknowledged: node,
       message: node?.message,
     }
   })
@@ -88,7 +90,18 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
     { Header: 'User', accessor: 'user' },
     { Header: 'Receiver', accessor: 'receiver' },
     { Header: 'Privacy', accessor: 'privacy' },
-    { Header: 'Acknowledged', accessor: 'acknowledged' },
+    {
+      Header: 'Acknowledged',
+      accessor: 'acknowledged',
+      Cell: ({ value }: any) => {
+        console.log(value)
+        return (
+          <>
+            <CommunicationAcknowledge communication={value} />
+          </>
+        )
+      },
+    },
     { Header: 'Message', accessor: 'message' },
   ]
   return (

@@ -23,6 +23,12 @@ query CommunicationsQuery(
   ...CommunicationsBody_data_15qNS2
 }
 
+fragment CommunicationAcknowledge_communication on ClaimCommunication {
+  acknowledged
+  communicationId
+  portfolioType
+}
+
 fragment CommunicationsBody_data_15qNS2 on Query {
   communicationsConnection: claimCommuications(first: 15, where: {claimId: $claimId}) {
     edges {
@@ -48,6 +54,7 @@ fragment CommunicationsBody_data_15qNS2 on Query {
             id
           }
         }
+        ...CommunicationAcknowledge_communication
         id
         __typename
       }
@@ -351,7 +358,7 @@ return {
     "metadata": {},
     "name": "CommunicationsQuery",
     "operationKind": "query",
-    "text": "query CommunicationsQuery(\n  $claimId: ID!\n) {\n  ...CommunicationsBody_data_15qNS2\n}\n\nfragment CommunicationsBody_data_15qNS2 on Query {\n  communicationsConnection: claimCommuications(first: 15, where: {claimId: $claimId}) {\n    edges {\n      node {\n        acknowledged\n        claimId\n        communicationId\n        message\n        acknowledgeUserName\n        acknowledgeDate\n        portfolioType\n        recieverCompanyId\n        recieverCompanyName\n        sendDate\n        senderCompanyId\n        senderCompanyName\n        senderId\n        senderName\n        private\n        actions {\n          acknowledge {\n            isDisplay\n            id\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CommunicationsQuery(\n  $claimId: ID!\n) {\n  ...CommunicationsBody_data_15qNS2\n}\n\nfragment CommunicationAcknowledge_communication on ClaimCommunication {\n  acknowledged\n  communicationId\n  portfolioType\n}\n\nfragment CommunicationsBody_data_15qNS2 on Query {\n  communicationsConnection: claimCommuications(first: 15, where: {claimId: $claimId}) {\n    edges {\n      node {\n        acknowledged\n        claimId\n        communicationId\n        message\n        acknowledgeUserName\n        acknowledgeDate\n        portfolioType\n        recieverCompanyId\n        recieverCompanyName\n        sendDate\n        senderCompanyId\n        senderCompanyName\n        senderId\n        senderName\n        private\n        actions {\n          acknowledge {\n            isDisplay\n            id\n          }\n        }\n        ...CommunicationAcknowledge_communication\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -30,6 +30,12 @@ query CommunicationsBodyPaginationQuery(
   ...CommunicationsBody_data_16lzxw
 }
 
+fragment CommunicationAcknowledge_communication on ClaimCommunication {
+  acknowledged
+  communicationId
+  portfolioType
+}
+
 fragment CommunicationsBody_data_16lzxw on Query {
   communicationsConnection: claimCommuications(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {
     edges {
@@ -55,6 +61,7 @@ fragment CommunicationsBody_data_16lzxw on Query {
             id
           }
         }
+        ...CommunicationAcknowledge_communication
         id
         __typename
       }
@@ -396,9 +403,9 @@ return {
     },
     "name": "CommunicationsBodyPaginationQuery",
     "operationKind": "query",
-    "text": "query CommunicationsBodyPaginationQuery(\n  $count: Int = 15\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...CommunicationsBody_data_16lzxw\n}\n\nfragment CommunicationsBody_data_16lzxw on Query {\n  communicationsConnection: claimCommuications(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        acknowledged\n        claimId\n        communicationId\n        message\n        acknowledgeUserName\n        acknowledgeDate\n        portfolioType\n        recieverCompanyId\n        recieverCompanyName\n        sendDate\n        senderCompanyId\n        senderCompanyName\n        senderId\n        senderName\n        private\n        actions {\n          acknowledge {\n            isDisplay\n            id\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CommunicationsBodyPaginationQuery(\n  $count: Int = 15\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...CommunicationsBody_data_16lzxw\n}\n\nfragment CommunicationAcknowledge_communication on ClaimCommunication {\n  acknowledged\n  communicationId\n  portfolioType\n}\n\nfragment CommunicationsBody_data_16lzxw on Query {\n  communicationsConnection: claimCommuications(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        acknowledged\n        claimId\n        communicationId\n        message\n        acknowledgeUserName\n        acknowledgeDate\n        portfolioType\n        recieverCompanyId\n        recieverCompanyName\n        sendDate\n        senderCompanyId\n        senderCompanyName\n        senderId\n        senderName\n        private\n        actions {\n          acknowledge {\n            isDisplay\n            id\n          }\n        }\n        ...CommunicationAcknowledge_communication\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '419e623a14e5f4ef42683207398f4732';
+(node as any).hash = '6d6857af1a2f46699448e90bbf8fda71';
 export default node;
