@@ -5,14 +5,20 @@ import NextStepAction, {
   NextStepActions,
   useNextStepAction,
 } from './NextStepAction'
+import NewMessageAction, {
+  NewMessageActions,
+  useNewMessageAction,
+} from './NewMessageAction'
 import { useFragment } from 'react-relay/hooks'
 
 const placeHolderAction = () => console.log('action loading...')
 export type ActionContextValue = {
   nextStep: NextStepActions
+  newMessage: NewMessageActions
 }
 export const ActionContext = React.createContext<ActionContextValue>({
   nextStep: { handleOpen: placeHolderAction, handleClose: placeHolderAction },
+  newMessage: { handleOpen: placeHolderAction, handleClose: placeHolderAction },
 })
 export const useClaimAction = () => {
   const value = React.useContext(ActionContext)
@@ -31,6 +37,11 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
     handleNextActionOpen,
     handleNextActionClose,
   ] = useNextStepAction({})
+  // const [
+  //   isNextActionOpen,
+  //   handleNextActionOpen,
+  //   handleNextActionClose,
+  // ] = useNewMessageAction({})
 
   const data = useFragment(
     graphql`
@@ -46,6 +57,10 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
       <ActionContext.Provider
         value={{
           nextStep: {
+            handleOpen: handleNextActionOpen,
+            handleClose: handleNextActionClose,
+          },
+          newMessage: {
             handleOpen: handleNextActionOpen,
             handleClose: handleNextActionClose,
           },
