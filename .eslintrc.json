@@ -17,6 +17,7 @@
     "jest": true
   },
   "rules": {
+    "react/display-name": "off",
     "react/prop-types": 0,
     "multiline-ternary": "off",
     "@typescript-eslint/no-explicit-any": "off",
