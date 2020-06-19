@@ -28,7 +28,7 @@ const DocumentView: React.FC<DocumentViewProps> = props => {
   // }, [url])
 
   return (
-    <IconButton component='a' target='_blank' href={data?.url}>
+    <IconButton component="a" target="_blank" href={data?.url}>
       <DescriptionIcon />
     </IconButton>
   )
