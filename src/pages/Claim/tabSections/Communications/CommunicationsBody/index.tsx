@@ -94,7 +94,6 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
       Header: 'Acknowledged',
       accessor: 'acknowledged',
       Cell: ({ value }: any) => {
-        console.log(value)
         return (
           <>
             <CommunicationAcknowledge communication={value} />
