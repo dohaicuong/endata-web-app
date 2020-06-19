@@ -43,7 +43,6 @@ const NewMessageAction: React.FC<any> = ({
     <Formik
       initialValues={{}}
       validate={values => {
-        
         // if (values && onChange) onChange(values)
       }}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -66,10 +65,7 @@ const NewMessageAction: React.FC<any> = ({
           />
           <CardContent>
             <ComboBoxField loading variant="outlined" name="wating..." />
-            <TextField 
-              label="Tenant Name"
-              name="tenantName"
-              />
+            <TextField label="Tenant Name" name="tenantName" />
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites"></IconButton>
