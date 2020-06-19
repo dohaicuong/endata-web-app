@@ -37,11 +37,11 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
     handleNextActionOpen,
     handleNextActionClose,
   ] = useNextStepAction({})
-  // const [
-  //   isNextActionOpen,
-  //   handleNextActionOpen,
-  //   handleNextActionClose,
-  // ] = useNewMessageAction({})
+  const [
+    isNewMessageOpen,
+    handleNewMessageOpen,
+    handleNewMessageClose,
+  ] = useNewMessageAction({})
 
   const data = useFragment(
     graphql`
@@ -61,8 +61,8 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
             handleClose: handleNextActionClose,
           },
           newMessage: {
-            handleOpen: handleNextActionOpen,
-            handleClose: handleNextActionClose,
+            handleOpen: handleNewMessageOpen,
+            handleClose: handleNewMessageClose,
           },
         }}
       >
@@ -74,6 +74,13 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
           open={isNextActionOpen}
           onClose={handleNextActionClose}
           data={data}
+        />
+      </React.Suspense>
+      <React.Suspense fallback={null}>
+        <NewMessageAction
+          open={isNewMessageOpen}
+          onClose={handleNewMessageClose}
+          onOpen={handleNewMessageOpen}
         />
       </React.Suspense>
     </>
