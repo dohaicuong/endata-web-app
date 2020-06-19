@@ -32,7 +32,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
   const secondRow = filters.slice(firstRowFilters)
 
   return (
-    <Paper style={{ padding: 16 }}>
+    <Paper style={{ padding: 8 }}>
       <Formik
         initialValues={{}}
         validateOnChange
