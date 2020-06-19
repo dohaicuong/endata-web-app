@@ -1,8 +1,20 @@
 import React from 'react'
-import { Dialog, Grid, makeStyles } from '@material-ui/core'
+import {
+  Card,
+  Grid,
+  makeStyles,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Typography,
+  IconButton,
+} from '@material-ui/core'
+import { Formik, Form } from 'formik'
+import { Minimize, Clear } from '@material-ui/icons'
+import ComboBoxField from 'components/Formik/ComboBoxField'
+import TextField from 'components/Formik/TextField'
 import PortfolioIcon from 'components/PortfolioIcon'
 import Info from 'components/Info'
-
 import { useRefetchableFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 // import { NextStepActionRefetchQuery } from './__generated__/NextStepActionRefetchQuery.graphql'
@@ -20,74 +32,54 @@ export type NextStepActionProps = {
   onClose: () => void
   // data: NextStepAction_data$key | null
 }
-const NewMessageAction: React.FC<any> = ({ open, onClose, ...props }) => {
+const NewMessageAction: React.FC<any> = ({
+  open,
+  onClose,
+  onOpen,
+  ...props
+}) => {
   const classes = useStyles()
-
-  // const [data, refetch] = useRefetchableFragment<
-  //   NextStepActionRefetchQuery,
-  //   NextStepAction_data$key
-  // >(
-  //   graphql`
-  //     fragment NextStepAction_data on Query
-  //       @refetchable(queryName: "NextStepActionRefetchQuery")
-  //       @argumentDefinitions(
-  //         isOpen: { type: "Boolean", defaultValue: false }
-  //         claimId: { type: "ID!" }
-  //       ) {
-  //       claimNextStep(where: { id: $claimId }) @include(if: $isOpen) {
-  //         statusName
-
-  //         description
-  //         nextStep
-  //         portfolioType
-  //       }
-  //     }
-  //   `,
-  //   props.data
-  // )
-  // React.useEffect(() => {
-  //   if (open) refetch({ isOpen: true })
-  // }, [open, refetch])
-
   return (
-    <Dialog onClose={onClose} open={open} classes={{ paper: classes.paper }}>
-      <h1>test</h1>
-      {/* {!data?.claimNextStep ? (
-        'Loading...'
+    <Formik
+      initialValues={{}}
+      validate={values => {
+        
+        // if (values && onChange) onChange(values)
+      }}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      onSubmit={() => {}}
+    >
+      {open ? (
+        <Card style={{ width: '500px', position: 'fixed', bottom: '0' }}>
+          <CardHeader
+            title="New Communication"
+            action={
+              <>
+                <IconButton aria-label="settings" onClick={onClose}>
+                  <Minimize />
+                </IconButton>
+                <IconButton aria-label="settings" onClick={onClose}>
+                  <Clear />
+                </IconButton>
+              </>
+            }
+          />
+          <CardContent>
+            <ComboBoxField loading variant="outlined" name="wating..." />
+            <TextField 
+              label="Tenant Name"
+              name="tenantName"
+              />
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites"></IconButton>
+            <IconButton aria-label="share"></IconButton>
+          </CardActions>
+        </Card>
       ) : (
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          className={classes.container}
-        >
-          {data?.claimNextStep.map((step, index) => {
-            if (!step) return null
-
-            return (
-              <Grid item xs key={index}>
-                <PortfolioIcon
-                  portfolio={step.portfolioType as any}
-                  className={classes.portfolioIcon}
-                />
-                <Info
-                  label={step.statusName}
-                  value={step.description}
-                  fullWidth
-                  rowsMax={8}
-                />
-                <Info
-                  label="Next step"
-                  value={step.nextStep}
-                  fullWidth
-                  rowsMax={8}
-                />
-              </Grid>
-            )
-          })}
-        </Grid>
-      )} */}
-    </Dialog>
+        <div></div>
+      )}
+    </Formik>
   )
 }
 export default NewMessageAction
