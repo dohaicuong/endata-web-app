@@ -18,9 +18,6 @@ const DashboardPage: React.FC = () => {
             ...FilterInput_data
           }
         }
-        # ...TableFilter_data
-        # ...KPITable_data @arguments(where: $where)
-        # ...Widgets_data @arguments(where: $where)
       }
     `,
     {}

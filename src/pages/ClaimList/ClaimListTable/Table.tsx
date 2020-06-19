@@ -46,11 +46,11 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <Paper className={tableClasses.paper}>
-      {isLoading && (
+      {/* {isLoading && (
         <div className={tableClasses.loading}>
           <CircularProgress />
         </div>
-      )}
+      )} */}
       <TableContainer
         className={tableClasses.tableContainer}
         onScroll={onScroll}
@@ -122,6 +122,20 @@ const Table: React.FC<TableProps> = ({
                 </React.Fragment>
               )
             })}
+            {isLoading && (
+              <TableRow>
+                <TableCell
+                  colSpan={flatColumns.length}
+                  className={tableClasses.tableBodyCell}
+                >
+                  <div>
+                    <CircularProgress
+                      style={{ display: 'block', margin: '0 auto' }}
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </MuiTable>
       </TableContainer>
