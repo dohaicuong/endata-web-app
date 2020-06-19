@@ -1,22 +1,22 @@
 import React from 'react'
 import {
   Card,
-  Grid,
-  makeStyles,
+  // Grid,
+  // makeStyles,
   CardHeader,
   CardContent,
   CardActions,
-  Typography,
+  // Typography,
   IconButton,
 } from '@material-ui/core'
-import { Formik, Form } from 'formik'
+import { Formik } from 'formik' // Form
 import { Minimize, Clear } from '@material-ui/icons'
 import ComboBoxField from 'components/Formik/ComboBoxField'
 import TextField from 'components/Formik/TextField'
-import PortfolioIcon from 'components/PortfolioIcon'
-import Info from 'components/Info'
-import { useRefetchableFragment } from 'react-relay/hooks'
-import { graphql } from 'babel-plugin-relay/macro'
+// import PortfolioIcon from 'components/PortfolioIcon'
+// import Info from 'components/Info'
+// import { useRefetchableFragment } from 'react-relay/hooks'
+// import { graphql } from 'babel-plugin-relay/macro'
 // import { NextStepActionRefetchQuery } from './__generated__/NextStepActionRefetchQuery.graphql'
 // import { NextStepAction_data$key } from './__generated__/NextStepAction_data.graphql'
 
@@ -38,7 +38,7 @@ const NewMessageAction: React.FC<any> = ({
   onOpen,
   ...props
 }) => {
-  const classes = useStyles()
+  // const classes = useStyles()
   return (
     <Formik
       initialValues={{}}
@@ -83,19 +83,19 @@ const NewMessageAction: React.FC<any> = ({
   )
 }
 export default NewMessageAction
-const useStyles = makeStyles(theme => ({
-  paper: {
-    minWidth: '60%',
-  },
-  container: {
-    padding: theme.spacing(2),
-  },
-  portfolioIcon: {
-    margin: '0 auto 20px auto',
-    display: 'flex',
-    fontSize: '2.5rem',
-  },
-}))
+// const useStyles = makeStyles(theme => ({
+//   paper: {
+//     minWidth: '60%',
+//   },
+//   container: {
+//     padding: theme.spacing(2),
+//   },
+//   portfolioIcon: {
+//     margin: '0 auto 20px auto',
+//     display: 'flex',
+//     fontSize: '2.5rem',
+//   },
+// }))
 
 export type useNewMessageProps = {
   defaultOpen?: boolean
