@@ -1,8 +1,8 @@
 import React from 'react'
 import { Paper, Button, makeStyles } from '@material-ui/core'
 import { useClaimAction } from 'pages/Claim/actions'
-import { useFragment } from 'react-relay/hooks'
-import { graphql } from 'babel-plugin-relay/macro'
+// import { useFragment } from 'react-relay/hooks'
+// import { graphql } from 'babel-plugin-relay/macro'
 // import { JobInfoActions_actions$key } from './__generated__/JobInfoActions_actions.graphql'
 
 type JobInfoActionsProps = {
@@ -10,7 +10,7 @@ type JobInfoActionsProps = {
 }
 const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
   const classes = useStyles()
-  const { nextStep, newMessage } = useClaimAction()
+  const { nextStep } = useClaimAction()
 
   // const actions = useFragment(
   //   graphql`
@@ -44,7 +44,7 @@ const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
         variant="outlined"
         size="large"
         type="submit"
-        onClick={newMessage.handleOpen}
+        // onClick={newMessage.handleOpen}
       >
         New Message
       </Button>

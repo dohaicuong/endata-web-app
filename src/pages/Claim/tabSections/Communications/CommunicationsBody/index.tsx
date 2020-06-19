@@ -107,7 +107,7 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
   return (
     <Table
       tableData={tableData}
-      // isLoading={isLoadingNext}
+      isLoading={isLoadingNext}
       tableColumns={tableColumns}
     />
   )
