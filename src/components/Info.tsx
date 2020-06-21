@@ -12,7 +12,7 @@ const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
   rowsMax = 3,
   className,
   startAdornment,
-  variant,
+  variant, // eslint-disable-line @typescript-eslint/no-unused-vars
   ...props
 }) => {
   const classes = useStyles()
