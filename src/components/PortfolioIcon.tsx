@@ -4,9 +4,10 @@ import { SvgIconProps } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import LiveTvIcon from '@material-ui/icons/LiveTv'
 import HealingIcon from '@material-ui/icons/Healing'
+import { PortfolioType } from 'pages/ClaimList/ClaimListTable/__generated__/ClaimListTablePaginationQuery.graphql'
 
 type PortfolioIconProps = SvgIconProps & {
-  portfolio: 'Building' | 'Contents' | 'Restoration'
+  portfolio: PortfolioType
 }
 
 const PortfolioIcon: React.FC<PortfolioIconProps> = ({

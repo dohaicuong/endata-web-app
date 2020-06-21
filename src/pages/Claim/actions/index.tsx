@@ -1,8 +1,11 @@
 import React from 'react'
+import { graphql } from 'babel-plugin-relay/macro'
+
 import NextStepAction, {
   NextStepActions,
   useNextStepAction,
 } from './NextStepAction'
+import { useFragment } from 'react-relay/hooks'
 
 const placeHolderAction = () => console.log('action loading...')
 export type ActionContextValue = {
@@ -16,12 +19,27 @@ export const useClaimAction = () => {
   return value
 }
 
-const ActionProvider: React.FC = ({ children }) => {
+type ActionProviderProps = {
+  data: any
+}
+const ActionProvider: React.FC<ActionProviderProps> = ({
+  children,
+  ...props
+}) => {
   const [
     isNextActionOpen,
     handleNextActionOpen,
     handleNextActionClose,
   ] = useNextStepAction({})
+
+  const data = useFragment(
+    graphql`
+      fragment actions_data on Query {
+        ...NextStepAction_data @arguments(claimId: $claimId)
+      }
+    `,
+    props.data
+  )
 
   return (
     <>
@@ -35,7 +53,14 @@ const ActionProvider: React.FC = ({ children }) => {
       >
         {children}
       </ActionContext.Provider>
-      <NextStepAction open={isNextActionOpen} onClose={handleNextActionClose} />
+
+      <React.Suspense fallback={null}>
+        <NextStepAction
+          open={isNextActionOpen}
+          onClose={handleNextActionClose}
+          data={data}
+        />
+      </React.Suspense>
     </>
   )
 }

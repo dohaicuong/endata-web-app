@@ -41,7 +41,7 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
   const { isSubmitting } = useFormikContext()
 
   const [field, meta, helpers] = useField(name)
-  const [value, setValue] = React.useState<any>('')
+  const [value, setValue] = React.useState<any>()
   const fieldValue = field.value
   const optionString = JSON.stringify(options)
   React.useEffect(() => {
@@ -88,7 +88,7 @@ const ComboBoxField: React.FC<ComboBoxFieldProps> = ({
   return (
     <Autocomplete
       {...props}
-      value={value}
+      value={value || []}
       onChange={handleValueChange}
       disabled={loading || disabled || readOnly || isSubmitting}
       multiple={multiple}

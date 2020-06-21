@@ -5,7 +5,9 @@ const routes: AppRouteProps[] = [
   {
     exact: true,
     path: '/user/login',
-    component: lazy(() => import('pages/Login')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "LoginPage" */ 'pages/Login')
+    ),
   },
   {
     exact: true,
@@ -17,7 +19,9 @@ const routes: AppRouteProps[] = [
     exact: true,
     private: true,
     path: '/dashboard',
-    component: lazy(() => import('pages/Dashboard')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "DashboardPage" */ 'pages/Dashboard')
+    ),
   },
   {
     exact: true,
@@ -35,7 +39,9 @@ const routes: AppRouteProps[] = [
     exact: true,
     private: true,
     path: '/claims',
-    component: lazy(() => import('pages/Claims')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "ClaimListPage" */ 'pages/ClaimList')
+    ),
   },
   {
     exact: false,
