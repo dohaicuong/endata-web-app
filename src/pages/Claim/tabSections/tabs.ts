@@ -20,6 +20,11 @@ export const tabs = [
     component: 'Report',
   },
   {
+    label: 'Documents',
+    path: '/documents',
+    component: 'Documents',
+  },
+  {
     label: 'Communications',
     path: '/communications',
     component: 'Communications',

@@ -23,16 +23,8 @@ query ClaimListQuery {
 fragment ClaimListFilter_filters on Query {
   currentUser {
     claimFilters {
+      ...FilterInput_data
       id
-      type
-      label
-      name
-      options {
-        group
-        label
-        value: id
-        id
-      }
     }
     id
   }
@@ -163,6 +155,18 @@ fragment ClaimsTable_user on AuthenticatedUser {
   userType
 }
 
+fragment FilterInput_data on FilterInput {
+  type
+  label
+  name
+  options {
+    group
+    label
+    value: id
+    id
+  }
+}
+
 fragment WaterfallView_waterfallFilters on Query {
   currentUser {
     waterfallFilters(where: {claimPortfolioType: Building}) {
@@ -185,25 +189,25 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "label",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "label",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": "value",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
@@ -256,7 +260,7 @@ v7 = {
       "name": "requestType",
       "storageKey": null
     },
-    (v0/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -272,7 +276,7 @@ v7 = {
           "name": "total",
           "storageKey": null
         },
-        (v0/*: any*/),
+        (v3/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -361,7 +365,6 @@ return {
             "name": "claimFilters",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -369,8 +372,8 @@ return {
                 "name": "type",
                 "storageKey": null
               },
+              (v0/*: any*/),
               (v1/*: any*/),
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -386,16 +389,17 @@ return {
                     "name": "group",
                     "storageKey": null
                   },
-                  (v1/*: any*/),
-                  (v3/*: any*/),
-                  (v0/*: any*/)
+                  (v0/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v0/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": [
@@ -412,7 +416,7 @@ return {
             "name": "waterfallFilters",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -421,8 +425,8 @@ return {
                 "name": "items",
                 "plural": true,
                 "selections": [
-                  (v3/*: any*/),
-                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -437,7 +441,7 @@ return {
                     "name": "color",
                     "storageKey": null
                   },
-                  (v0/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -485,7 +489,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -603,7 +607,7 @@ return {
                     "name": "insured",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -758,7 +762,7 @@ return {
     "metadata": {},
     "name": "ClaimListQuery",
     "operationKind": "query",
-    "text": "query ClaimListQuery {\n  ...ClaimListFilter_filters\n  ...ClaimListTable_data\n}\n\nfragment ClaimListFilter_filters on Query {\n  currentUser {\n    claimFilters {\n      id\n      type\n      label\n      name\n      options {\n        group\n        label\n        value: id\n        id\n      }\n    }\n    id\n  }\n  ...WaterfallView_waterfallFilters\n}\n\nfragment ClaimListTable_data on Query {\n  currentUser {\n    ...ClaimsTable_user\n    id\n  }\n  claimConnection: claimJobs(first: 30) {\n    ...ClaimsTable_claims\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ClaimsTable_claims on ClaimJobConnection {\n  totalCount\n  edges {\n    node {\n      id\n      hasBuilding\n      hasContents\n      hasRestoration\n      refNumber\n      insurer {\n        companyName\n      }\n      lodgeDate\n      building {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        authorisedValue\n        scopedValue\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n        daysAtStatus\n      }\n      contents {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n      }\n      restoration {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n      }\n      insured {\n        name\n        phone1\n        phone2\n        phone3\n        email\n      }\n      incidentDetail {\n        riskAddress {\n          suburb\n          state\n          line1\n          postcode\n        }\n        incidentDate\n      }\n    }\n  }\n}\n\nfragment ClaimsTable_user on AuthenticatedUser {\n  userType\n}\n\nfragment WaterfallView_waterfallFilters on Query {\n  currentUser {\n    waterfallFilters(where: {claimPortfolioType: Building}) {\n      id\n      items {\n        value: id\n        label\n        claimCount\n        color\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ClaimListQuery {\n  ...ClaimListFilter_filters\n  ...ClaimListTable_data\n}\n\nfragment ClaimListFilter_filters on Query {\n  currentUser {\n    claimFilters {\n      ...FilterInput_data\n      id\n    }\n    id\n  }\n  ...WaterfallView_waterfallFilters\n}\n\nfragment ClaimListTable_data on Query {\n  currentUser {\n    ...ClaimsTable_user\n    id\n  }\n  claimConnection: claimJobs(first: 30) {\n    ...ClaimsTable_claims\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ClaimsTable_claims on ClaimJobConnection {\n  totalCount\n  edges {\n    node {\n      id\n      hasBuilding\n      hasContents\n      hasRestoration\n      refNumber\n      insurer {\n        companyName\n      }\n      lodgeDate\n      building {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        authorisedValue\n        scopedValue\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n        daysAtStatus\n      }\n      contents {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n      }\n      restoration {\n        jobSuppliers {\n          requestDate\n          requestType\n          id\n          quote {\n            total\n            id\n            quoteStatus {\n              statusName\n            }\n          }\n        }\n        claimStatus {\n          statusName\n        }\n        authorisedSupplier {\n          companyName\n        }\n        scopingSupplier {\n          companyName\n        }\n      }\n      insured {\n        name\n        phone1\n        phone2\n        phone3\n        email\n      }\n      incidentDetail {\n        riskAddress {\n          suburb\n          state\n          line1\n          postcode\n        }\n        incidentDate\n      }\n    }\n  }\n}\n\nfragment ClaimsTable_user on AuthenticatedUser {\n  userType\n}\n\nfragment FilterInput_data on FilterInput {\n  type\n  label\n  name\n  options {\n    group\n    label\n    value: id\n    id\n  }\n}\n\nfragment WaterfallView_waterfallFilters on Query {\n  currentUser {\n    waterfallFilters(where: {claimPortfolioType: Building}) {\n      id\n      items {\n        value: id\n        label\n        claimCount\n        color\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
