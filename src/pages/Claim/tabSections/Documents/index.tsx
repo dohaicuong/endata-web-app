@@ -20,6 +20,7 @@ const Documents: React.FC<DocumentsProps> = props => {
     graphql`
       query DocumentsQuery($claimId: ID!) {
         ...DocumentsBody_data @arguments(claimId: $claimId)
+        ...DocumentsAction_data
       }
     `,
     { claimId: props.claimId }
@@ -27,7 +28,7 @@ const Documents: React.FC<DocumentsProps> = props => {
 
   return (
     <>
-      <DocumentsAction actions={null} />
+      <DocumentsAction data={data} />
       <Grid container style={{ marginTop: 8 }}>
         <Grid item>
           <PortfolioFilter

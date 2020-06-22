@@ -6,9 +6,10 @@ import { FragmentRefs } from "relay-runtime";
 export type JobInfoOptionQueryVariables = {
     companyId?: Array<string> | null;
     postcode?: string | null;
+    claimId: string;
 };
 export type JobInfoOptionQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"JobInfoClaimDetails_optionData" | "JobInfoQuotingBuilders_options" | "JobInfoQuotingRestorers_options">;
+    readonly " $fragmentRefs": FragmentRefs<"JobInfoActions_data" | "JobInfoClaimDetails_optionData" | "JobInfoQuotingBuilders_options" | "JobInfoQuotingRestorers_options">;
 };
 export type JobInfoOptionQuery = {
     readonly response: JobInfoOptionQueryResponse;
@@ -152,6 +153,12 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "postcode",
     "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "claimId",
+    "type": "ID!"
   }
 ],
 v1 = {
@@ -208,6 +215,11 @@ return {
     "metadata": null,
     "name": "JobInfoOptionQuery",
     "selections": [
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "JobInfoActions_data"
+      },
       {
         "args": null,
         "kind": "FragmentSpread",
@@ -482,5 +494,5 @@ return {
   }
 };
 })();
-(node as any).hash = '7da8e3964f7277eef497c74eb4477072';
+(node as any).hash = '01ab8430b39570920829dc98fe8dbbfe';
 export default node;

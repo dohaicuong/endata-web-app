@@ -1,25 +1,30 @@
 import React from 'react'
 import { Paper, makeStyles, Button } from '@material-ui/core'
-import { useClaimAction } from 'pages/Claim/actions'
+import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
+
+import { useFragment } from 'react-relay/hooks'
+import { graphql } from 'babel-plugin-relay/macro'
+import { DocumentsAction_data$key } from './__generated__/DocumentsAction_data.graphql'
 
 type DocumentsActionProps = {
-  actions: any
+  data: DocumentsAction_data$key | null
 }
 const DocumentsAction: React.FC<DocumentsActionProps> = props => {
   const classes = useStyles()
-  const { nextStep } = useClaimAction()
+  const data = useFragment(
+    graphql`
+      fragment DocumentsAction_data on Query {
+        ...NextStep_data @arguments(claimId: $claimId)
+      }
+    `,
+    props.data
+  )
 
   return (
     <Paper className={classes.actionRoot}>
-      <Button
-        className={classes.actionButton}
-        color="primary"
-        variant="outlined"
-        size="large"
-        onClick={nextStep.handleOpen}
-      >
-        Next Step
-      </Button>
+      <React.Suspense fallback={<NextStepButton />}>
+        <NextStep data={data} />
+      </React.Suspense>
       <div className={classes.pad} />
       <Button
         className={classes.actionButton}

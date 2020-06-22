@@ -1,8 +1,14 @@
 import React from 'react'
-import { useClaimAction } from 'pages/Claim/actions'
 import { Paper, Button, makeStyles } from '@material-ui/core'
+import { useFragment } from 'react-relay/hooks'
+import { graphql } from 'babel-plugin-relay/macro'
+import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
+
+import { ReportActions_data$key } from './__generated__/ReportActions_data.graphql'
 
 export type ReportActionsProps = {
+  data: ReportActions_data$key | null
+
   isSavedData: boolean
   isReadOnly: boolean
 
@@ -15,21 +21,24 @@ const ReportActions: React.FC<ReportActionsProps> = ({
   isReadOnly,
   resetReport,
   submitReport,
+  ...props
 }) => {
   const classes = useStyles()
-  const { nextStep } = useClaimAction()
+
+  const data = useFragment(
+    graphql`
+      fragment ReportActions_data on Query {
+        ...NextStep_data @arguments(claimId: $claimId)
+      }
+    `,
+    props.data
+  )
 
   return (
     <Paper className={classes.actionRoot}>
-      <Button
-        className={classes.actionButton}
-        color="primary"
-        variant="outlined"
-        size="large"
-        onClick={nextStep.handleOpen}
-      >
-        Next Step
-      </Button>
+      <React.Suspense fallback={<NextStepButton />}>
+        <NextStep data={data} />
+      </React.Suspense>
       <div className={classes.pad} />
       <Button
         className={classes.actionButton}

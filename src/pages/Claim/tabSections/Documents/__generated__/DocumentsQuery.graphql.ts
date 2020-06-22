@@ -7,7 +7,7 @@ export type DocumentsQueryVariables = {
     claimId: string;
 };
 export type DocumentsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"DocumentsBody_data">;
+    readonly " $fragmentRefs": FragmentRefs<"DocumentsBody_data" | "DocumentsAction_data">;
 };
 export type DocumentsQuery = {
     readonly response: DocumentsQueryResponse;
@@ -99,6 +99,11 @@ return {
         ],
         "kind": "FragmentSpread",
         "name": "DocumentsBody_data"
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "DocumentsAction_data"
       }
     ],
     "type": "Query"
@@ -271,5 +276,5 @@ return {
   }
 };
 })();
-(node as any).hash = '9de95dc9258afbee7898e1a70dab2cb2';
+(node as any).hash = '07b651ad059fd3d212187dd48ee736ed';
 export default node;

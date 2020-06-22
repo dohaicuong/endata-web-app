@@ -13,6 +13,7 @@ const Communications = ({ claimId }: any) => {
     graphql`
       query CommunicationsQuery($claimId: ID!) {
         ...CommunicationsBody_data @arguments(claimId: $claimId)
+        ...CommunicationsActions_data
       }
     `,
     { claimId }
@@ -23,7 +24,7 @@ const Communications = ({ claimId }: any) => {
 
   return (
     <>
-      <CommunicationsActions />
+      <CommunicationsActions data={data} />
       <Grid container style={{ marginTop: 8 }}>
         <Grid item>
           <PortfolioFilter

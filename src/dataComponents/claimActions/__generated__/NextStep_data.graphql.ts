@@ -4,19 +4,19 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PortfolioType = "Building" | "Contents" | "Restoration" | "%future added value";
-export type NextStepAction_data = {
+export type NextStep_data = {
     readonly claimNextStep?: ReadonlyArray<{
         readonly statusName: string;
         readonly description: string;
         readonly nextStep: string;
         readonly portfolioType: PortfolioType | null;
     } | null> | null;
-    readonly " $refType": "NextStepAction_data";
+    readonly " $refType": "NextStep_data";
 };
-export type NextStepAction_data$data = NextStepAction_data;
-export type NextStepAction_data$key = {
-    readonly " $data"?: NextStepAction_data$data;
-    readonly " $fragmentRefs": FragmentRefs<"NextStepAction_data">;
+export type NextStep_data$data = NextStep_data;
+export type NextStep_data$key = {
+    readonly " $data"?: NextStep_data$data;
+    readonly " $fragmentRefs": FragmentRefs<"NextStep_data">;
 };
 
 
@@ -41,10 +41,10 @@ const node: ReaderFragment = {
     "refetch": {
       "connection": null,
       "fragmentPathInResult": [],
-      "operation": require('./NextStepActionRefetchQuery.graphql.ts')
+      "operation": require('./NextStepRefetchQuery.graphql.ts')
     }
   },
-  "name": "NextStepAction_data",
+  "name": "NextStep_data",
   "selections": [
     {
       "condition": "isOpen",
@@ -107,5 +107,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = 'e4253cc711330b480ebed36c34e3001f';
+(node as any).hash = 'ca9f20b4df4c2b9a413d2a52c7a7b4d5';
 export default node;

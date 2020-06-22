@@ -1,41 +1,30 @@
 import React from 'react'
 import { Paper, Button, makeStyles } from '@material-ui/core'
-import { useClaimAction } from 'pages/Claim/actions'
-// import { useFragment } from 'react-relay/hooks'
-// import { graphql } from 'babel-plugin-relay/macro'
-// import { JobInfoActions_actions$key } from './__generated__/JobInfoActions_actions.graphql'
+import { useFragment } from 'react-relay/hooks'
+import { graphql } from 'babel-plugin-relay/macro'
+import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
+import { CommunicationsActions_data$key } from './__generated__/CommunicationsActions_data.graphql'
 
-type JobInfoActionsProps = {
-  // actions: JobInfoActions_actions$key | null
+type CommunicationsActionsProps = {
+  data: CommunicationsActions_data$key | null
 }
-const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
+const CommunicationsActions: React.FC<CommunicationsActionsProps> = props => {
   const classes = useStyles()
-  const { nextStep } = useClaimAction()
 
-  // const actions = useFragment(
-  //   graphql`
-  //     fragment JobInfoActions_actions on ClaimJobAction {
-  //       updateClaim {
-  //         label
-  //         isDisabled
-  //         isDisplay
-  //       }
-  //     }
-  //   `,
-  //   props.actions
-  // )
+  const data = useFragment(
+    graphql`
+      fragment CommunicationsActions_data on Query {
+        ...NextStep_data @arguments(claimId: $claimId)
+      }
+    `,
+    props.data
+  )
 
   return (
     <Paper className={classes.actionRoot}>
-      <Button
-        className={classes.actionButton}
-        color="primary"
-        variant="outlined"
-        size="large"
-        onClick={nextStep.handleOpen}
-      >
-        Next Step
-      </Button>
+      <React.Suspense fallback={<NextStepButton />}>
+        <NextStep data={data} />
+      </React.Suspense>
       <div className={classes.pad} />
       <Button
         className={classes.actionButton}
@@ -51,7 +40,7 @@ const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
     </Paper>
   )
 }
-export default JobInfoActions
+export default CommunicationsActions
 
 const useStyles = makeStyles(theme => ({
   actionRoot: {

@@ -21,8 +21,10 @@ const Report: React.FC<TabProps> = ({ claimId }) => {
   const refreshQuery = () => setRefreshKey(pre => pre + 1)
   const data = useLazyLoadQuery<ReportQuery>(
     graphql`
-      query ReportQuery($where: ENDataEntityKey!) {
-        claimJob(where: $where) {
+      query ReportQuery($claimId: ID!) {
+        ...ReportActions_data
+
+        claimJob(where: { id: $claimId }) {
           reportForm {
             cards {
               id
@@ -38,11 +40,7 @@ const Report: React.FC<TabProps> = ({ claimId }) => {
         }
       }
     `,
-    {
-      where: {
-        id: claimId,
-      },
-    },
+    { claimId },
     {
       fetchPolicy: 'store-and-network',
       fetchKey: refreshKey,
@@ -133,6 +131,7 @@ const Report: React.FC<TabProps> = ({ claimId }) => {
     >
       <Form className={classes.root}>
         <ReportActions
+          data={data}
           isSavedData={isSavedData}
           isReadOnly={isReadOnly}
           resetReport={resetReport}

@@ -7,7 +7,7 @@ export type CommunicationsQueryVariables = {
     claimId: string;
 };
 export type CommunicationsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"CommunicationsBody_data">;
+    readonly " $fragmentRefs": FragmentRefs<"CommunicationsBody_data" | "CommunicationsActions_data">;
 };
 export type CommunicationsQuery = {
     readonly response: CommunicationsQueryResponse;
@@ -121,6 +121,11 @@ return {
         ],
         "kind": "FragmentSpread",
         "name": "CommunicationsBody_data"
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "CommunicationsActions_data"
       }
     ],
     "type": "Query"
@@ -362,5 +367,5 @@ return {
   }
 };
 })();
-(node as any).hash = 'ae91cf11683cc777535a9b5135359c0f';
+(node as any).hash = 'c85c3e33bc397dab62ea0f473137fe05';
 export default node;

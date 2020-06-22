@@ -3,14 +3,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type actions_data = {
+export type JobNotesActions_data = {
     readonly " $fragmentRefs": FragmentRefs<"NextStep_data">;
-    readonly " $refType": "actions_data";
+    readonly " $refType": "JobNotesActions_data";
 };
-export type actions_data$data = actions_data;
-export type actions_data$key = {
-    readonly " $data"?: actions_data$data;
-    readonly " $fragmentRefs": FragmentRefs<"actions_data">;
+export type JobNotesActions_data$data = JobNotesActions_data;
+export type JobNotesActions_data$key = {
+    readonly " $data"?: JobNotesActions_data$data;
+    readonly " $fragmentRefs": FragmentRefs<"JobNotesActions_data">;
 };
 
 
@@ -25,7 +25,7 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "actions_data",
+  "name": "JobNotesActions_data",
   "selections": [
     {
       "args": [
@@ -41,5 +41,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = 'c1bf3b94dde33e038df4d164ff6c3ea3';
+(node as any).hash = '2afa8a6b331b7bbf53114b9d2b7b2a0b';
 export default node;

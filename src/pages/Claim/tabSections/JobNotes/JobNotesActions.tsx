@@ -1,19 +1,20 @@
 import React from 'react'
 
-import { makeStyles, Paper, Button } from '@material-ui/core'
-import { useClaimAction } from 'pages/Claim/actions'
+import { makeStyles, Paper } from '@material-ui/core'
 import ActionButton from 'dataComponents/ActionButton'
+import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
 
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobNotesActions_actions$key } from './__generated__/JobNotesActions_actions.graphql'
+import { JobNotesActions_data$key } from './__generated__/JobNotesActions_data.graphql'
 
 type JobNotesActionsProps = {
   actions: JobNotesActions_actions$key | null
+  data: JobNotesActions_data$key | null
 }
 const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
   const classes = useStyles()
-  const { nextStep } = useClaimAction()
 
   const actions = useFragment(
     graphql`
@@ -38,17 +39,20 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
     props.actions
   )
 
+  const data = useFragment(
+    graphql`
+      fragment JobNotesActions_data on Query {
+        ...NextStep_data @arguments(claimId: $claimId)
+      }
+    `,
+    props.data
+  )
+
   return (
     <Paper className={classes.actionRoot}>
-      <Button
-        className={classes.actionButton}
-        color="primary"
-        variant="outlined"
-        size="large"
-        onClick={nextStep.handleOpen}
-      >
-        Next Step
-      </Button>
+      <React.Suspense fallback={<NextStepButton />}>
+        <NextStep data={data} />
+      </React.Suspense>
       <div className={classes.pad} />
       <ActionButton action={actions?.makeLossAdjusterInitialCall ?? null} />
       <ActionButton action={actions?.makeLossAdjusterAppointment ?? null} />

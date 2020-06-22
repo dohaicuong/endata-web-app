@@ -4,11 +4,8 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ReportStatus = "REPORTED" | "REPORTING" | "%future added value";
-export type ENDataEntityKey = {
-    id: string;
-};
 export type ReportQueryVariables = {
-    where: ENDataEntityKey;
+    claimId: string;
 };
 export type ReportQueryResponse = {
     readonly claimJob: {
@@ -25,6 +22,7 @@ export type ReportQueryResponse = {
             readonly status: ReportStatus;
         } | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ReportActions_data">;
 };
 export type ReportQuery = {
     readonly response: ReportQueryResponse;
@@ -35,9 +33,9 @@ export type ReportQuery = {
 
 /*
 query ReportQuery(
-  $where: ENDataEntityKey!
+  $claimId: ID!
 ) {
-  claimJob(where: $where) {
+  claimJob(where: {id: $claimId}) {
     reportForm {
       cards {
         id
@@ -146,15 +144,21 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "where",
-    "type": "ENDataEntityKey!"
+    "name": "claimId",
+    "type": "ID!"
   }
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "where",
-    "variableName": "where"
+    "fields": [
+      {
+        "kind": "Variable",
+        "name": "id",
+        "variableName": "claimId"
+      }
+    ],
+    "kind": "ObjectValue",
+    "name": "where"
   }
 ],
 v2 = {
@@ -347,6 +351,11 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "ReportActions_data"
       }
     ],
     "type": "Query"
@@ -473,9 +482,9 @@ return {
     "metadata": {},
     "name": "ReportQuery",
     "operationKind": "query",
-    "text": "query ReportQuery(\n  $where: ENDataEntityKey!\n) {\n  claimJob(where: $where) {\n    reportForm {\n      cards {\n        id\n        order\n        grid\n        ...ReportCard_cart\n      }\n      id\n    }\n    reportData {\n      data\n      status\n      id\n    }\n    id\n  }\n}\n\nfragment ArrayField_data on GroupField {\n  label\n  name\n  fields {\n    __typename\n    label\n    grid\n    ...ReportInfoField_field\n    ...ReportTextField_field\n    ...ReportTextAreaField_field\n    ...ReportSelectField_field\n    ...ReportDateTimeField_field\n    ...ReportFileField_field\n    id\n  }\n}\n\nfragment ReportCardField_field on Field {\n  __typename\n  label\n  ...ReportInfoField_field\n  ...ReportTextField_field\n  ...ReportTextAreaField_field\n  ...ReportSelectField_field\n  ...ReportDateTimeField_field\n  ...ReportGroupField_field\n  ...ReportFileField_field\n}\n\nfragment ReportCard_cart on Card {\n  id\n  title\n  fields {\n    __typename\n    id\n    grid\n    order\n    ...ReportCardField_field\n  }\n}\n\nfragment ReportDateTimeField_field on DateTimeField {\n  label\n  name\n}\n\nfragment ReportFileField_field on FileField {\n  label\n  name\n}\n\nfragment ReportGroupField_field on GroupField {\n  label\n  name\n  ...ArrayField_data\n}\n\nfragment ReportInfoField_field on InfoField {\n  label\n  value\n}\n\nfragment ReportSelectField_field on SelectField {\n  name\n  label\n  options {\n    id\n    label\n    value\n  }\n}\n\nfragment ReportTextAreaField_field on TextAreaField {\n  label\n  name\n  rows\n  rowsMax\n}\n\nfragment ReportTextField_field on TextField {\n  label\n  name\n}\n"
+    "text": "query ReportQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    reportForm {\n      cards {\n        id\n        order\n        grid\n        ...ReportCard_cart\n      }\n      id\n    }\n    reportData {\n      data\n      status\n      id\n    }\n    id\n  }\n}\n\nfragment ArrayField_data on GroupField {\n  label\n  name\n  fields {\n    __typename\n    label\n    grid\n    ...ReportInfoField_field\n    ...ReportTextField_field\n    ...ReportTextAreaField_field\n    ...ReportSelectField_field\n    ...ReportDateTimeField_field\n    ...ReportFileField_field\n    id\n  }\n}\n\nfragment ReportCardField_field on Field {\n  __typename\n  label\n  ...ReportInfoField_field\n  ...ReportTextField_field\n  ...ReportTextAreaField_field\n  ...ReportSelectField_field\n  ...ReportDateTimeField_field\n  ...ReportGroupField_field\n  ...ReportFileField_field\n}\n\nfragment ReportCard_cart on Card {\n  id\n  title\n  fields {\n    __typename\n    id\n    grid\n    order\n    ...ReportCardField_field\n  }\n}\n\nfragment ReportDateTimeField_field on DateTimeField {\n  label\n  name\n}\n\nfragment ReportFileField_field on FileField {\n  label\n  name\n}\n\nfragment ReportGroupField_field on GroupField {\n  label\n  name\n  ...ArrayField_data\n}\n\nfragment ReportInfoField_field on InfoField {\n  label\n  value\n}\n\nfragment ReportSelectField_field on SelectField {\n  name\n  label\n  options {\n    id\n    label\n    value\n  }\n}\n\nfragment ReportTextAreaField_field on TextAreaField {\n  label\n  name\n  rows\n  rowsMax\n}\n\nfragment ReportTextField_field on TextField {\n  label\n  name\n}\n"
   }
 };
 })();
-(node as any).hash = 'b60b6a7ba784783e9f20c636ce3ac5c9';
+(node as any).hash = '25c28f0b96cd97957ddc4f29c9375faf';
 export default node;

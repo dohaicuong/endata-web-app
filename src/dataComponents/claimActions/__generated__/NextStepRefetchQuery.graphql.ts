@@ -3,29 +3,29 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type NextStepActionRefetchQueryVariables = {
+export type NextStepRefetchQueryVariables = {
     isOpen?: boolean | null;
     claimId: string;
 };
-export type NextStepActionRefetchQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"NextStepAction_data">;
+export type NextStepRefetchQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"NextStep_data">;
 };
-export type NextStepActionRefetchQuery = {
-    readonly response: NextStepActionRefetchQueryResponse;
-    readonly variables: NextStepActionRefetchQueryVariables;
+export type NextStepRefetchQuery = {
+    readonly response: NextStepRefetchQueryResponse;
+    readonly variables: NextStepRefetchQueryVariables;
 };
 
 
 
 /*
-query NextStepActionRefetchQuery(
+query NextStepRefetchQuery(
   $isOpen: Boolean = false
   $claimId: ID!
 ) {
-  ...NextStepAction_data_2ChpTy
+  ...NextStep_data_2ChpTy
 }
 
-fragment NextStepAction_data_2ChpTy on Query {
+fragment NextStep_data_2ChpTy on Query {
   claimNextStep(where: {id: $claimId}) @include(if: $isOpen) {
     statusName
     description
@@ -55,7 +55,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "NextStepActionRefetchQuery",
+    "name": "NextStepRefetchQuery",
     "selections": [
       {
         "args": [
@@ -71,7 +71,7 @@ return {
           }
         ],
         "kind": "FragmentSpread",
-        "name": "NextStepAction_data"
+        "name": "NextStep_data"
       }
     ],
     "type": "Query"
@@ -80,7 +80,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "NextStepActionRefetchQuery",
+    "name": "NextStepRefetchQuery",
     "selections": [
       {
         "condition": "isOpen",
@@ -145,14 +145,14 @@ return {
   "params": {
     "id": null,
     "metadata": {
-      "derivedFrom": "NextStepAction_data",
+      "derivedFrom": "NextStep_data",
       "isRefetchableQuery": true
     },
-    "name": "NextStepActionRefetchQuery",
+    "name": "NextStepRefetchQuery",
     "operationKind": "query",
-    "text": "query NextStepActionRefetchQuery(\n  $isOpen: Boolean = false\n  $claimId: ID!\n) {\n  ...NextStepAction_data_2ChpTy\n}\n\nfragment NextStepAction_data_2ChpTy on Query {\n  claimNextStep(where: {id: $claimId}) @include(if: $isOpen) {\n    statusName\n    description\n    nextStep\n    portfolioType\n  }\n}\n"
+    "text": "query NextStepRefetchQuery(\n  $isOpen: Boolean = false\n  $claimId: ID!\n) {\n  ...NextStep_data_2ChpTy\n}\n\nfragment NextStep_data_2ChpTy on Query {\n  claimNextStep(where: {id: $claimId}) @include(if: $isOpen) {\n    statusName\n    description\n    nextStep\n    portfolioType\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e4253cc711330b480ebed36c34e3001f';
+(node as any).hash = 'ca9f20b4df4c2b9a413d2a52c7a7b4d5';
 export default node;

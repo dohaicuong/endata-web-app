@@ -16,6 +16,7 @@ import JobInfoQuotingBuilders from './cards/JobInfoQuotingBuilders'
 import JobInfoQuotingRestorers from './cards/JobInfoQuotingRestorers'
 
 type JobInfoProps = {
+  claimId: string
   claim: JobInfo_claim$key | null
 }
 const JobInfo: React.FC<JobInfoProps> = props => {
@@ -45,7 +46,6 @@ const JobInfo: React.FC<JobInfoProps> = props => {
             ...JobInfoActions_actions
           }
         }
-
         ...JobInfoClaimDetails_claim
         ...JobInfoCustomerInfo_claim
         ...JobInfoPostalAddress_claim
@@ -62,7 +62,13 @@ const JobInfo: React.FC<JobInfoProps> = props => {
     String(claim?.incidentDetail?.riskAddress?.postcode ?? '') || '0'
   const optionData = useLazyLoadQuery<JobInfoOptionQuery>(
     graphql`
-      query JobInfoOptionQuery($companyId: [ID!], $postcode: String) {
+      query JobInfoOptionQuery(
+        $companyId: [ID!]
+        $postcode: String
+        $claimId: ID!
+      ) {
+        ...JobInfoActions_data
+
         ...JobInfoClaimDetails_optionData
         ...JobInfoQuotingBuilders_options
           @arguments(companyIds: $companyId, postcode: $postcode)
@@ -71,6 +77,7 @@ const JobInfo: React.FC<JobInfoProps> = props => {
       }
     `,
     {
+      claimId: props.claimId,
       companyId: companyId ? [companyId] : null,
       postcode,
     }
@@ -150,7 +157,10 @@ const JobInfo: React.FC<JobInfoProps> = props => {
       }}
     >
       <Form>
-        <JobInfoActions actions={claim?.view?.actions ?? null} />
+        <JobInfoActions
+          actions={claim?.view?.actions ?? null}
+          data={optionData}
+        />
         <Grid container spacing={2} style={{ marginTop: 4 }}>
           <Grid item xs={12}>
             <ClaimDetailsCard claim={claim} optionData={optionData} />

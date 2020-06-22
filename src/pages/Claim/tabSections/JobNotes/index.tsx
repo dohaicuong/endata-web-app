@@ -21,6 +21,7 @@ const JobNotes = ({ claimId }: any) => {
           }
         }
         ...JobNotesBody_data @arguments(claimId: $claimId)
+        ...JobNotesActions_data
       }
     `,
     { claimId }
@@ -31,7 +32,10 @@ const JobNotes = ({ claimId }: any) => {
 
   return (
     <>
-      <JobNotesActions actions={data.claimJob?.view?.actions ?? null} />
+      <JobNotesActions
+        actions={data.claimJob?.view?.actions ?? null}
+        data={data}
+      />
       <Grid container style={{ marginTop: 8 }}>
         <Grid item>
           <PortfolioFilter

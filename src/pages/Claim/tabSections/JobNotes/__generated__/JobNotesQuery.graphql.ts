@@ -14,7 +14,7 @@ export type JobNotesQueryResponse = {
             };
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"JobNotesBody_data">;
+    readonly " $fragmentRefs": FragmentRefs<"JobNotesBody_data" | "JobNotesActions_data">;
 };
 export type JobNotesQuery = {
     readonly response: JobNotesQueryResponse;
@@ -222,6 +222,11 @@ return {
         ],
         "kind": "FragmentSpread",
         "name": "JobNotesBody_data"
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "JobNotesActions_data"
       }
     ],
     "type": "Query"
@@ -476,5 +481,5 @@ return {
   }
 };
 })();
-(node as any).hash = '25c8030bbded59de182ff0f3e21093dd';
+(node as any).hash = 'd3abac8f6804fb6772eb4567eebab793';
 export default node;
