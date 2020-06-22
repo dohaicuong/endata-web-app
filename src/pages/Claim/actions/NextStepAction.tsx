@@ -58,7 +58,8 @@ const NextStepAction: React.FC<NextStepActionProps> = ({
         <Grid
           container
           justify="center"
-          alignItems="center"
+          alignItems="stretch"
+          spacing={3}
           className={classes.container}
         >
           {data?.claimNextStep.map((step, index) => {
@@ -94,9 +95,13 @@ export default NextStepAction
 const useStyles = makeStyles(theme => ({
   paper: {
     minWidth: '60%',
+    maxWidth: '80%',
+    maxHeight: '70vh',
   },
   container: {
     padding: theme.spacing(2),
+    width: '100%',
+    margin: 0,
   },
   portfolioIcon: {
     margin: '0 auto 20px auto',
