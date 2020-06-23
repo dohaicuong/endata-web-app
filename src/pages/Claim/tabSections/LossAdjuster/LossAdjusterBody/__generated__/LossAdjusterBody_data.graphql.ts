@@ -3,41 +3,42 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PortfolioType = "Building" | "Contents" | "Restoration" | "%future added value";
-export type DocumentsBody_data = {
-    readonly documentConnection: {
+export type LossAdjusterBody_data = {
+    readonly LossAdjusterConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly portfolioType: PortfolioType | null;
+                readonly id: string;
                 readonly uploadDate: unknown | null;
                 readonly company: {
                     readonly companyName: string;
                 } | null;
+                readonly reportType: {
+                    readonly reportTypeName: string;
+                } | null;
                 readonly private: boolean;
                 readonly description: string;
-                readonly amountInvoice: number | null;
-                readonly " $fragmentRefs": FragmentRefs<"DocumentView_claimDocumentsData">;
+                readonly " $fragmentRefs": FragmentRefs<"DocumentView_LossAdjusterData">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "DocumentsBody_data";
+    readonly " $refType": "LossAdjusterBody_data";
 };
-export type DocumentsBody_data$data = DocumentsBody_data;
-export type DocumentsBody_data$key = {
-    readonly " $data"?: DocumentsBody_data$data;
-    readonly " $fragmentRefs": FragmentRefs<"DocumentsBody_data">;
+export type LossAdjusterBody_data$data = LossAdjusterBody_data;
+export type LossAdjusterBody_data$key = {
+    readonly " $data"?: LossAdjusterBody_data$data;
+    readonly " $fragmentRefs": FragmentRefs<"LossAdjusterBody_data">;
 };
 
 
 
 const node: ReaderFragment = (function(){
 var v0 = [
-  "documentConnection"
+  "LossAdjusterConnection"
 ];
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 500,
+      "defaultValue": 15,
       "kind": "LocalArgument",
       "name": "count",
       "type": "Int"
@@ -53,12 +54,6 @@ return {
       "kind": "LocalArgument",
       "name": "claimId",
       "type": "ID!"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "portfolios",
-      "type": "[PortfolioType]"
     }
   ],
   "kind": "Fragment",
@@ -81,23 +76,23 @@ return {
         "path": (v0/*: any*/)
       },
       "fragmentPathInResult": [],
-      "operation": require('./DocumentsBodyPaginationQuery.graphql.ts')
+      "operation": require('./LossAdjusterBodyPaginationQuery.graphql.ts')
     }
   },
-  "name": "DocumentsBody_data",
+  "name": "LossAdjusterBody_data",
   "selections": [
     {
-      "alias": "documentConnection",
+      "alias": "LossAdjusterConnection",
       "args": null,
-      "concreteType": "ClaimDocumentConnection",
+      "concreteType": "ClaimLossAdjusterDocumentConnection",
       "kind": "LinkedField",
-      "name": "__DocumentsBody_data_documentConnection_connection",
+      "name": "__LossAdjusterBody_data_LossAdjusterConnection_connection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ClaimDocumentEdge",
+          "concreteType": "ClaimLossAdjusterDocumentEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -105,7 +100,7 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "ClaimDocument",
+              "concreteType": "ClaimLossAdjusterDocument",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -114,7 +109,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "portfolioType",
+                  "name": "id",
                   "storageKey": null
                 },
                 {
@@ -145,6 +140,24 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "concreteType": "LossAdjusterReportType",
+                  "kind": "LinkedField",
+                  "name": "reportType",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "reportTypeName",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "kind": "ScalarField",
                   "name": "private",
                   "storageKey": null
@@ -160,20 +173,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "amountInvoice",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "DocumentView_claimDocumentsData"
+                  "name": "DocumentView_LossAdjusterData"
                 }
               ],
               "storageKey": null
@@ -220,5 +226,5 @@ return {
   "type": "Query"
 };
 })();
-(node as any).hash = '1466d28b082b3be246a07277fe565bab';
+(node as any).hash = 'f5b94ba094429a6399656264fd45e413';
 export default node;

@@ -82,7 +82,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
                 {Boolean(subview) && (
                   <Grid item xs={6} style={{ minHeight: 48 }}>
                     <IconButton
-                      // style={{ padding: 6 }}
+                      style={{ padding: 6 }}
                       onClick={handleViewChange}
                     >
                       {isSubview ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -93,7 +93,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
                   {!isSubview && Boolean(secondRow.length) && (
                     <IconButton
                       onClick={() => setIsExpand(pre => !pre)}
-                      // style={{ padding: 6 }}
+                      style={{ padding: 6 }}
                     >
                       {isExpand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </IconButton>

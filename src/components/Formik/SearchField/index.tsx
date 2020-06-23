@@ -3,7 +3,8 @@ import React from 'react'
 import TextField, { TextFieldProps } from '@material-ui/core/TextField'
 import { useField, useFormikContext } from 'formik'
 import { InputAdornment, IconButton } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search'
+// import SearchIcon from '@material-ui/icons/Search'
+import Button from '@material-ui/core/Button'
 
 export type FormikSearchFieldProps = TextFieldProps & {
   name: string
@@ -49,9 +50,13 @@ const SearchField: React.FC<FormikSearchFieldProps> = ({
         ),
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton onClick={() => setFormikValue(value)}>
-              <SearchIcon />
-            </IconButton>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => setFormikValue(value)}
+            >
+              Go
+            </Button>
           </InputAdornment>
         ),
       }}

@@ -1,24 +1,33 @@
 import React from 'react'
 import { graphql } from 'babel-plugin-relay/macro'
 import { useFragment } from 'react-relay/hooks'
-import { DocumentView_data$key } from './__generated__/DocumentView_data.graphql'
+// import { DocumentView_data$key } from './__generated__/DocumentView_data.graphql'
 
 import { IconButton } from '@material-ui/core'
 import DescriptionIcon from '@material-ui/icons/Description'
 
 // const supportedFormats = ['jpg', 'png', 'pdf']
 
-type DocumentViewProps = {
-  data: DocumentView_data$key | null
-}
-const DocumentView: React.FC<DocumentViewProps> = props => {
-  const data = useFragment(
+// type DocumentViewProps = {
+//   data: DocumentView_data$key | null
+// }
+const DocumentView: React.FC<any> = props => {
+  const claimDocumentsData = useFragment(
     graphql`
-      fragment DocumentView_data on ClaimDocument {
+      fragment DocumentView_claimDocumentsData on ClaimDocument {
         url
       }
     `,
-    props.data
+    props.claimDocumentsData
+  )
+
+  const LossAdjusterData = useFragment(
+    graphql`
+      fragment DocumentView_LossAdjusterData on ClaimLossAdjusterDocument {
+        url
+      }
+    `,
+    props.LossAdjusterData
   )
 
   // const url = data?.url ?? ''
@@ -28,7 +37,15 @@ const DocumentView: React.FC<DocumentViewProps> = props => {
   // }, [url])
 
   return (
-    <IconButton component="a" target="_blank" href={data?.url}>
+    <IconButton
+      component="a"
+      target="_blank"
+      href={
+        claimDocumentsData
+          ? claimDocumentsData?.url
+          : LossAdjusterData && LossAdjusterData?.url
+      }
+    >
       <DescriptionIcon />
     </IconButton>
   )

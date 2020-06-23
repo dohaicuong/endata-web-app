@@ -30,7 +30,7 @@ query DocumentsBodyPaginationQuery(
   ...DocumentsBody_data_16lzxw
 }
 
-fragment DocumentView_data on ClaimDocument {
+fragment DocumentView_claimDocumentsData on ClaimDocument {
   url
 }
 
@@ -46,7 +46,7 @@ fragment DocumentsBody_data_16lzxw on Query {
         private
         description
         amountInvoice
-        ...DocumentView_data
+        ...DocumentView_claimDocumentsData
         id
         __typename
       }
@@ -312,9 +312,9 @@ return {
     },
     "name": "DocumentsBodyPaginationQuery",
     "operationKind": "query",
-    "text": "query DocumentsBodyPaginationQuery(\n  $count: Int = 500\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...DocumentsBody_data_16lzxw\n}\n\nfragment DocumentView_data on ClaimDocument {\n  url\n}\n\nfragment DocumentsBody_data_16lzxw on Query {\n  documentConnection: claimDocuments(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        portfolioType\n        uploadDate\n        company {\n          companyName\n        }\n        private\n        description\n        amountInvoice\n        ...DocumentView_data\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query DocumentsBodyPaginationQuery(\n  $count: Int = 500\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...DocumentsBody_data_16lzxw\n}\n\nfragment DocumentView_claimDocumentsData on ClaimDocument {\n  url\n}\n\nfragment DocumentsBody_data_16lzxw on Query {\n  documentConnection: claimDocuments(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        portfolioType\n        uploadDate\n        company {\n          companyName\n        }\n        private\n        description\n        amountInvoice\n        ...DocumentView_claimDocumentsData\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ec37cee0c1684c45cfcb7bda4f1f2676';
+(node as any).hash = '1466d28b082b3be246a07277fe565bab';
 export default node;

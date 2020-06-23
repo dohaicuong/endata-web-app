@@ -399,7 +399,11 @@ const getTableColumns = (userType: any) =>
               {parseInt(row.id) + 1}
             </span>
             {value.map((portfolio: any) => (
-              <PortfolioIcon key={portfolio} portfolio={portfolio} />
+              <PortfolioIcon
+                key={portfolio}
+                portfolio={portfolio}
+                style={{ fontSize: '20px' }}
+              />
             ))}
           </div>
         )
@@ -421,7 +425,7 @@ const getTableColumns = (userType: any) =>
     { Header: 'Customer', accessor: 'customerName' },
     { Header: 'Suburb', accessor: 'suburb' },
     { Header: 'State', accessor: 'state' },
-    { Header: 'Value', accessor: 'value' },
+    { Header: 'Value', accessor: 'value', width: 100 },
     {
       show: userType !== 'Administrator',
       Header: 'Status',
@@ -431,11 +435,13 @@ const getTableColumns = (userType: any) =>
       show: userType === 'Administrator' || userType === 'Restorer',
       Header: 'Builder',
       accessor: 'builder',
+      width: 400,
     },
     {
       show: userType === 'Administrator',
       Header: 'Building Status',
       accessor: 'buildingStatus',
+      width: 160,
     },
     {
       show: userType === 'Administrator',
@@ -451,6 +457,7 @@ const getTableColumns = (userType: any) =>
       show: userType === 'Administrator',
       Header: 'Restoration Status',
       accessor: 'restorationStatus',
+      width: 180,
     },
     {
       show: userType === 'Administrator',

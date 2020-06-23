@@ -85,7 +85,7 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
     }
   })
   const tableColumns = [
-    { Header: 'Date', accessor: 'date' },
+    { Header: 'Date', accessor: 'date', width: 300 },
     { Header: 'Company', accessor: 'company' },
     { Header: 'User', accessor: 'user' },
     { Header: 'Receiver', accessor: 'receiver' },
@@ -101,7 +101,7 @@ const CommunicationsBody: React.FC<CommunicationsBody> = props => {
         )
       },
     },
-    { Header: 'Message', accessor: 'message' },
+    { Header: 'Message', accessor: 'message', width: 800 },
   ]
   return (
     <Table

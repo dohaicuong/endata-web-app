@@ -3,44 +3,49 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type DocumentsQueryVariables = {
+export type LossAdjusterBodyPaginationQueryVariables = {
+    count?: number | null;
+    cursor?: string | null;
     claimId: string;
 };
-export type DocumentsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"DocumentsBody_data">;
+export type LossAdjusterBodyPaginationQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"LossAdjusterBody_data">;
 };
-export type DocumentsQuery = {
-    readonly response: DocumentsQueryResponse;
-    readonly variables: DocumentsQueryVariables;
+export type LossAdjusterBodyPaginationQuery = {
+    readonly response: LossAdjusterBodyPaginationQueryResponse;
+    readonly variables: LossAdjusterBodyPaginationQueryVariables;
 };
 
 
 
 /*
-query DocumentsQuery(
+query LossAdjusterBodyPaginationQuery(
+  $count: Int = 15
+  $cursor: String
   $claimId: ID!
 ) {
-  ...DocumentsBody_data_15qNS2
+  ...LossAdjusterBody_data_3FCKZj
 }
 
-fragment DocumentView_claimDocumentsData on ClaimDocument {
+fragment DocumentView_LossAdjusterData on ClaimLossAdjusterDocument {
   url
 }
 
-fragment DocumentsBody_data_15qNS2 on Query {
-  documentConnection: claimDocuments(first: 500, where: {claimId: $claimId}) {
+fragment LossAdjusterBody_data_3FCKZj on Query {
+  LossAdjusterConnection: claimLossAdjusterDocuments(first: $count, after: $cursor, where: {claimId: $claimId}) {
     edges {
       node {
-        portfolioType
+        id
         uploadDate
         company {
           companyName
         }
+        reportType {
+          reportTypeName
+        }
         private
         description
-        amountInvoice
-        ...DocumentView_claimDocumentsData
-        id
+        ...DocumentView_LossAdjusterData
         __typename
       }
       cursor
@@ -56,6 +61,18 @@ fragment DocumentsBody_data_15qNS2 on Query {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": 15,
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "cursor",
+    "type": "String"
+  },
+  {
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "claimId",
@@ -69,18 +86,18 @@ v1 = {
 },
 v2 = [
   {
-    "kind": "Literal",
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
-    "value": 500
+    "variableName": "count"
   },
   {
     "fields": [
-      (v1/*: any*/),
-      {
-        "kind": "Literal",
-        "name": "portfolios",
-        "value": null
-      }
+      (v1/*: any*/)
     ],
     "kind": "ObjectValue",
     "name": "where"
@@ -91,14 +108,24 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DocumentsQuery",
+    "name": "LossAdjusterBodyPaginationQuery",
     "selections": [
       {
         "args": [
-          (v1/*: any*/)
+          (v1/*: any*/),
+          {
+            "kind": "Variable",
+            "name": "count",
+            "variableName": "count"
+          },
+          {
+            "kind": "Variable",
+            "name": "cursor",
+            "variableName": "cursor"
+          }
         ],
         "kind": "FragmentSpread",
-        "name": "DocumentsBody_data"
+        "name": "LossAdjusterBody_data"
       }
     ],
     "type": "Query"
@@ -107,20 +134,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DocumentsQuery",
+    "name": "LossAdjusterBodyPaginationQuery",
     "selections": [
       {
-        "alias": "documentConnection",
+        "alias": "LossAdjusterConnection",
         "args": (v2/*: any*/),
-        "concreteType": "ClaimDocumentConnection",
+        "concreteType": "ClaimLossAdjusterDocumentConnection",
         "kind": "LinkedField",
-        "name": "claimDocuments",
+        "name": "claimLossAdjusterDocuments",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ClaimDocumentEdge",
+            "concreteType": "ClaimLossAdjusterDocumentEdge",
             "kind": "LinkedField",
             "name": "edges",
             "plural": true,
@@ -128,7 +155,7 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ClaimDocument",
+                "concreteType": "ClaimLossAdjusterDocument",
                 "kind": "LinkedField",
                 "name": "node",
                 "plural": false,
@@ -137,7 +164,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "portfolioType",
+                    "name": "id",
                     "storageKey": null
                   },
                   {
@@ -168,6 +195,24 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "LossAdjusterReportType",
+                    "kind": "LinkedField",
+                    "name": "reportType",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "reportTypeName",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "kind": "ScalarField",
                     "name": "private",
                     "storageKey": null
@@ -183,21 +228,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "amountInvoice",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "url",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
                     "storageKey": null
                   },
                   {
@@ -249,27 +280,29 @@ return {
         "storageKey": null
       },
       {
-        "alias": "documentConnection",
+        "alias": "LossAdjusterConnection",
         "args": (v2/*: any*/),
         "filters": [
-          "claimId",
-          "portfolios"
+          "claimId"
         ],
         "handle": "connection",
-        "key": "DocumentsBody_data_documentConnection",
+        "key": "LossAdjusterBody_data_LossAdjusterConnection",
         "kind": "LinkedHandle",
-        "name": "claimDocuments"
+        "name": "claimLossAdjusterDocuments"
       }
     ]
   },
   "params": {
     "id": null,
-    "metadata": {},
-    "name": "DocumentsQuery",
+    "metadata": {
+      "derivedFrom": "LossAdjusterBody_data",
+      "isRefetchableQuery": true
+    },
+    "name": "LossAdjusterBodyPaginationQuery",
     "operationKind": "query",
-    "text": "query DocumentsQuery(\n  $claimId: ID!\n) {\n  ...DocumentsBody_data_15qNS2\n}\n\nfragment DocumentView_claimDocumentsData on ClaimDocument {\n  url\n}\n\nfragment DocumentsBody_data_15qNS2 on Query {\n  documentConnection: claimDocuments(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        portfolioType\n        uploadDate\n        company {\n          companyName\n        }\n        private\n        description\n        amountInvoice\n        ...DocumentView_claimDocumentsData\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query LossAdjusterBodyPaginationQuery(\n  $count: Int = 15\n  $cursor: String\n  $claimId: ID!\n) {\n  ...LossAdjusterBody_data_3FCKZj\n}\n\nfragment DocumentView_LossAdjusterData on ClaimLossAdjusterDocument {\n  url\n}\n\nfragment LossAdjusterBody_data_3FCKZj on Query {\n  LossAdjusterConnection: claimLossAdjusterDocuments(first: $count, after: $cursor, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        uploadDate\n        company {\n          companyName\n        }\n        reportType {\n          reportTypeName\n        }\n        private\n        description\n        ...DocumentView_LossAdjusterData\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9de95dc9258afbee7898e1a70dab2cb2';
+(node as any).hash = 'f5b94ba094429a6399656264fd45e413';
 export default node;

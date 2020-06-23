@@ -29,6 +29,16 @@ export const tabs = [
     path: '/communications',
     component: 'Communications',
   },
+  {
+    label: 'Variations',
+    path: '/variations',
+    component: 'Variations',
+  },
+  {
+    label: 'Loss adjuster',
+    path: '/loss-adjuster',
+    component: 'LossAdjuster',
+  },
 ].map(({ component, ...args }) => ({
   ...args,
   component: lazy(() => import(`./${component}`)),
