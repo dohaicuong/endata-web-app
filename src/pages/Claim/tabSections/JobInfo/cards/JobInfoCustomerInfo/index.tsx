@@ -2,6 +2,7 @@ import React from 'react'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfoCustomerInfo_claim$key } from './__generated__/JobInfoCustomerInfo_claim.graphql'
+import { JobInfoCustomerInfo_data$key } from './__generated__/JobInfoCustomerInfo_data.graphql'
 
 import Card, { CardProps } from 'components/Card'
 import { Grid } from '@material-ui/core'
@@ -13,8 +14,18 @@ import JobInfoCustomerInfoRow5 from './JobInfoCustomerInfoRow5'
 
 type JobInfoCustomerInfoProps = CardProps & {
   claim: JobInfoCustomerInfo_claim$key | null
+  data: JobInfoCustomerInfo_data$key | null
 }
 const JobInfoCustomerInfo: React.FC<JobInfoCustomerInfoProps> = props => {
+  const data = useFragment(
+    graphql`
+      fragment JobInfoCustomerInfo_data on Query {
+        ...JobInfoCustomerInfoRow4_data
+      }
+    `,
+    props.data
+  )
+
   const claim = useFragment(
     graphql`
       fragment JobInfoCustomerInfo_claim on ClaimJob {
@@ -34,7 +45,7 @@ const JobInfoCustomerInfo: React.FC<JobInfoCustomerInfoProps> = props => {
         <JobInfoCustomerInfoRow1 claim={claim} />
         <JobInfoCustomerInfoRow2 claim={claim} />
         <JobInfoCustomerInfoRow3 claim={claim} />
-        <JobInfoCustomerInfoRow4 claim={claim} />
+        <JobInfoCustomerInfoRow4 claim={claim} data={data as any} />
         <JobInfoCustomerInfoRow5 claim={claim} />
       </Grid>
     </Card>

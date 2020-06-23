@@ -38,6 +38,45 @@ query ClaimPageQuery(
   }
 }
 
+fragment ClaimFinaliseResetForm_data on ClaimPortfolio {
+  finaliseReason {
+    name
+    id
+  }
+  dateCompleted
+}
+
+fragment ClaimFinalise_claim on ClaimJob {
+  id
+  hasBuilding
+  building {
+    claimStatus {
+      statusName
+      id
+    }
+    ...ClaimFinaliseResetForm_data
+    id
+  }
+  hasContents
+  contents {
+    claimStatus {
+      statusName
+      id
+    }
+    ...ClaimFinaliseResetForm_data
+    id
+  }
+  hasRestoration
+  restoration {
+    claimStatus {
+      statusName
+      id
+    }
+    ...ClaimFinaliseResetForm_data
+    id
+  }
+}
+
 fragment ClaimInfoCard_info on ClaimJob {
   insurer {
     companyName
@@ -76,6 +115,7 @@ fragment ClaimInfoCard_info on ClaimJob {
   building {
     claimStatus {
       statusName
+      id
     }
     scopingSupplier {
       companyName
@@ -94,6 +134,7 @@ fragment ClaimInfoCard_info on ClaimJob {
         }
         quoteStatus: quoteJobStatus {
           statusName
+          id
         }
         id
       }
@@ -101,10 +142,12 @@ fragment ClaimInfoCard_info on ClaimJob {
     }
     toCollectExcess
     excessValue
+    id
   }
   restoration {
     claimStatus {
       statusName
+      id
     }
     scopingSupplier {
       companyName
@@ -123,6 +166,7 @@ fragment ClaimInfoCard_info on ClaimJob {
         }
         quoteStatus: quoteJobStatus {
           statusName
+          id
         }
         id
       }
@@ -130,14 +174,17 @@ fragment ClaimInfoCard_info on ClaimJob {
     }
     toCollectExcess
     excessValue
+    id
   }
   contents {
     portfolioType
     claimStatus {
       statusName
+      id
     }
     toCollectExcess
     excessValue
+    id
   }
 }
 
@@ -197,6 +244,7 @@ fragment JobInfoClaimDetailsRow2_claim on ClaimJob {
     scopingSupplier {
       companyName
     }
+    id
   }
   restoration {
     jobSuppliers {
@@ -214,6 +262,7 @@ fragment JobInfoClaimDetailsRow2_claim on ClaimJob {
     scopingSupplier {
       companyName
     }
+    id
   }
 }
 
@@ -229,6 +278,7 @@ fragment JobInfoClaimDetailsRow3_claim on ClaimJob {
     toCollectExcess
     excessValue
     sumInsured
+    id
   }
 }
 
@@ -248,6 +298,7 @@ fragment JobInfoClaimDetailsRow4_claim on ClaimJob {
     toCollectExcess
     excessValue
     sumInsured
+    id
   }
 }
 
@@ -266,6 +317,7 @@ fragment JobInfoClaimDetailsRow5_claim on ClaimJob {
     toCollectExcess
     excessValue
     sumInsured
+    id
   }
 }
 
@@ -356,6 +408,7 @@ fragment JobInfoCustomerInfoRow4_claim on ClaimJob {
       }
     }
   }
+  ...ClaimFinalise_claim
 }
 
 fragment JobInfoCustomerInfoRow5_claim on ClaimJob {
@@ -407,11 +460,13 @@ fragment JobInfo_claim on ClaimJob {
     scopingSupplier {
       companyId
     }
+    id
   }
   restoration {
     scopingSupplier {
       companyId
     }
+    id
   }
   view {
     actions {
@@ -539,7 +594,8 @@ v14 = [
     "kind": "ScalarField",
     "name": "statusName",
     "storageKey": null
-  }
+  },
+  (v2/*: any*/)
 ],
 v15 = {
   "alias": null,
@@ -586,7 +642,27 @@ v20 = {
   "name": "sumInsured",
   "storageKey": null
 },
-v21 = [
+v21 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "ClaimFinaliseReason",
+  "kind": "LinkedField",
+  "name": "finaliseReason",
+  "plural": false,
+  "selections": [
+    (v10/*: any*/),
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+},
+v22 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "dateCompleted",
+  "storageKey": null
+},
+v23 = [
   (v15/*: any*/),
   {
     "alias": null,
@@ -665,36 +741,39 @@ v21 = [
   },
   (v18/*: any*/),
   (v19/*: any*/),
-  (v20/*: any*/)
+  (v2/*: any*/),
+  (v20/*: any*/),
+  (v21/*: any*/),
+  (v22/*: any*/)
 ],
-v22 = {
+v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "label",
   "storageKey": null
 },
-v23 = {
+v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isDisabled",
   "storageKey": null
 },
-v24 = {
+v26 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isDisplay",
   "storageKey": null
 },
-v25 = [
-  (v22/*: any*/),
+v27 = [
   (v24/*: any*/),
-  (v23/*: any*/),
+  (v26/*: any*/),
+  (v25/*: any*/),
   (v2/*: any*/)
 ],
-v26 = [
+v28 = [
   {
     "alias": null,
     "args": null,
@@ -1090,7 +1169,7 @@ return {
             "kind": "LinkedField",
             "name": "building",
             "plural": false,
-            "selections": (v21/*: any*/),
+            "selections": (v23/*: any*/),
             "storageKey": null
           },
           {
@@ -1100,7 +1179,7 @@ return {
             "kind": "LinkedField",
             "name": "restoration",
             "plural": false,
-            "selections": (v21/*: any*/),
+            "selections": (v23/*: any*/),
             "storageKey": null
           },
           {
@@ -1121,7 +1200,10 @@ return {
               (v15/*: any*/),
               (v18/*: any*/),
               (v19/*: any*/),
-              (v20/*: any*/)
+              (v2/*: any*/),
+              (v20/*: any*/),
+              (v21/*: any*/),
+              (v22/*: any*/)
             ],
             "storageKey": null
           },
@@ -1149,9 +1231,9 @@ return {
                     "name": "updateClaim",
                     "plural": false,
                     "selections": [
-                      (v22/*: any*/),
-                      (v23/*: any*/),
                       (v24/*: any*/),
+                      (v25/*: any*/),
+                      (v26/*: any*/),
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -1163,7 +1245,7 @@ return {
                     "kind": "LinkedField",
                     "name": "cashSettle",
                     "plural": false,
-                    "selections": (v25/*: any*/),
+                    "selections": (v27/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1173,7 +1255,7 @@ return {
                     "kind": "LinkedField",
                     "name": "claimFinalise",
                     "plural": false,
-                    "selections": (v25/*: any*/),
+                    "selections": (v27/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -1189,7 +1271,7 @@ return {
             "kind": "LinkedField",
             "name": "caseManager",
             "plural": false,
-            "selections": (v26/*: any*/),
+            "selections": (v28/*: any*/),
             "storageKey": null
           },
           {
@@ -1258,7 +1340,7 @@ return {
             "kind": "LinkedField",
             "name": "brc",
             "plural": false,
-            "selections": (v26/*: any*/),
+            "selections": (v28/*: any*/),
             "storageKey": null
           },
           {
@@ -1273,6 +1355,20 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "customLoginEmail",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasBuilding",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasRestoration",
             "storageKey": null
           },
           {
@@ -1326,7 +1422,7 @@ return {
     "metadata": {},
     "name": "ClaimPageQuery",
     "operationKind": "query",
-    "text": "query ClaimPageQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    id\n    ...ClaimInfoCard_info\n    ...JobInfo_claim\n  }\n  currentUser {\n    ...ClaimInfoCard_user\n    id\n  }\n}\n\nfragment ClaimInfoCard_info on ClaimJob {\n  insurer {\n    companyName\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  refNumber\n  incidentDetail {\n    riskAddress {\n      line1\n      suburb\n      state\n      postcode\n    }\n    eventType {\n      eventName\n    }\n    cATCode {\n      cATCodeName\n    }\n  }\n  insured {\n    name\n    phone1\n    phone2\n    phone3\n    email\n  }\n  lodgeDate\n  policyType {\n    policyTypeName\n  }\n  policyCover {\n    policyCoverName\n  }\n  building {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  restoration {\n    claimStatus {\n      statusName\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n  }\n  contents {\n    portfolioType\n    claimStatus {\n      statusName\n    }\n    toCollectExcess\n    excessValue\n  }\n}\n\nfragment ClaimInfoCard_user on AuthenticatedUser {\n  userType\n}\n\nfragment JobInfoActions_actions on ClaimJobAction {\n  updateClaim {\n    label\n    isDisabled\n    isDisplay\n    id\n  }\n}\n\nfragment JobInfoClaimDescription_claim on ClaimJob {\n  claimDescription\n}\n\nfragment JobInfoClaimDetailsRow1_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    incidentDate\n  }\n  caseManager {\n    managerId\n    id\n  }\n  externalLossAdjuster {\n    companyId\n  }\n}\n\nfragment JobInfoClaimDetailsRow2_claim on ClaimJob {\n  hasContents\n  insurer {\n    contentsref\n  }\n  refNumber\n  contentsRefNum\n  building {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n  restoration {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n  }\n}\n\nfragment JobInfoClaimDetailsRow3_claim on ClaimJob {\n  lodgeDate\n  incidentDetail {\n    hold\n  }\n  insurer {\n    quickrepair\n  }\n  building {\n    toCollectExcess\n    excessValue\n    sumInsured\n  }\n}\n\nfragment JobInfoClaimDetailsRow4_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    eventType {\n      eventTypeId\n    }\n    cATCode {\n      cATCodeId\n    }\n  }\n  contents {\n    toCollectExcess\n    excessValue\n    sumInsured\n  }\n}\n\nfragment JobInfoClaimDetailsRow5_claim on ClaimJob {\n  insurer {\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  policyType {\n    policyTypeId\n  }\n  policyCover {\n    policyCoverId\n  }\n  restoration {\n    toCollectExcess\n    excessValue\n    sumInsured\n  }\n}\n\nfragment JobInfoClaimDetailsRow6_claim on ClaimJob {\n  insurer {\n    enableMultipleRisks\n    additionalRefNo\n    useInternalAssessor\n    cm2nd\n  }\n  riskname\n  additionalRefNumber\n  homeAssessor {\n    assesorId\n    id\n  }\n  brc {\n    managerId\n    id\n  }\n}\n\nfragment JobInfoClaimDetails_claim on ClaimJob {\n  ...JobInfoClaimDetailsRow1_claim\n  ...JobInfoClaimDetailsRow2_claim\n  ...JobInfoClaimDetailsRow3_claim\n  ...JobInfoClaimDetailsRow4_claim\n  ...JobInfoClaimDetailsRow5_claim\n  ...JobInfoClaimDetailsRow6_claim\n}\n\nfragment JobInfoCustomerInfoRow1_claim on ClaimJob {\n  insured {\n    salutation\n    name\n    email\n  }\n}\n\nfragment JobInfoCustomerInfoRow2_claim on ClaimJob {\n  insurer {\n    setupcustomerlogin\n  }\n  incidentDetail {\n    riskAddress {\n      line1\n      line2\n    }\n  }\n  requireCustomLogin\n  customLoginEmail\n}\n\nfragment JobInfoCustomerInfoRow3_claim on ClaimJob {\n  incidentDetail {\n    riskAddress {\n      suburb\n      state\n      postcode\n    }\n    habitableProperty\n    category\n  }\n  insurer {\n    removeHabitableAsbestos\n    hideCategoryOfClaim\n  }\n}\n\nfragment JobInfoCustomerInfoRow4_claim on ClaimJob {\n  insured {\n    phone1\n    phone2\n  }\n  view {\n    actions {\n      cashSettle {\n        label\n        isDisplay\n        isDisabled\n        id\n      }\n      claimFinalise {\n        label\n        isDisplay\n        isDisabled\n        id\n      }\n    }\n  }\n}\n\nfragment JobInfoCustomerInfoRow5_claim on ClaimJob {\n  insured {\n    phone3\n    fax\n  }\n}\n\nfragment JobInfoCustomerInfo_claim on ClaimJob {\n  ...JobInfoCustomerInfoRow1_claim\n  ...JobInfoCustomerInfoRow2_claim\n  ...JobInfoCustomerInfoRow3_claim\n  ...JobInfoCustomerInfoRow4_claim\n  ...JobInfoCustomerInfoRow5_claim\n}\n\nfragment JobInfoPostalAddress_claim on ClaimJob {\n  insured {\n    postalAddress {\n      line1\n      line2\n      suburb\n      state\n      postcode\n    }\n  }\n}\n\nfragment JobInfoTenantInfo_claim on ClaimJob {\n  tenantDetails {\n    name\n    phone1\n    phone2\n    phone3\n  }\n}\n\nfragment JobInfo_claim on ClaimJob {\n  insurer {\n    companyId\n  }\n  incidentDetail {\n    riskAddress {\n      postcode\n    }\n  }\n  building {\n    scopingSupplier {\n      companyId\n    }\n  }\n  restoration {\n    scopingSupplier {\n      companyId\n    }\n  }\n  view {\n    actions {\n      ...JobInfoActions_actions\n    }\n  }\n  ...JobInfoClaimDetails_claim\n  ...JobInfoCustomerInfo_claim\n  ...JobInfoPostalAddress_claim\n  ...JobInfoTenantInfo_claim\n  ...JobInfoClaimDescription_claim\n}\n"
+    "text": "query ClaimPageQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    id\n    ...ClaimInfoCard_info\n    ...JobInfo_claim\n  }\n  currentUser {\n    ...ClaimInfoCard_user\n    id\n  }\n}\n\nfragment ClaimFinaliseResetForm_data on ClaimPortfolio {\n  finaliseReason {\n    name\n    id\n  }\n  dateCompleted\n}\n\nfragment ClaimFinalise_claim on ClaimJob {\n  id\n  hasBuilding\n  building {\n    claimStatus {\n      statusName\n      id\n    }\n    ...ClaimFinaliseResetForm_data\n    id\n  }\n  hasContents\n  contents {\n    claimStatus {\n      statusName\n      id\n    }\n    ...ClaimFinaliseResetForm_data\n    id\n  }\n  hasRestoration\n  restoration {\n    claimStatus {\n      statusName\n      id\n    }\n    ...ClaimFinaliseResetForm_data\n    id\n  }\n}\n\nfragment ClaimInfoCard_info on ClaimJob {\n  insurer {\n    companyName\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  refNumber\n  incidentDetail {\n    riskAddress {\n      line1\n      suburb\n      state\n      postcode\n    }\n    eventType {\n      eventName\n    }\n    cATCode {\n      cATCodeName\n    }\n  }\n  insured {\n    name\n    phone1\n    phone2\n    phone3\n    email\n  }\n  lodgeDate\n  policyType {\n    policyTypeName\n  }\n  policyCover {\n    policyCoverName\n  }\n  building {\n    claimStatus {\n      statusName\n      id\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n          id\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n    id\n  }\n  restoration {\n    claimStatus {\n      statusName\n      id\n    }\n    scopingSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    authorisedSupplier {\n      companyName\n      companyPhone1\n      companyPhone2\n    }\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        quoteStatus: quoteJobStatus {\n          statusName\n          id\n        }\n        id\n      }\n      id\n    }\n    toCollectExcess\n    excessValue\n    id\n  }\n  contents {\n    portfolioType\n    claimStatus {\n      statusName\n      id\n    }\n    toCollectExcess\n    excessValue\n    id\n  }\n}\n\nfragment ClaimInfoCard_user on AuthenticatedUser {\n  userType\n}\n\nfragment JobInfoActions_actions on ClaimJobAction {\n  updateClaim {\n    label\n    isDisabled\n    isDisplay\n    id\n  }\n}\n\nfragment JobInfoClaimDescription_claim on ClaimJob {\n  claimDescription\n}\n\nfragment JobInfoClaimDetailsRow1_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    incidentDate\n  }\n  caseManager {\n    managerId\n    id\n  }\n  externalLossAdjuster {\n    companyId\n  }\n}\n\nfragment JobInfoClaimDetailsRow2_claim on ClaimJob {\n  hasContents\n  insurer {\n    contentsref\n  }\n  refNumber\n  contentsRefNum\n  building {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n    id\n  }\n  restoration {\n    jobSuppliers {\n      quote {\n        supplier {\n          companyName\n        }\n        id\n      }\n      id\n    }\n    authorisedSupplier {\n      companyName\n    }\n    scopingSupplier {\n      companyName\n    }\n    id\n  }\n}\n\nfragment JobInfoClaimDetailsRow3_claim on ClaimJob {\n  lodgeDate\n  incidentDetail {\n    hold\n  }\n  insurer {\n    quickrepair\n  }\n  building {\n    toCollectExcess\n    excessValue\n    sumInsured\n    id\n  }\n}\n\nfragment JobInfoClaimDetailsRow4_claim on ClaimJob {\n  insurer {\n    companyName\n  }\n  incidentDetail {\n    eventType {\n      eventTypeId\n    }\n    cATCode {\n      cATCodeId\n    }\n  }\n  contents {\n    toCollectExcess\n    excessValue\n    sumInsured\n    id\n  }\n}\n\nfragment JobInfoClaimDetailsRow5_claim on ClaimJob {\n  insurer {\n    policyTypeSuppliersView\n    policyCoverSuppliersView\n  }\n  policyType {\n    policyTypeId\n  }\n  policyCover {\n    policyCoverId\n  }\n  restoration {\n    toCollectExcess\n    excessValue\n    sumInsured\n    id\n  }\n}\n\nfragment JobInfoClaimDetailsRow6_claim on ClaimJob {\n  insurer {\n    enableMultipleRisks\n    additionalRefNo\n    useInternalAssessor\n    cm2nd\n  }\n  riskname\n  additionalRefNumber\n  homeAssessor {\n    assesorId\n    id\n  }\n  brc {\n    managerId\n    id\n  }\n}\n\nfragment JobInfoClaimDetails_claim on ClaimJob {\n  ...JobInfoClaimDetailsRow1_claim\n  ...JobInfoClaimDetailsRow2_claim\n  ...JobInfoClaimDetailsRow3_claim\n  ...JobInfoClaimDetailsRow4_claim\n  ...JobInfoClaimDetailsRow5_claim\n  ...JobInfoClaimDetailsRow6_claim\n}\n\nfragment JobInfoCustomerInfoRow1_claim on ClaimJob {\n  insured {\n    salutation\n    name\n    email\n  }\n}\n\nfragment JobInfoCustomerInfoRow2_claim on ClaimJob {\n  insurer {\n    setupcustomerlogin\n  }\n  incidentDetail {\n    riskAddress {\n      line1\n      line2\n    }\n  }\n  requireCustomLogin\n  customLoginEmail\n}\n\nfragment JobInfoCustomerInfoRow3_claim on ClaimJob {\n  incidentDetail {\n    riskAddress {\n      suburb\n      state\n      postcode\n    }\n    habitableProperty\n    category\n  }\n  insurer {\n    removeHabitableAsbestos\n    hideCategoryOfClaim\n  }\n}\n\nfragment JobInfoCustomerInfoRow4_claim on ClaimJob {\n  insured {\n    phone1\n    phone2\n  }\n  view {\n    actions {\n      cashSettle {\n        label\n        isDisplay\n        isDisabled\n        id\n      }\n      claimFinalise {\n        label\n        isDisplay\n        isDisabled\n        id\n      }\n    }\n  }\n  ...ClaimFinalise_claim\n}\n\nfragment JobInfoCustomerInfoRow5_claim on ClaimJob {\n  insured {\n    phone3\n    fax\n  }\n}\n\nfragment JobInfoCustomerInfo_claim on ClaimJob {\n  ...JobInfoCustomerInfoRow1_claim\n  ...JobInfoCustomerInfoRow2_claim\n  ...JobInfoCustomerInfoRow3_claim\n  ...JobInfoCustomerInfoRow4_claim\n  ...JobInfoCustomerInfoRow5_claim\n}\n\nfragment JobInfoPostalAddress_claim on ClaimJob {\n  insured {\n    postalAddress {\n      line1\n      line2\n      suburb\n      state\n      postcode\n    }\n  }\n}\n\nfragment JobInfoTenantInfo_claim on ClaimJob {\n  tenantDetails {\n    name\n    phone1\n    phone2\n    phone3\n  }\n}\n\nfragment JobInfo_claim on ClaimJob {\n  insurer {\n    companyId\n  }\n  incidentDetail {\n    riskAddress {\n      postcode\n    }\n  }\n  building {\n    scopingSupplier {\n      companyId\n    }\n    id\n  }\n  restoration {\n    scopingSupplier {\n      companyId\n    }\n    id\n  }\n  view {\n    actions {\n      ...JobInfoActions_actions\n    }\n  }\n  ...JobInfoClaimDetails_claim\n  ...JobInfoCustomerInfo_claim\n  ...JobInfoPostalAddress_claim\n  ...JobInfoTenantInfo_claim\n  ...JobInfoClaimDescription_claim\n}\n"
   }
 };
 })();

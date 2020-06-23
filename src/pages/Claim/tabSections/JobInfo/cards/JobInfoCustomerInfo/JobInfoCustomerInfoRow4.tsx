@@ -3,18 +3,31 @@ import React from 'react'
 import FormGridField from 'components/FormGridField'
 import TextField from 'components/Formik/TextField'
 import PhoneIcon from '@material-ui/icons/Phone'
-import { Button } from '@material-ui/core'
 import DoneIcon from '@material-ui/icons/Done'
 
 import { useFormikContext } from 'formik'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfoCustomerInfoRow4_claim$key } from './__generated__/JobInfoCustomerInfoRow4_claim.graphql'
+import { JobInfoCustomerInfo_data$key } from './__generated__/JobInfoCustomerInfo_data.graphql'
+import ClaimFinalise from 'dataComponents/claimActions/ClaimFinalise'
+import CashSettle from 'dataComponents/claimActions/CashSettle'
 
 type JobInfoCustomerInfoRow4Props = {
   claim: JobInfoCustomerInfoRow4_claim$key | null
+  data: JobInfoCustomerInfo_data$key | null
 }
 const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props => {
+  const data = useFragment(
+    graphql`
+      fragment JobInfoCustomerInfoRow4_data on Query {
+        ...ClaimFinalise_data
+        ...CashSettle_data
+      }
+    `,
+    props.data
+  )
+
   const claim = useFragment(
     graphql`
       fragment JobInfoCustomerInfoRow4_claim on ClaimJob {
@@ -37,6 +50,8 @@ const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props =>
             }
           }
         }
+
+        ...ClaimFinalise_claim
       }
     `,
     props.claim
@@ -75,15 +90,13 @@ const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props =>
         md={2}
         unMountOn={!claim?.view?.actions.claimFinalise.isDisplay}
         component={
-          <Button
+          <ClaimFinalise
+            claim={claim}
+            data={data as any}
             startIcon={<DoneIcon />}
             disabled={claim?.view?.actions.claimFinalise.isDisabled}
-            onClick={() => {
-              console.log('open finallize claim')
-            }}
-          >
-            {claim?.view?.actions.claimFinalise.label}
-          </Button>
+            label={claim?.view?.actions.claimFinalise.label}
+          />
         }
       />
       <FormGridField
@@ -91,15 +104,13 @@ const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props =>
         md={2}
         unMountOn={!claim?.view?.actions.cashSettle.isDisplay}
         component={
-          <Button
-            disabled={claim?.view?.actions.cashSettle.isDisabled}
+          <CashSettle
+            // claim={claim}
+            data={data as any}
             startIcon={<DoneIcon />}
-            onClick={() => {
-              console.log('open cash settle')
-            }}
-          >
-            {claim?.view?.actions.cashSettle.label}
-          </Button>
+            // disabled={claim?.view?.actions.cashSettle.isDisabled}
+            label={claim?.view?.actions.cashSettle.label}
+          />
         }
       />
     </>

@@ -15,7 +15,7 @@ import { InputAdornment } from '@material-ui/core'
 // }
 
 const DateField: React.FC<any> = ({
-  variant = 'standard',
+  variant = 'outlined',
   startAdornment,
   endAdornment,
   ...props

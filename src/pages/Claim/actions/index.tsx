@@ -44,12 +44,14 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
   return (
     <>
       <ActionContext.Provider
-        value={{
-          // nextStep: {
-          //   handleOpen: handleNextActionOpen,
-          //   handleClose: handleNextActionClose,
-          // },
-        }}
+        value={
+          {
+            // nextStep: {
+            //   handleOpen: handleNextActionOpen,
+            //   handleClose: handleNextActionClose,
+            // },
+          }
+        }
       >
         {children}
       </ActionContext.Provider>

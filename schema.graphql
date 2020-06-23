@@ -80,9 +80,13 @@ enum ActionType {
   INVOICE_UPDATE_STATUS
   INVOICE_DELETE
   INVOICE_VIEW_DOCUMENT
+  FEE_EDIT_AFTER_APPROVED
   RESERVE_UPDATE
   COMMUNICATION_SEND
   COMMUNICATION_ACKNOWLEDGE
+  COMMUNICATION_TO_ADMIN
+  COMMUNICATION_TO_INSURER
+  COMMUNICATION_TO_LOSSADJUSTER
   DOCUMENT_UPLOAD
   DOCUMENT_DELETE
   CLAIM_ADD
@@ -118,6 +122,8 @@ enum ActionType {
   JOB_CONTENTS_RESET
   ADJUSTER_INITIAL_CALL
   ADJUSTER_APPOINTMENT
+  ADJUSTER_DOCUMENT_UPLOAD
+  ADJUSTER_DOCUMENT_DELETE
   SPECIALIST_REQUEST_ADD
   SPECIALIST_REQUEST_EDIT
   SPECIALIST_REQUEST_DELETE
@@ -596,6 +602,7 @@ type ClaimJobAction {
   addDocument: ActionControl!
   addFeeItem: ActionControl!
   addJobNote: ActionControl!
+  addLossAdjusterDocument: ActionControl!
   allocateSupplier: PortfolioAction!
   auditVariation: PortfolioAction!
   authoriseQuote: PortfolioAction!
@@ -1056,6 +1063,9 @@ type ClaimPortfolio {
   estimator: Estimator
   excessValue: Int
   finaliseReason: ClaimFinaliseReason
+
+  """The Global Id of the ClaimPortfolio"""
+  id: ID!
   insuranceCompletedSiteReport: Boolean!
   isReallocateSupplier: Boolean!
   jobSuppliers: [JobSupplier]
@@ -1156,7 +1166,9 @@ type ClaimSiteReport {
 }
 
 type ClaimStatus {
-  statusId: Int
+  """The Global Id of the ClaimStatus"""
+  id: ID!
+  statusId: Int!
   statusName: String
 }
 

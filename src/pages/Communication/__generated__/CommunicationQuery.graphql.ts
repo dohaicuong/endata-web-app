@@ -9,8 +9,8 @@ export type State = "ACT" | "NSW" | "NT" | "QLD" | "SA" | "TAS" | "VIC" | "WA" |
 export type CommunicationFilter = {
     id?: string | null;
     claimId?: string | null;
-    createDateFrom?: unknown | null;
-    createDateTo?: unknown | null;
+    createDateFrom?: string | null;
+    createDateTo?: string | null;
     keyWords?: string | null;
     managers?: Array<string> | null;
     managerTeams?: Array<string | null> | null;

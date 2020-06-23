@@ -68,6 +68,7 @@ const JobInfo: React.FC<JobInfoProps> = props => {
         $claimId: ID!
       ) {
         ...JobInfoActions_data
+        ...JobInfoCustomerInfo_data
 
         ...JobInfoClaimDetails_optionData
         ...JobInfoQuotingBuilders_options
@@ -166,7 +167,7 @@ const JobInfo: React.FC<JobInfoProps> = props => {
             <ClaimDetailsCard claim={claim} optionData={optionData} />
           </Grid>
           <Grid item xs={12}>
-            <JobInfoCustomerInfo claim={claim} />
+            <JobInfoCustomerInfo claim={claim} data={optionData} />
           </Grid>
           <Grid item xs={6}>
             <JobInfoPostalAddress claim={claim} />

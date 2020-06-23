@@ -6,8 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type PortfolioType = "Building" | "Contents" | "Restoration" | "%future added value";
 export type State = "ACT" | "NSW" | "NT" | "QLD" | "SA" | "TAS" | "VIC" | "WA" | "%future added value";
 export type ClaimStatusVolumeWhere = {
-    createDateFrom?: unknown | null;
-    createDateTo?: unknown | null;
+    createDateFrom?: string | null;
+    createDateTo?: string | null;
     incidentDate?: unknown | null;
     incidentDateFrom?: unknown | null;
     incidentDateTo?: unknown | null;
