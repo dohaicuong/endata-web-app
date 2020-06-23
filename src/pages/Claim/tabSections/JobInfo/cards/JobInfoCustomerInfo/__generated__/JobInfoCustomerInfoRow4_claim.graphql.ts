@@ -22,7 +22,7 @@ export type JobInfoCustomerInfoRow4_claim = {
             };
         };
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ClaimFinalise_claim">;
+    readonly " $fragmentRefs": FragmentRefs<"ClaimFinalise_claim" | "CashSettle_claim">;
     readonly " $refType": "JobInfoCustomerInfoRow4_claim";
 };
 export type JobInfoCustomerInfoRow4_claim$data = JobInfoCustomerInfoRow4_claim;
@@ -134,10 +134,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ClaimFinalise_claim"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CashSettle_claim"
     }
   ],
   "type": "ClaimJob"
 };
 })();
-(node as any).hash = '4e2ee62aa1f4f527ffd37a1575508bf5';
+(node as any).hash = '93d7ba0299d15a4535d5f0c0f02b50ec';
 export default node;

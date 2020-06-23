@@ -13,10 +13,12 @@ import PaymentMethodSelect from 'dataComponents/PaymentMethodSelect'
 type CashSettleFormProps = {
   data: any
   handleClose: () => void
+  isInFly: boolean
 }
 const CashSettleForm: React.FC<CashSettleFormProps> = ({
   data,
   handleClose,
+  isInFly,
 }) => {
   const classes = useStyles()
 
@@ -122,7 +124,12 @@ const CashSettleForm: React.FC<CashSettleFormProps> = ({
         <Button color="primary" onClick={handleClose}>
           Close
         </Button>
-        <Button color="primary" variant="contained" type="submit">
+        <Button
+          color="primary"
+          variant="contained"
+          type="submit"
+          disabled={isInFly}
+        >
           Settle
         </Button>
       </Grid>

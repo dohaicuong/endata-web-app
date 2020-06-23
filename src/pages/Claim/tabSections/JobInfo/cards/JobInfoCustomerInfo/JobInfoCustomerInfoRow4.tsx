@@ -52,6 +52,7 @@ const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props =>
         }
 
         ...ClaimFinalise_claim
+        ...CashSettle_claim
       }
     `,
     props.claim
@@ -105,7 +106,7 @@ const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props =>
         unMountOn={!claim?.view?.actions.cashSettle.isDisplay}
         component={
           <CashSettle
-            // claim={claim}
+            claim={claim}
             data={data as any}
             startIcon={<DoneIcon />}
             // disabled={claim?.view?.actions.cashSettle.isDisabled}
