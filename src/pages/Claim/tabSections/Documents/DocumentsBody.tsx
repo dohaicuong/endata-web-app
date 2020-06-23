@@ -48,7 +48,7 @@ const DocumentsBody: React.FC<DocumentsBodyProps> = props => {
               description
               amountInvoice
 
-              ...DocumentView_data
+              ...DocumentView_claimDocumentsData
             }
           }
         }
@@ -61,8 +61,6 @@ const DocumentsBody: React.FC<DocumentsBodyProps> = props => {
     if (selectedPortfolio) refetch({ portfolios: [selectedPortfolio] })
     else refetch({ portfolios: ['Building', 'Contents', 'Restoration'] })
   }, [selectedPortfolio, refetch])
-
-  // console.log(data?.documentConnection?.edges)
 
   const tableData = data?.documentConnection?.edges
     ?.map(edge => {
@@ -92,7 +90,7 @@ const DocumentsBody: React.FC<DocumentsBodyProps> = props => {
       Header: 'File',
       accessor: 'viewActionData',
       Cell: ({ value }: any) => {
-        return <DocumentView data={value} />
+        return <DocumentView claimDocumentsData={value} />
       },
     },
     { Header: 'Privacy', accessor: 'privacy' },

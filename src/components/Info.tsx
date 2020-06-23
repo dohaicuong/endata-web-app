@@ -5,6 +5,7 @@ import { makeStyles, InputAdornment } from '@material-ui/core'
 
 export type FormikInfoFieldProps = TextFieldProps & {
   startAdornment?: React.ReactElement
+  labelProps?: any
 }
 
 const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
@@ -12,6 +13,7 @@ const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
   rowsMax = 3,
   className,
   startAdornment,
+  labelProps,
   variant, // eslint-disable-line @typescript-eslint/no-unused-vars
   ...props
 }) => {
@@ -30,7 +32,7 @@ const FormikInfoField: React.FC<FormikInfoFieldProps> = ({
           <InputAdornment position="start">{startAdornment}</InputAdornment>
         ),
       }}
-      InputLabelProps={{ shrink: true }}
+      InputLabelProps={{ shrink: true, ...labelProps }}
     />
   )
 }

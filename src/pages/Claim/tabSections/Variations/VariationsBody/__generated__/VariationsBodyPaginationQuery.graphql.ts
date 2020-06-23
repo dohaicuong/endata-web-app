@@ -3,43 +3,46 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type DocumentsQueryVariables = {
+export type PortfolioType = "Building" | "Contents" | "Restoration" | "%future added value";
+export type VariationsBodyPaginationQueryVariables = {
+    count?: number | null;
+    cursor?: string | null;
     claimId: string;
+    portfolios?: Array<PortfolioType | null> | null;
 };
-export type DocumentsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"DocumentsBody_data" | "DocumentsAction_data">;
+export type VariationsBodyPaginationQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"VariationsBody_data">;
 };
-export type DocumentsQuery = {
-    readonly response: DocumentsQueryResponse;
-    readonly variables: DocumentsQueryVariables;
+export type VariationsBodyPaginationQuery = {
+    readonly response: VariationsBodyPaginationQueryResponse;
+    readonly variables: VariationsBodyPaginationQueryVariables;
 };
 
 
 
 /*
-query DocumentsQuery(
+query VariationsBodyPaginationQuery(
+  $count: Int = 15
+  $cursor: String
   $claimId: ID!
+  $portfolios: [PortfolioType]
 ) {
-  ...DocumentsBody_data_15qNS2
+  ...VariationsBody_data_16lzxw
 }
 
-fragment DocumentView_claimDocumentsData on ClaimDocument {
-  url
-}
-
-fragment DocumentsBody_data_15qNS2 on Query {
-  documentConnection: claimDocuments(first: 500, where: {claimId: $claimId}) {
+fragment VariationsBody_data_16lzxw on Query {
+  VariationsConnection: jobVariations(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {
     edges {
       node {
-        portfolioType
-        uploadDate
-        company {
-          companyName
+        variationId
+        logdate
+        variationTitle
+        variationDescription
+        variationReason {
+          reasonDescription
         }
-        private
-        description
-        amountInvoice
-        ...DocumentView_claimDocumentsData
+        total
+        variationStatus
         id
         __typename
       }
@@ -56,10 +59,28 @@ fragment DocumentsBody_data_15qNS2 on Query {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": 15,
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "cursor",
+    "type": "String"
+  },
+  {
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "claimId",
     "type": "ID!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "portfolios",
+    "type": "[PortfolioType]"
   }
 ],
 v1 = {
@@ -67,20 +88,26 @@ v1 = {
   "name": "claimId",
   "variableName": "claimId"
 },
-v2 = [
+v2 = {
+  "kind": "Variable",
+  "name": "portfolios",
+  "variableName": "portfolios"
+},
+v3 = [
   {
-    "kind": "Literal",
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
-    "value": 500
+    "variableName": "count"
   },
   {
     "fields": [
       (v1/*: any*/),
-      {
-        "kind": "Literal",
-        "name": "portfolios",
-        "value": null
-      }
+      (v2/*: any*/)
     ],
     "kind": "ObjectValue",
     "name": "where"
@@ -91,19 +118,25 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DocumentsQuery",
+    "name": "VariationsBodyPaginationQuery",
     "selections": [
       {
         "args": [
-          (v1/*: any*/)
+          (v1/*: any*/),
+          {
+            "kind": "Variable",
+            "name": "count",
+            "variableName": "count"
+          },
+          {
+            "kind": "Variable",
+            "name": "cursor",
+            "variableName": "cursor"
+          },
+          (v2/*: any*/)
         ],
         "kind": "FragmentSpread",
-        "name": "DocumentsBody_data"
-      },
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "DocumentsAction_data"
+        "name": "VariationsBody_data"
       }
     ],
     "type": "Query"
@@ -112,20 +145,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DocumentsQuery",
+    "name": "VariationsBodyPaginationQuery",
     "selections": [
       {
-        "alias": "documentConnection",
-        "args": (v2/*: any*/),
-        "concreteType": "ClaimDocumentConnection",
+        "alias": "VariationsConnection",
+        "args": (v3/*: any*/),
+        "concreteType": "JobVariationConnection",
         "kind": "LinkedField",
-        "name": "claimDocuments",
+        "name": "jobVariations",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ClaimDocumentEdge",
+            "concreteType": "JobVariationEdge",
             "kind": "LinkedField",
             "name": "edges",
             "plural": true,
@@ -133,7 +166,7 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ClaimDocument",
+                "concreteType": "JobVariation",
                 "kind": "LinkedField",
                 "name": "node",
                 "plural": false,
@@ -142,29 +175,43 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "portfolioType",
+                    "name": "variationId",
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "uploadDate",
+                    "name": "logdate",
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Company",
+                    "kind": "ScalarField",
+                    "name": "variationTitle",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "variationDescription",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "JobVariationReason",
                     "kind": "LinkedField",
-                    "name": "company",
+                    "name": "variationReason",
                     "plural": false,
                     "selections": [
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "companyName",
+                        "name": "reasonDescription",
                         "storageKey": null
                       }
                     ],
@@ -174,28 +221,14 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "private",
+                    "name": "total",
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "description",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "amountInvoice",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "url",
+                    "name": "variationStatus",
                     "storageKey": null
                   },
                   {
@@ -254,27 +287,30 @@ return {
         "storageKey": null
       },
       {
-        "alias": "documentConnection",
-        "args": (v2/*: any*/),
+        "alias": "VariationsConnection",
+        "args": (v3/*: any*/),
         "filters": [
           "claimId",
           "portfolios"
         ],
         "handle": "connection",
-        "key": "DocumentsBody_data_documentConnection",
+        "key": "VariationsBody_data_VariationsConnection",
         "kind": "LinkedHandle",
-        "name": "claimDocuments"
+        "name": "jobVariations"
       }
     ]
   },
   "params": {
     "id": null,
-    "metadata": {},
-    "name": "DocumentsQuery",
+    "metadata": {
+      "derivedFrom": "VariationsBody_data",
+      "isRefetchableQuery": true
+    },
+    "name": "VariationsBodyPaginationQuery",
     "operationKind": "query",
-    "text": "query DocumentsQuery(\n  $claimId: ID!\n) {\n  ...DocumentsBody_data_15qNS2\n}\n\nfragment DocumentView_claimDocumentsData on ClaimDocument {\n  url\n}\n\nfragment DocumentsBody_data_15qNS2 on Query {\n  documentConnection: claimDocuments(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        portfolioType\n        uploadDate\n        company {\n          companyName\n        }\n        private\n        description\n        amountInvoice\n        ...DocumentView_claimDocumentsData\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query VariationsBodyPaginationQuery(\n  $count: Int = 15\n  $cursor: String\n  $claimId: ID!\n  $portfolios: [PortfolioType]\n) {\n  ...VariationsBody_data_16lzxw\n}\n\nfragment VariationsBody_data_16lzxw on Query {\n  VariationsConnection: jobVariations(first: $count, after: $cursor, where: {claimId: $claimId, portfolios: $portfolios}) {\n    edges {\n      node {\n        variationId\n        logdate\n        variationTitle\n        variationDescription\n        variationReason {\n          reasonDescription\n        }\n        total\n        variationStatus\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '07b651ad059fd3d212187dd48ee736ed';
+(node as any).hash = '49b2bb362c7ffd66bd126983e28a8065';
 export default node;

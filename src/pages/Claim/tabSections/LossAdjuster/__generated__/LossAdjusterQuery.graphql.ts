@@ -3,44 +3,45 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type DocumentsQueryVariables = {
+export type LossAdjusterQueryVariables = {
     claimId: string;
 };
-export type DocumentsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"DocumentsBody_data" | "DocumentsAction_data">;
+export type LossAdjusterQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"LossAdjusterBody_data">;
 };
-export type DocumentsQuery = {
-    readonly response: DocumentsQueryResponse;
-    readonly variables: DocumentsQueryVariables;
+export type LossAdjusterQuery = {
+    readonly response: LossAdjusterQueryResponse;
+    readonly variables: LossAdjusterQueryVariables;
 };
 
 
 
 /*
-query DocumentsQuery(
+query LossAdjusterQuery(
   $claimId: ID!
 ) {
-  ...DocumentsBody_data_15qNS2
+  ...LossAdjusterBody_data_15qNS2
 }
 
-fragment DocumentView_claimDocumentsData on ClaimDocument {
+fragment DocumentView_LossAdjusterData on ClaimLossAdjusterDocument {
   url
 }
 
-fragment DocumentsBody_data_15qNS2 on Query {
-  documentConnection: claimDocuments(first: 500, where: {claimId: $claimId}) {
+fragment LossAdjusterBody_data_15qNS2 on Query {
+  LossAdjusterConnection: claimLossAdjusterDocuments(first: 15, where: {claimId: $claimId}) {
     edges {
       node {
-        portfolioType
+        id
         uploadDate
         company {
           companyName
         }
+        reportType {
+          reportTypeName
+        }
         private
         description
-        amountInvoice
-        ...DocumentView_claimDocumentsData
-        id
+        ...DocumentView_LossAdjusterData
         __typename
       }
       cursor
@@ -62,26 +63,21 @@ var v0 = [
     "type": "ID!"
   }
 ],
-v1 = {
-  "kind": "Variable",
-  "name": "claimId",
-  "variableName": "claimId"
-},
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "claimId",
+    "variableName": "claimId"
+  }
+],
 v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 500
+    "value": 15
   },
   {
-    "fields": [
-      (v1/*: any*/),
-      {
-        "kind": "Literal",
-        "name": "portfolios",
-        "value": null
-      }
-    ],
+    "fields": (v1/*: any*/),
     "kind": "ObjectValue",
     "name": "where"
   }
@@ -91,19 +87,12 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DocumentsQuery",
+    "name": "LossAdjusterQuery",
     "selections": [
       {
-        "args": [
-          (v1/*: any*/)
-        ],
+        "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "DocumentsBody_data"
-      },
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "DocumentsAction_data"
+        "name": "LossAdjusterBody_data"
       }
     ],
     "type": "Query"
@@ -112,20 +101,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DocumentsQuery",
+    "name": "LossAdjusterQuery",
     "selections": [
       {
-        "alias": "documentConnection",
+        "alias": "LossAdjusterConnection",
         "args": (v2/*: any*/),
-        "concreteType": "ClaimDocumentConnection",
+        "concreteType": "ClaimLossAdjusterDocumentConnection",
         "kind": "LinkedField",
-        "name": "claimDocuments",
+        "name": "claimLossAdjusterDocuments",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ClaimDocumentEdge",
+            "concreteType": "ClaimLossAdjusterDocumentEdge",
             "kind": "LinkedField",
             "name": "edges",
             "plural": true,
@@ -133,7 +122,7 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ClaimDocument",
+                "concreteType": "ClaimLossAdjusterDocument",
                 "kind": "LinkedField",
                 "name": "node",
                 "plural": false,
@@ -142,7 +131,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "portfolioType",
+                    "name": "id",
                     "storageKey": null
                   },
                   {
@@ -173,6 +162,24 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "LossAdjusterReportType",
+                    "kind": "LinkedField",
+                    "name": "reportType",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "reportTypeName",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "kind": "ScalarField",
                     "name": "private",
                     "storageKey": null
@@ -188,21 +195,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "amountInvoice",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "url",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
                     "storageKey": null
                   },
                   {
@@ -254,27 +247,26 @@ return {
         "storageKey": null
       },
       {
-        "alias": "documentConnection",
+        "alias": "LossAdjusterConnection",
         "args": (v2/*: any*/),
         "filters": [
-          "claimId",
-          "portfolios"
+          "claimId"
         ],
         "handle": "connection",
-        "key": "DocumentsBody_data_documentConnection",
+        "key": "LossAdjusterBody_data_LossAdjusterConnection",
         "kind": "LinkedHandle",
-        "name": "claimDocuments"
+        "name": "claimLossAdjusterDocuments"
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "DocumentsQuery",
+    "name": "LossAdjusterQuery",
     "operationKind": "query",
-    "text": "query DocumentsQuery(\n  $claimId: ID!\n) {\n  ...DocumentsBody_data_15qNS2\n}\n\nfragment DocumentView_claimDocumentsData on ClaimDocument {\n  url\n}\n\nfragment DocumentsBody_data_15qNS2 on Query {\n  documentConnection: claimDocuments(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        portfolioType\n        uploadDate\n        company {\n          companyName\n        }\n        private\n        description\n        amountInvoice\n        ...DocumentView_claimDocumentsData\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query LossAdjusterQuery(\n  $claimId: ID!\n) {\n  ...LossAdjusterBody_data_15qNS2\n}\n\nfragment DocumentView_LossAdjusterData on ClaimLossAdjusterDocument {\n  url\n}\n\nfragment LossAdjusterBody_data_15qNS2 on Query {\n  LossAdjusterConnection: claimLossAdjusterDocuments(first: 15, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        uploadDate\n        company {\n          companyName\n        }\n        reportType {\n          reportTypeName\n        }\n        private\n        description\n        ...DocumentView_LossAdjusterData\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '07b651ad059fd3d212187dd48ee736ed';
+(node as any).hash = 'acea550092639bc30bd0d69a1ee36a26';
 export default node;
