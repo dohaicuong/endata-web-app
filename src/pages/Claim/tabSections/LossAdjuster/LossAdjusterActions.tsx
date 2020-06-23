@@ -1,6 +1,6 @@
 import React from 'react'
 import { Paper, Button, makeStyles } from '@material-ui/core'
-import { useClaimAction } from 'pages/Claim/actions'
+// import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
 // import { useFragment } from 'react-relay/hooks'
 // import { graphql } from 'babel-plugin-relay/macro'
 // import { JobInfoActions_actions$key } from './__generated__/JobInfoActions_actions.graphql'
@@ -10,7 +10,7 @@ type JobInfoActionsProps = {
 }
 const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
   const classes = useStyles()
-  const { nextStep } = useClaimAction()
+  // const { nextStep } = useClaimAction()
 
   // const actions = useFragment(
   //   graphql`
@@ -32,7 +32,7 @@ const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
         color="primary"
         variant="outlined"
         size="large"
-        onClick={nextStep.handleOpen}
+        // onClick={nextStep.handleOpen}
       >
         Next Step
       </Button>
