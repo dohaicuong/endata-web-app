@@ -184,6 +184,10 @@ const useStyles = makeStyles(theme => ({
   tableBodyCell: {
     textAlign: 'center',
     padding: theme.spacing(0.5),
+    maxWidth: '150px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   tableRow: {
     '&:nth-child(even)': {

@@ -6,7 +6,7 @@ const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
 })
 
-export const moneyFormats = (number: number) => formatter.format(number)
+export const moneyFormats = (number: any) => formatter.format(number)
 
 const useMoneyFormats = (number: number) =>
   React.useMemo(() => formatter.format(number), [number])

@@ -27,7 +27,7 @@ export default (options: ThemeOptions = {}) => {
           '*': {
             'scrollbar-width': 'thin',
           },
-          '*::-webkit-scrollbar': { width: 8, height: 4 },
+          '*::-webkit-scrollbar': { width: 10, height: 10 },
           '::-webkit-scrollbar-thumb': {
             background: defaultMuiTheme.palette.primary.main,
             borderRadius: 10,
