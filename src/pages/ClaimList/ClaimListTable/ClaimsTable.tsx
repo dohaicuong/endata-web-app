@@ -330,7 +330,12 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
       <Grid container spacing={2}>
         {blocks.map(({ label, value }) => (
           <Grid item xs={3} key={label}>
-            <Info label={label} value={value} fullWidth labelProps={{focused: true}}/>
+            <Info
+              label={label}
+              value={value}
+              fullWidth
+              labelProps={{ focused: true }}
+            />
           </Grid>
         ))}
       </Grid>
