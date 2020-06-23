@@ -463,5 +463,6 @@ const getTableColumns = (userType: any) =>
       show: userType === 'Administrator',
       Header: 'Content Status',
       accessor: 'contentsStatus',
+      width: 160,
     },
   ].filter(column => column.show !== false)
