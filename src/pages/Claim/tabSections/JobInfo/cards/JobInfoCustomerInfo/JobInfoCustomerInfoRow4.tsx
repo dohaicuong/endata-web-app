@@ -109,7 +109,7 @@ const JobInfoCustomerInfoRow4: React.FC<JobInfoCustomerInfoRow4Props> = props =>
             claim={claim}
             data={data as any}
             startIcon={<DoneIcon />}
-            // disabled={claim?.view?.actions.cashSettle.isDisabled}
+            disabled={claim?.view?.actions.cashSettle.isDisabled}
             label={claim?.view?.actions.cashSettle.label}
           />
         }

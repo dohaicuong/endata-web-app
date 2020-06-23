@@ -1,8 +1,9 @@
 import React from 'react'
-import { useFragment, useLazyLoadQuery } from 'react-relay/hooks'
+import { useFragment, useLazyLoadQuery, useMutation } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfo_claim$key } from './__generated__/JobInfo_claim.graphql'
 import { JobInfoOptionQuery } from './__generated__/JobInfoOptionQuery.graphql'
+import { JobInfoMutation } from './__generated__/JobInfoMutation.graphql'
 
 import ClaimDetailsCard from './cards/JobInfoClaimDetails'
 import { Form, Formik } from 'formik'
@@ -14,12 +15,15 @@ import JobInfoTenantInfo from './cards/JobInfoTenantInfo'
 import JobInfoClaimDescription from './cards/JobInfoClaimDescription'
 import JobInfoQuotingBuilders from './cards/JobInfoQuotingBuilders'
 import JobInfoQuotingRestorers from './cards/JobInfoQuotingRestorers'
+import { useSnackbar } from 'notistack'
 
 type JobInfoProps = {
   claimId: string
   claim: JobInfo_claim$key | null
 }
 const JobInfo: React.FC<JobInfoProps> = props => {
+  const { enqueueSnackbar } = useSnackbar()
+
   const claim = useFragment(
     graphql`
       fragment JobInfo_claim on ClaimJob {
@@ -55,6 +59,20 @@ const JobInfo: React.FC<JobInfoProps> = props => {
     `,
     props.claim
   )
+
+  const [commit] = useMutation<JobInfoMutation>(graphql`
+    mutation JobInfoMutation($input: ClaimJobInput!, $claimId: ID!) {
+      updateClaimJob(input: $input, where: { id: $claimId }) {
+        success
+        messages
+        fieldErrors {
+          fieldName
+          level
+          message
+        }
+      }
+    }
+  `)
 
   // $postcode: String
   const companyId = String(claim?.insurer?.companyId ?? '') || null
@@ -152,7 +170,42 @@ const JobInfo: React.FC<JobInfoProps> = props => {
 
         claimDescription: '',
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, setErrors }) => {
+        commit({
+          variables: {
+            claimId: props.claimId,
+            // @ts-ignore
+            input: values,
+          },
+          onCompleted: (res, errors) => {
+            if (errors) {
+              return errors.forEach(error => {
+                enqueueSnackbar(error.message, { variant: 'error' })
+              })
+            }
+            const response = res.updateClaimJob
+
+            if (response?.fieldErrors) {
+              const fieldErrors = response.fieldErrors.reduce(
+                (total: any, current) => {
+                  if (!current) return total
+
+                  total[current.fieldName] = current.message
+                  return total
+                },
+                {}
+              )
+
+              setErrors(fieldErrors)
+            }
+
+            response?.messages.map(message => {
+              enqueueSnackbar(message, {
+                variant: response?.success ? 'success' : 'error',
+              })
+            })
+          },
+        })
         console.log(values)
         setSubmitting(false)
       }}
