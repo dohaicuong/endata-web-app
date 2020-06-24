@@ -32,7 +32,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
   const secondRow = filters?.slice(firstRowFilters)
 
   return (
-    <Paper style={{ padding: 8 }}>
+    <Paper style={{ padding: '16px 8px 0 8px' }}>
       <Formik
         initialValues={{}}
         validateOnChange
@@ -80,9 +80,9 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
             <Grid item>
               <Grid container direction="column">
                 {Boolean(subview) && (
-                  <Grid item xs={6} style={{ minHeight: 48 }}>
+                  <Grid item xs={6}>
                     <IconButton
-                      // style={{ padding: 6 }}
+                      style={{ padding: 6 }}
                       onClick={handleViewChange}
                     >
                       {isSubview ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -93,7 +93,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
                   {!isSubview && Boolean(secondRow?.length) && (
                     <IconButton
                       onClick={() => setIsExpand(pre => !pre)}
-                      // style={{ padding: 6 }}
+                      style={{ padding: 6 }}
                     >
                       {isExpand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </IconButton>

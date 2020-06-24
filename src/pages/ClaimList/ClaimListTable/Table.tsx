@@ -28,7 +28,6 @@ const Table: React.FC<TableProps> = ({
   onScroll,
   isLoading = false,
 }) => {
-  const tableClasses = useStyles()
   const {
     getTableProps,
     getTableBodyProps,
@@ -43,6 +42,7 @@ const Table: React.FC<TableProps> = ({
     },
     useExpanded
   )
+  const tableClasses = useStyles()
 
   return (
     <Paper className={tableClasses.paper}>
@@ -63,15 +63,19 @@ const Table: React.FC<TableProps> = ({
                 key={headerGroup.getHeaderGroupProps().key}
                 className={tableClasses.tableRow}
               >
-                {headerGroup.headers.map(column => (
-                  <TableCell
-                    {...column.getHeaderProps()}
-                    key={column.getHeaderProps().key}
-                    className={tableClasses.tableHeaderCell}
-                  >
-                    {column.render('Header')}
-                  </TableCell>
-                ))}
+                {headerGroup.headers.map(column => {
+                  const widthClasses = widthStyles(column.width)
+                  return (
+                    <TableCell
+                      {...column.getHeaderProps()}
+                      key={column.getHeaderProps().key}
+                      style={{ width: column.width }}
+                      className={`${tableClasses.tableHeaderCell} ${widthClasses.tableHeaderWidth}`}
+                    >
+                      {column.render('Header')}
+                    </TableCell>
+                  )
+                })}
               </TableRow>
             ))}
           </TableHead>
@@ -144,6 +148,12 @@ const Table: React.FC<TableProps> = ({
 }
 export default Table
 
+const widthStyles = makeStyles({
+  tableHeaderWidth: {
+    width: (props: any) => props,
+  },
+})
+
 const useStyles = makeStyles(theme => ({
   paper: {
     position: 'relative',
@@ -167,13 +177,17 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     padding: theme.spacing(),
     textAlign: 'center',
-    minWidth: 130,
+    fontWeight: 'bold',
     borderLeft: '1px solid #fff',
     borderRight: '1px solid #fff',
   },
   tableBodyCell: {
     textAlign: 'center',
     padding: theme.spacing(0.5),
+    maxWidth: '150px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   tableRow: {
     '&:nth-child(even)': {

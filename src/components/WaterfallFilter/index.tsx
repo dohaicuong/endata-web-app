@@ -41,10 +41,10 @@ const WaterfallFilter: React.FC<WaterfallFilterProps> = ({
               <Button
                 style={{
                   margin: 0,
-                  padding: '4px 8px',
-                  fontWeight: 600,
+                  padding: '2px 16px',
                   border: '1px solid rgba(0, 0, 0, 0.12)',
                   display: 'flex',
+                  fontSize: '12px',
                   // background: color,
                   // color: 'rgba(0, 0, 0, 0.87)',
                   background:

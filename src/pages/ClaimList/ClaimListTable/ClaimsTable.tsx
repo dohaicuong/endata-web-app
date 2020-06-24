@@ -4,7 +4,7 @@ import Info from 'components/Info'
 import PortfolioIcon from 'components/PortfolioIcon'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-
+import { moneyFormats } from 'hooks/useMoneyFormat'
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { ClaimsTable_user$key } from './__generated__/ClaimsTable_user.graphql'
@@ -243,14 +243,18 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
 
     const value =
       userType === 'Administrator'
-        ? claim?.building?.authorisedValue || claim?.building?.scopedValue
+        ? (claim?.building && moneyFormats(claim?.building?.authorisedValue)) ||
+          (claim?.building && moneyFormats(claim?.building?.scopedValue)) ||
+          '-'
         : userType === 'Builder'
-        ? claim?.building?.jobSuppliers?.[0]?.quote?.total
+        ? (claim?.building &&
+            moneyFormats(claim?.building?.jobSuppliers?.[0]?.quote?.total)) ||
+          '-'
         : userType === 'Restorer'
-        ? claim?.restoration?.jobSuppliers?.[0]?.quote?.total
+        ? moneyFormats(claim?.restoration?.jobSuppliers?.[0]?.quote?.total)
         : userType === 'ContentSupplier'
-        ? claim?.contents?.jobSuppliers?.[0]?.quote?.total
-        : null
+        ? moneyFormats(claim?.contents?.jobSuppliers?.[0]?.quote?.total)
+        : '-'
     const status =
       userType === 'Builder'
         ? claim?.building?.jobSuppliers?.[0]?.quote?.quoteStatus?.statusName ||
@@ -282,7 +286,6 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
     const incidentAddress =
       claim?.incidentDetail?.riskAddress &&
       `${claim?.incidentDetail?.riskAddress?.line1} ${claim?.incidentDetail?.riskAddress?.suburb} ${claim?.incidentDetail?.riskAddress?.state}, ${claim?.incidentDetail?.riskAddress?.postcode}`
-
     return {
       id: claim?.id,
       portfolios,
@@ -294,16 +297,16 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
       customerName: claim?.insured?.name,
       suburb: claim?.incidentDetail?.riskAddress?.suburb,
       state: claim?.incidentDetail?.riskAddress?.state,
-      value,
-      status,
-      builder,
+      value: value,
+      status: status || '-',
+      builder: builder || '-',
       buildingStatus: claim?.building?.claimStatus?.statusName,
-      daysAtStatus: claim?.building?.daysAtStatus,
-      restorer,
+      daysAtStatus: claim?.building?.daysAtStatus || '-',
+      restorer: restorer || '-',
       restorationStatus: claim?.building?.claimStatus?.statusName,
       contentsStatus: claim?.building?.claimStatus?.statusName,
-      insuredPhone,
-      incidentAddress,
+      insuredPhone: insuredPhone || '-',
+      incidentAddress: incidentAddress || '-',
       email: claim?.insured?.email,
       incidentDate: claim?.incidentDetail?.incidentDate,
       name: claim?.insured?.name,
@@ -327,7 +330,12 @@ const ClaimsTable: React.FC<ClaimsTableProps> = props => {
       <Grid container spacing={2}>
         {blocks.map(({ label, value }) => (
           <Grid item xs={3} key={label}>
-            <Info label={label} value={value} fullWidth />
+            <Info
+              label={label}
+              value={value}
+              fullWidth
+              labelProps={{ focused: true }}
+            />
           </Grid>
         ))}
       </Grid>
@@ -376,6 +384,7 @@ const getTableColumns = (userType: any) =>
     {
       Header: 'Type',
       accessor: 'portfolios',
+      width: 200,
       Cell: ({ row, value }: any) => {
         const { onClick, toggleProps } = row.getToggleRowExpandedProps({
           style: { padding: 8 },
@@ -395,12 +404,18 @@ const getTableColumns = (userType: any) =>
             >
               {row.isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </IconButton>
-            <span style={{ marginRight: 8, width: 10, fontWeight: 600 }}>
+            <div style={{ marginRight: 20, width: 10, fontWeight: 600 }}>
               {parseInt(row.id) + 1}
-            </span>
-            {value.map((portfolio: any) => (
-              <PortfolioIcon key={portfolio} portfolio={portfolio} />
-            ))}
+            </div>
+            <div>
+              {value.map((portfolio: any) => (
+                <PortfolioIcon
+                  key={portfolio}
+                  portfolio={portfolio}
+                  style={{ fontSize: '16px' }}
+                />
+              ))}
+            </div>
           </div>
         )
       },
@@ -420,8 +435,8 @@ const getTableColumns = (userType: any) =>
     },
     { Header: 'Customer', accessor: 'customerName' },
     { Header: 'Suburb', accessor: 'suburb' },
-    { Header: 'State', accessor: 'state' },
-    { Header: 'Value', accessor: 'value' },
+    { Header: 'State', accessor: 'state', width: 100 },
+    { Header: 'Value', accessor: 'value', width: 100 },
     {
       show: userType !== 'Administrator',
       Header: 'Status',
@@ -431,11 +446,13 @@ const getTableColumns = (userType: any) =>
       show: userType === 'Administrator' || userType === 'Restorer',
       Header: 'Builder',
       accessor: 'builder',
+      width: 350,
     },
     {
       show: userType === 'Administrator',
       Header: 'Building Status',
       accessor: 'buildingStatus',
+      width: 160,
     },
     {
       show: userType === 'Administrator',
@@ -451,10 +468,12 @@ const getTableColumns = (userType: any) =>
       show: userType === 'Administrator',
       Header: 'Restoration Status',
       accessor: 'restorationStatus',
+      width: 200,
     },
     {
       show: userType === 'Administrator',
       Header: 'Content Status',
       accessor: 'contentsStatus',
+      width: 160,
     },
   ].filter(column => column.show !== false)
