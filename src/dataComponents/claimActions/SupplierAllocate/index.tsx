@@ -12,6 +12,7 @@ import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { SupplierAllocate_data$key } from './__generated__/SupplierAllocate_data.graphql'
 import SupplierAllocateForm from './SupplierAllocateForm'
+import { useSnackbar } from 'notistack'
 
 type SupplierAllocateProps = ButtonProps & {
   label?: string
@@ -19,6 +20,7 @@ type SupplierAllocateProps = ButtonProps & {
 }
 const SupplierAllocate: React.FC<SupplierAllocateProps> = props => {
   const classes = useStyles()
+  const { enqueueSnackbar } = useSnackbar()
 
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
@@ -70,6 +72,18 @@ const SupplierAllocate: React.FC<SupplierAllocateProps> = props => {
   const isRestorerReallocate =
     data?.currentUser?.claimJob?.hasRestoration &&
     claim?.restoration?.reallocate
+
+  React.useEffect(() => {
+    if (isAdmin && (isBuilderReallocate || isRestorerReallocate)) {
+      enqueueSnackbar(
+        `Please immediately allocate the builder by using the "Allocate Supplier" button`,
+        {
+          variant: 'info',
+        }
+      )
+    }
+  }, [isAdmin, isBuilderReallocate, isRestorerReallocate])
+
   if (!isAdmin || !(isBuilderReallocate && !isRestorerReallocate)) return null
 
   const groups = [
