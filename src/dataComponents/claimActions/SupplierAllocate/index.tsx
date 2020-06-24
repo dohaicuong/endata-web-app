@@ -84,12 +84,16 @@ const SupplierAllocate: React.FC<SupplierAllocateProps> = props => {
     }
   }, [isAdmin, isBuilderReallocate, isRestorerReallocate])
 
-  if (!isAdmin || !(isBuilderReallocate && !isRestorerReallocate)) return null
+  const groups = React.useMemo(
+    () =>
+      [
+        { show: isBuilderReallocate, portfolio: 'Building' },
+        { show: isRestorerReallocate, portfolio: 'Restoration' },
+      ].filter(group => group.show),
+    [isBuilderReallocate, isRestorerReallocate]
+  )
 
-  const groups = [
-    { show: isBuilderReallocate, portfolio: 'Building' },
-    { show: isRestorerReallocate, portfolio: 'Restoration' },
-  ].filter(group => group.show)
+  if (!isAdmin || !(isBuilderReallocate && !isRestorerReallocate)) return null
   return (
     <>
       <Button
