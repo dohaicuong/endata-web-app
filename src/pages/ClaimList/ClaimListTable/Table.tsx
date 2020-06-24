@@ -158,6 +158,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     position: 'relative',
     height: '100%',
+    borderRadius: theme.spacing(),
   },
   loading: {
     position: 'absolute',
@@ -171,6 +172,7 @@ const useStyles = makeStyles(theme => ({
   },
   tableContainer: {
     maxHeight: '100%',
+    borderRadius: theme.spacing(),
   },
   tableHeaderCell: {
     background: theme.palette.primary.main,
