@@ -66,8 +66,8 @@ const CashSettle: React.FC<CashSettleProps> = props => {
         {props.label ? props.label : 'Cash Settle'}
       </Button>
       <Dialog
-        onClose={handleClose}
         open={open}
+        onClose={handleClose}
         classes={{ paper: classes.paper }}
       >
         <Formik

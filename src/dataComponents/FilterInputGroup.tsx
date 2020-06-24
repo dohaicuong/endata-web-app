@@ -28,8 +28,8 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
   }
 
   const firstRowFilters = 6
-  const firstRow = filters.slice(0, firstRowFilters)
-  const secondRow = filters.slice(firstRowFilters)
+  const firstRow = filters?.slice(0, firstRowFilters)
+  const secondRow = filters?.slice(firstRowFilters)
 
   return (
     <Paper style={{ padding: 8 }}>
@@ -90,7 +90,7 @@ const FilterInputGroup: React.FC<FilterInputGroupProps> = ({
                   </Grid>
                 )}
                 <Grid item xs={6}>
-                  {!isSubview && Boolean(secondRow.length) && (
+                  {!isSubview && Boolean(secondRow?.length) && (
                     <IconButton
                       onClick={() => setIsExpand(pre => !pre)}
                       // style={{ padding: 6 }}

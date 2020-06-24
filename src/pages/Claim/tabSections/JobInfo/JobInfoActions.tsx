@@ -5,6 +5,9 @@ import { graphql } from 'babel-plugin-relay/macro'
 import { JobInfoActions_actions$key } from './__generated__/JobInfoActions_actions.graphql'
 import { JobInfoActions_data$key } from './__generated__/JobInfoActions_data.graphql'
 import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
+import OfferAccept from 'dataComponents/claimActions/OfferAccept'
+import OfferDecline from 'dataComponents/claimActions/OfferDecline'
+import SupplierAllocate from 'dataComponents/claimActions/SupplierAllocate'
 
 type JobInfoActionsProps = {
   data: JobInfoActions_data$key | null
@@ -30,6 +33,9 @@ const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
     graphql`
       fragment JobInfoActions_data on Query {
         ...NextStep_data @arguments(claimId: $claimId)
+        ...OfferAccept_data @arguments(claimId: $claimId)
+        ...OfferDecline_data @arguments(claimId: $claimId)
+        ...SupplierAllocate_data @arguments(claimId: $claimId)
       }
     `,
     props.data
@@ -41,6 +47,21 @@ const JobInfoActions: React.FC<JobInfoActionsProps> = props => {
         <NextStep data={data} />
       </React.Suspense>
       <div className={classes.pad} />
+      <OfferAccept
+        data={data}
+        className={classes.actionButton}
+        label="Accept Offer"
+      />
+      <OfferDecline
+        data={data}
+        className={classes.actionButton}
+        label="Decline Offer"
+      />
+      <SupplierAllocate
+        data={data}
+        className={classes.actionButton}
+        label="Allocate Supplier"
+      />
       {actions?.updateClaim.isDisplay && (
         <Button
           className={classes.actionButton}

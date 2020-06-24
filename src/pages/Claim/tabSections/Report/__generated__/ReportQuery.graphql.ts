@@ -9,6 +9,7 @@ export type ReportQueryVariables = {
 };
 export type ReportQueryResponse = {
     readonly claimJob: {
+        readonly reportFormId: string | null;
         readonly reportForm: {
             readonly cards: ReadonlyArray<{
                 readonly id: string;
@@ -36,6 +37,7 @@ query ReportQuery(
   $claimId: ID!
 ) {
   claimJob(where: {id: $claimId}) {
+    reportFormId
     reportForm {
       cards {
         id
@@ -165,84 +167,91 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "reportFormId",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "order",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "grid",
+  "name": "order",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "data",
+  "name": "grid",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "status",
+  "name": "data",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "status",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "label",
+  "name": "__typename",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "value",
+  "name": "label",
   "storageKey": null
 },
 v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "value",
+  "storageKey": null
+},
+v11 = {
   "kind": "InlineFragment",
   "selections": [
-    (v9/*: any*/)
+    (v10/*: any*/)
   ],
   "type": "InfoField"
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v12 = [
-  (v11/*: any*/)
+v13 = [
+  (v12/*: any*/)
 ],
-v13 = {
-  "kind": "InlineFragment",
-  "selections": (v12/*: any*/),
-  "type": "TextField"
-},
 v14 = {
   "kind": "InlineFragment",
+  "selections": (v13/*: any*/),
+  "type": "TextField"
+},
+v15 = {
+  "kind": "InlineFragment",
   "selections": [
-    (v11/*: any*/),
+    (v12/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -260,10 +269,10 @@ v14 = {
   ],
   "type": "TextAreaField"
 },
-v15 = {
+v16 = {
   "kind": "InlineFragment",
   "selections": [
-    (v11/*: any*/),
+    (v12/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -272,23 +281,23 @@ v15 = {
       "name": "options",
       "plural": true,
       "selections": [
-        (v2/*: any*/),
-        (v8/*: any*/),
-        (v9/*: any*/)
+        (v3/*: any*/),
+        (v9/*: any*/),
+        (v10/*: any*/)
       ],
       "storageKey": null
     }
   ],
   "type": "SelectField"
 },
-v16 = {
-  "kind": "InlineFragment",
-  "selections": (v12/*: any*/),
-  "type": "DateTimeField"
-},
 v17 = {
   "kind": "InlineFragment",
-  "selections": (v12/*: any*/),
+  "selections": (v13/*: any*/),
+  "type": "DateTimeField"
+},
+v18 = {
+  "kind": "InlineFragment",
+  "selections": (v13/*: any*/),
   "type": "FileField"
 };
 return {
@@ -306,6 +315,7 @@ return {
         "name": "claimJob",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -322,9 +332,9 @@ return {
                 "name": "cards",
                 "plural": true,
                 "selections": [
-                  (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -344,8 +354,8 @@ return {
             "name": "reportData",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
-              (v6/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -374,6 +384,7 @@ return {
         "name": "claimJob",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -390,9 +401,9 @@ return {
                 "name": "cards",
                 "plural": true,
                 "selections": [
-                  (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -408,20 +419,20 @@ return {
                     "name": "fields",
                     "plural": true,
                     "selections": [
-                      (v2/*: any*/),
-                      (v4/*: any*/),
                       (v3/*: any*/),
-                      (v7/*: any*/),
+                      (v5/*: any*/),
+                      (v4/*: any*/),
                       (v8/*: any*/),
-                      (v10/*: any*/),
-                      (v13/*: any*/),
+                      (v9/*: any*/),
+                      (v11/*: any*/),
                       (v14/*: any*/),
                       (v15/*: any*/),
                       (v16/*: any*/),
+                      (v17/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v11/*: any*/),
+                          (v12/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -430,30 +441,30 @@ return {
                             "name": "fields",
                             "plural": true,
                             "selections": [
-                              (v7/*: any*/),
                               (v8/*: any*/),
-                              (v4/*: any*/),
-                              (v2/*: any*/),
-                              (v10/*: any*/),
-                              (v13/*: any*/),
+                              (v9/*: any*/),
+                              (v5/*: any*/),
+                              (v3/*: any*/),
+                              (v11/*: any*/),
                               (v14/*: any*/),
                               (v15/*: any*/),
                               (v16/*: any*/),
-                              (v17/*: any*/)
+                              (v17/*: any*/),
+                              (v18/*: any*/)
                             ],
                             "storageKey": null
                           }
                         ],
                         "type": "GroupField"
                       },
-                      (v17/*: any*/)
+                      (v18/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -465,13 +476,13 @@ return {
             "name": "reportData",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
               (v6/*: any*/),
-              (v2/*: any*/)
+              (v7/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -482,9 +493,9 @@ return {
     "metadata": {},
     "name": "ReportQuery",
     "operationKind": "query",
-    "text": "query ReportQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    reportForm {\n      cards {\n        id\n        order\n        grid\n        ...ReportCard_cart\n      }\n      id\n    }\n    reportData {\n      data\n      status\n      id\n    }\n    id\n  }\n}\n\nfragment ArrayField_data on GroupField {\n  label\n  name\n  fields {\n    __typename\n    label\n    grid\n    ...ReportInfoField_field\n    ...ReportTextField_field\n    ...ReportTextAreaField_field\n    ...ReportSelectField_field\n    ...ReportDateTimeField_field\n    ...ReportFileField_field\n    id\n  }\n}\n\nfragment ReportCardField_field on Field {\n  __typename\n  label\n  ...ReportInfoField_field\n  ...ReportTextField_field\n  ...ReportTextAreaField_field\n  ...ReportSelectField_field\n  ...ReportDateTimeField_field\n  ...ReportGroupField_field\n  ...ReportFileField_field\n}\n\nfragment ReportCard_cart on Card {\n  id\n  title\n  fields {\n    __typename\n    id\n    grid\n    order\n    ...ReportCardField_field\n  }\n}\n\nfragment ReportDateTimeField_field on DateTimeField {\n  label\n  name\n}\n\nfragment ReportFileField_field on FileField {\n  label\n  name\n}\n\nfragment ReportGroupField_field on GroupField {\n  label\n  name\n  ...ArrayField_data\n}\n\nfragment ReportInfoField_field on InfoField {\n  label\n  value\n}\n\nfragment ReportSelectField_field on SelectField {\n  name\n  label\n  options {\n    id\n    label\n    value\n  }\n}\n\nfragment ReportTextAreaField_field on TextAreaField {\n  label\n  name\n  rows\n  rowsMax\n}\n\nfragment ReportTextField_field on TextField {\n  label\n  name\n}\n"
+    "text": "query ReportQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    reportFormId\n    reportForm {\n      cards {\n        id\n        order\n        grid\n        ...ReportCard_cart\n      }\n      id\n    }\n    reportData {\n      data\n      status\n      id\n    }\n    id\n  }\n}\n\nfragment ArrayField_data on GroupField {\n  label\n  name\n  fields {\n    __typename\n    label\n    grid\n    ...ReportInfoField_field\n    ...ReportTextField_field\n    ...ReportTextAreaField_field\n    ...ReportSelectField_field\n    ...ReportDateTimeField_field\n    ...ReportFileField_field\n    id\n  }\n}\n\nfragment ReportCardField_field on Field {\n  __typename\n  label\n  ...ReportInfoField_field\n  ...ReportTextField_field\n  ...ReportTextAreaField_field\n  ...ReportSelectField_field\n  ...ReportDateTimeField_field\n  ...ReportGroupField_field\n  ...ReportFileField_field\n}\n\nfragment ReportCard_cart on Card {\n  id\n  title\n  fields {\n    __typename\n    id\n    grid\n    order\n    ...ReportCardField_field\n  }\n}\n\nfragment ReportDateTimeField_field on DateTimeField {\n  label\n  name\n}\n\nfragment ReportFileField_field on FileField {\n  label\n  name\n}\n\nfragment ReportGroupField_field on GroupField {\n  label\n  name\n  ...ArrayField_data\n}\n\nfragment ReportInfoField_field on InfoField {\n  label\n  value\n}\n\nfragment ReportSelectField_field on SelectField {\n  name\n  label\n  options {\n    id\n    label\n    value\n  }\n}\n\nfragment ReportTextAreaField_field on TextAreaField {\n  label\n  name\n  rows\n  rowsMax\n}\n\nfragment ReportTextField_field on TextField {\n  label\n  name\n}\n"
   }
 };
 })();
-(node as any).hash = '25c28f0b96cd97957ddc4f29c9375faf';
+(node as any).hash = '39b59e50b8b10dfcbe3c7ea95fd22d0f';
 export default node;

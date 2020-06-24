@@ -25,6 +25,8 @@ const Report: React.FC<TabProps> = ({ claimId }) => {
         ...ReportActions_data
 
         claimJob(where: { id: $claimId }) {
+          # dont remove reportFormId
+          reportFormId
           reportForm {
             cards {
               id
