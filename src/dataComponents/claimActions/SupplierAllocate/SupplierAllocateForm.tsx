@@ -97,7 +97,13 @@ const SupplierAllocateForm: React.FC<SupplierAllocateFormProps> = props => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary" fullWidth disabled={isInFly}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={isInFly}
+            >
               Reallocate
             </Button>
           </Grid>
