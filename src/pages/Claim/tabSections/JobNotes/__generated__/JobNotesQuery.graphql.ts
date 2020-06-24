@@ -36,6 +36,7 @@ query JobNotesQuery(
     id
   }
   ...JobNotesBody_data_15qNS2
+  ...JobNotesActions_data
 }
 
 fragment ActionButton_action on ActionControl {
@@ -67,6 +68,10 @@ fragment JobNotesActions_actions on ClaimJobAction {
   }
 }
 
+fragment JobNotesActions_data on Query {
+  ...JobNotesInitialCall_claim
+}
+
 fragment JobNotesBody_data_15qNS2 on Query {
   jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {
     edges {
@@ -90,6 +95,12 @@ fragment JobNotesBody_data_15qNS2 on Query {
       endCursor
       hasNextPage
     }
+  }
+}
+
+fragment JobNotesInitialCall_claim on Query {
+  claimJob(where: {id: $claimId}) {
+    id
   }
 }
 */
@@ -477,7 +488,7 @@ return {
     "metadata": {},
     "name": "JobNotesQuery",
     "operationKind": "query",
-    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    view {\n      actions {\n        ...JobNotesActions_actions\n      }\n    }\n    id\n  }\n  ...JobNotesBody_data_15qNS2\n}\n\nfragment ActionButton_action on ActionControl {\n  label\n  isDisabled\n  isDisplay\n}\n\nfragment JobNotesActions_actions on ClaimJobAction {\n  makeLossAdjusterInitialCall {\n    ...ActionButton_action\n    id\n  }\n  makeLossAdjusterAppointment {\n    ...ActionButton_action\n    id\n  }\n  updateReserve {\n    ...ActionButton_action\n    id\n  }\n  awaitingInfo {\n    ...ActionButton_action\n    id\n  }\n  addJobNote {\n    ...ActionButton_action\n    id\n  }\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    view {\n      actions {\n        ...JobNotesActions_actions\n      }\n    }\n    id\n  }\n  ...JobNotesBody_data_15qNS2\n  ...JobNotesActions_data\n}\n\nfragment ActionButton_action on ActionControl {\n  label\n  isDisabled\n  isDisplay\n}\n\nfragment JobNotesActions_actions on ClaimJobAction {\n  makeLossAdjusterInitialCall {\n    ...ActionButton_action\n    id\n  }\n  makeLossAdjusterAppointment {\n    ...ActionButton_action\n    id\n  }\n  updateReserve {\n    ...ActionButton_action\n    id\n  }\n  awaitingInfo {\n    ...ActionButton_action\n    id\n  }\n  addJobNote {\n    ...ActionButton_action\n    id\n  }\n}\n\nfragment JobNotesActions_data on Query {\n  ...JobNotesInitialCall_claim\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment JobNotesInitialCall_claim on Query {\n  claimJob(where: {id: $claimId}) {\n    id\n  }\n}\n"
   }
 };
 })();

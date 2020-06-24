@@ -11,10 +11,12 @@ export type SupplierAllocate_data = {
             readonly id: string;
             readonly hasBuilding: boolean;
             readonly building: {
+                readonly id: string;
                 readonly reallocate: boolean;
             } | null;
             readonly hasRestoration: boolean;
             readonly restoration: {
+                readonly id: string;
                 readonly reallocate: boolean;
             } | null;
             readonly insurer: {
@@ -39,7 +41,15 @@ export type SupplierAllocate_data$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = [
+  (v0/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -48,7 +58,7 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = [
+v2 = [
   {
     "kind": "Variable",
     "name": "companyIds",
@@ -118,13 +128,7 @@ return {
           "name": "claimJob",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            },
+            (v0/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -139,7 +143,7 @@ return {
               "kind": "LinkedField",
               "name": "building",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": (v1/*: any*/),
               "storageKey": null
             },
             {
@@ -156,7 +160,7 @@ return {
               "kind": "LinkedField",
               "name": "restoration",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": (v1/*: any*/),
               "storageKey": null
             },
             {
@@ -213,12 +217,12 @@ return {
       "storageKey": null
     },
     {
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "FragmentSpread",
       "name": "BuilderComboBox_data"
     },
     {
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "FragmentSpread",
       "name": "RestorerComboBox_data"
     }
@@ -226,5 +230,5 @@ return {
   "type": "Query"
 };
 })();
-(node as any).hash = '67ad294716dbb1c4a1f160d6dbf7b9d4';
+(node as any).hash = 'e85984f3fbeb6aa2f343d7ee61eb8e6d';
 export default node;

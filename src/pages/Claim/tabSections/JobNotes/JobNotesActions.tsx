@@ -1,13 +1,15 @@
 import React from 'react'
 
 import { makeStyles, Paper } from '@material-ui/core'
-import ActionButton from 'dataComponents/ActionButton'
+// import ActionButton from 'dataComponents/ActionButton'
 import NextStep, { NextStepButton } from 'dataComponents/claimActions/NextStep'
 
 import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobNotesActions_actions$key } from './__generated__/JobNotesActions_actions.graphql'
 import { JobNotesActions_data$key } from './__generated__/JobNotesActions_data.graphql'
+import JobNotesInitialCall from 'dataComponents/claimActions/JobNotesInitialCall'
+import JobNotesAppointmentMade from 'dataComponents/claimActions/JobNotesAppointmentMade'
 
 type JobNotesActionsProps = {
   actions: JobNotesActions_actions$key | null
@@ -43,6 +45,7 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
     graphql`
       fragment JobNotesActions_data on Query {
         ...NextStep_data @arguments(claimId: $claimId)
+        ...JobNotesInitialCall_claim
       }
     `,
     props.data
@@ -54,11 +57,13 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
         <NextStep data={data} />
       </React.Suspense>
       <div className={classes.pad} />
-      <ActionButton action={actions?.makeLossAdjusterInitialCall ?? null} />
+      <JobNotesInitialCall claim={data} />
+      <JobNotesAppointmentMade action={actions} />
+      {/* <ActionButton action={actions?.makeLossAdjusterInitialCall ?? null} />
       <ActionButton action={actions?.makeLossAdjusterAppointment ?? null} />
       <ActionButton action={actions?.updateReserve ?? null} />
       <ActionButton action={actions?.awaitingInfo ?? null} />
-      <ActionButton action={actions?.addJobNote ?? null} />
+      <ActionButton action={actions?.addJobNote ?? null} /> */}
     </Paper>
   )
 }

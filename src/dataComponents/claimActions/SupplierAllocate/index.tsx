@@ -82,7 +82,7 @@ const SupplierAllocate: React.FC<SupplierAllocateProps> = props => {
         }
       )
     }
-  }, [isAdmin, isBuilderReallocate, isRestorerReallocate])
+  }, [isAdmin, isBuilderReallocate, isRestorerReallocate, enqueueSnackbar])
 
   const groups = React.useMemo(
     () =>
