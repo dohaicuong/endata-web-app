@@ -7,6 +7,7 @@ import { ActionButton_action$key } from './__generated__/ActionButton_action.gra
 type ActionButtonProps = {
   action: ActionButton_action$key | null
   onClick?: any
+  disabled?: boolean
 }
 const ActionButton: React.FC<ActionButtonProps> = props => {
   const classes = useStyles()
@@ -24,6 +25,7 @@ const ActionButton: React.FC<ActionButtonProps> = props => {
 
   if (!action?.isDisplay) return null
 
+  const disabled = props.disabled || action.isDisabled
   return (
     <Button
       className={classes.actionButton}
@@ -31,7 +33,7 @@ const ActionButton: React.FC<ActionButtonProps> = props => {
       variant="outlined"
       size="large"
       onClick={props.onClick}
-      disabled={action?.isDisabled}
+      disabled={disabled}
     >
       {action.label}
     </Button>

@@ -45,7 +45,15 @@ const JobNotes = ({ claimId }: any) => {
             setValue={setPortfolio}
           />
         </Grid>
-        <Grid item xs>
+        <Grid
+          item
+          xs
+          style={{
+            height:
+              // 100vh - navBarHeight - infoCardHeight - margin - tabHeight - margin - actionBarHeight - margin - bottomMargin
+              'calc(100vh - 48px - 182px - 8px - 48px - 8px - 58px - 8px - 8px)',
+          }}
+        >
           <React.Suspense fallback="Loading...">
             <JobNotesBody data={data} portfolio={portfolio} />
           </React.Suspense>

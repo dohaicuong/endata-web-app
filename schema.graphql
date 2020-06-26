@@ -95,8 +95,12 @@ enum ActionType {
   CLAIM_UPDATE_REF
   CLAIM_AWAITING_INFO
   CLAIM_STATUS_VOLUME
+  CLAIM_ADD_NOTE
   CLAIM_FINALISE
   CLAIM_CASH_SETTLE
+  JOB_INITIAL_CALL
+  JOB_APPOINTMENT
+  JOB_APPOINTMENT_UPDATE
   JOB_BUILDING_ALLOCATE
   JOB_BUILDING_REALLOCATE
   JOB_BUILDING_ADD_SITEREPORT
@@ -608,12 +612,15 @@ type ClaimJobAction {
   authoriseQuote: PortfolioAction!
   awaitingInfo: ActionControl!
   cashSettle: ActionControl!
+  changeAppointment: ActionControl!
   claimFinalise: ActionControl!
   createSpecialistRequest: ActionControl!
   createVideoSession: ActionControl!
   deleteFeeItem: ActionControl!
   deleteInvoice: ActionControl!
   editFeeItem: ActionControl!
+  makeAppointment: ActionControl!
+  makeInitialCall: ActionControl!
   makeLossAdjusterAppointment: ActionControl!
   makeLossAdjusterInitialCall: ActionControl!
   reallocateSupplier: PortfolioAction!
@@ -3331,6 +3338,10 @@ type Query {
     """filter apply to this query"""
     where: ClaimItemFilter = null
   ): ClaimDocumentConnection
+  claimFilterInputOptions(
+    """filter apply to this query"""
+    where: ClaimJobFilter = null
+  ): [FilterInputOption]
   claimFilterOptions(
     """filter apply to this query"""
     where: ClaimJobFilter = null

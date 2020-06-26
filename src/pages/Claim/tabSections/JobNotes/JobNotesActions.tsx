@@ -8,8 +8,10 @@ import { useFragment } from 'react-relay/hooks'
 import { graphql } from 'babel-plugin-relay/macro'
 import { JobNotesActions_actions$key } from './__generated__/JobNotesActions_actions.graphql'
 import { JobNotesActions_data$key } from './__generated__/JobNotesActions_data.graphql'
-import JobNotesInitialCall from 'dataComponents/claimActions/JobNotesInitialCall'
-import JobNotesAppointmentMade from 'dataComponents/claimActions/JobNotesAppointmentMade'
+// import JobNotesInitialCall from 'dataComponents/claimActions/JobNotesInitialCall'
+// import JobNotesAppointmentMade from 'dataComponents/claimActions/JobNotesAppointmentMade'
+// import JobNotesAppointmentChange from 'dataComponents/claimActions/JobNotesAppointmentChange'
+import AwaitingInfo from 'dataComponents/claimActions/AwaitingInfo'
 
 type JobNotesActionsProps = {
   actions: JobNotesActions_actions$key | null
@@ -21,21 +23,13 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
   const actions = useFragment(
     graphql`
       fragment JobNotesActions_actions on ClaimJobAction {
-        makeLossAdjusterInitialCall {
-          ...ActionButton_action
-        }
-        makeLossAdjusterAppointment {
-          ...ActionButton_action
-        }
-        updateReserve {
-          ...ActionButton_action
-        }
-        awaitingInfo {
-          ...ActionButton_action
-        }
         addJobNote {
-          ...ActionButton_action
+          id
         }
+        # ...JobNotesInitialCall_action
+        # ...JobNotesAppointmentMade_action
+        # ...JobNotesAppointmentChange_action
+        ...AwaitingInfo_action
       }
     `,
     props.actions
@@ -46,6 +40,9 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
       fragment JobNotesActions_data on Query {
         ...NextStep_data @arguments(claimId: $claimId)
         ...JobNotesInitialCall_claim
+        ...JobNotesAppointmentMade_claim
+        ...JobNotesAppointmentChange_claim
+        ...AwaitingInfo_data
       }
     `,
     props.data
@@ -57,13 +54,10 @@ const JobNotesActions: React.FC<JobNotesActionsProps> = props => {
         <NextStep data={data} />
       </React.Suspense>
       <div className={classes.pad} />
-      <JobNotesInitialCall claim={data} />
-      <JobNotesAppointmentMade action={actions} />
-      {/* <ActionButton action={actions?.makeLossAdjusterInitialCall ?? null} />
-      <ActionButton action={actions?.makeLossAdjusterAppointment ?? null} />
-      <ActionButton action={actions?.updateReserve ?? null} />
-      <ActionButton action={actions?.awaitingInfo ?? null} />
-      <ActionButton action={actions?.addJobNote ?? null} /> */}
+      {/* <JobNotesInitialCall action={actions} claim={data} />
+      <JobNotesAppointmentMade claim={data} action={actions} />
+      <JobNotesAppointmentChange claim={data} action={actions} /> */}
+      <AwaitingInfo data={data} action={actions} />
     </Paper>
   )
 }

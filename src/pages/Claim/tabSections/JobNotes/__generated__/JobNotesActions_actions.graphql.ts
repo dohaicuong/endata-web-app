@@ -4,21 +4,10 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type JobNotesActions_actions = {
-    readonly makeLossAdjusterInitialCall: {
-        readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
-    };
-    readonly makeLossAdjusterAppointment: {
-        readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
-    };
-    readonly updateReserve: {
-        readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
-    };
-    readonly awaitingInfo: {
-        readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
-    };
     readonly addJobNote: {
-        readonly " $fragmentRefs": FragmentRefs<"ActionButton_action">;
+        readonly id: string;
     };
+    readonly " $fragmentRefs": FragmentRefs<"AwaitingInfo_action">;
     readonly " $refType": "JobNotesActions_actions";
 };
 export type JobNotesActions_actions$data = JobNotesActions_actions;
@@ -29,15 +18,7 @@ export type JobNotesActions_actions$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "args": null,
-    "kind": "FragmentSpread",
-    "name": "ActionButton_action"
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -48,54 +29,26 @@ return {
       "args": null,
       "concreteType": "ActionControl",
       "kind": "LinkedField",
-      "name": "makeLossAdjusterInitialCall",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ActionControl",
-      "kind": "LinkedField",
-      "name": "makeLossAdjusterAppointment",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ActionControl",
-      "kind": "LinkedField",
-      "name": "updateReserve",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ActionControl",
-      "kind": "LinkedField",
-      "name": "awaitingInfo",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ActionControl",
-      "kind": "LinkedField",
       "name": "addJobNote",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AwaitingInfo_action"
     }
   ],
   "type": "ClaimJobAction"
 };
-})();
-(node as any).hash = '93837750164f34098ffa9e82001a5e48';
+(node as any).hash = '7ab16e0f72a15aba5dbc9126d978381c';
 export default node;

@@ -1,20 +1,21 @@
 import React from 'react'
-import { useSnackbar } from 'notistack'
 import { Button, Dialog, makeStyles, Grid, Typography } from '@material-ui/core'
+import { Form, Formik } from 'formik'
+import { useSnackbar } from 'notistack'
 import DateField from 'components/Formik/DateField'
-import { Formik, Form } from 'formik'
+
 import { graphql } from 'babel-plugin-relay/macro'
 import { useMutation, useFragment } from 'react-relay/hooks'
-import { JobNotesAppointmentMadeMutation } from './__generated__/JobNotesAppointmentMadeMutation.graphql'
-import { JobNotesAppointmentMade_claim$key } from './__generated__/JobNotesAppointmentMade_claim.graphql'
+import { JobNotesAppointmentChange_claim$key } from './__generated__/JobNotesAppointmentChange_claim.graphql'
+import { JobNotesAppointmentChangeMutation } from './__generated__/JobNotesAppointmentChangeMutation.graphql'
 import ActionButton from 'dataComponents/ActionButton'
-import { JobNotesAppointmentMade_action$key } from './__generated__/JobNotesAppointmentMade_action.graphql'
+import { JobNotesAppointmentChange_action$key } from './__generated__/JobNotesAppointmentChange_action.graphql'
 
-type JobNotesAppointmentMadeProps = {
-  action: JobNotesAppointmentMade_action$key | null
-  claim: JobNotesAppointmentMade_claim$key | null
+type JobNotesAppointmentChangeProps = {
+  claim: JobNotesAppointmentChange_claim$key | null
+  action: JobNotesAppointmentChange_action$key | null
 }
-const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props => {
+const JobNotesAppointmentChange: React.FC<JobNotesAppointmentChangeProps> = props => {
   const classes = useStyles()
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = React.useState(false)
@@ -23,8 +24,8 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
 
   const action = useFragment(
     graphql`
-      fragment JobNotesAppointmentMade_action on ClaimJobAction {
-        makeAppointment {
+      fragment JobNotesAppointmentChange_action on ClaimJobAction {
+        changeAppointment {
           ...ActionButton_action
         }
       }
@@ -34,7 +35,7 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
 
   const claim = useFragment(
     graphql`
-      fragment JobNotesAppointmentMade_claim on Query {
+      fragment JobNotesAppointmentChange_claim on Query {
         claimJob(where: { id: $claimId }) {
           id
         }
@@ -45,9 +46,9 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
   const claimId = claim?.claimJob?.id ?? ''
 
   const [commit, isInFly] = useMutation<
-    JobNotesAppointmentMadeMutation
+    JobNotesAppointmentChangeMutation
   >(graphql`
-    mutation JobNotesAppointmentMadeMutation(
+    mutation JobNotesAppointmentChangeMutation(
       $claimId: ID!
       $input: AppointmentInput!
     ) {
@@ -69,7 +70,7 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
   return (
     <>
       <ActionButton
-        action={action?.makeAppointment ?? null}
+        action={action?.changeAppointment ?? null}
         onClick={handleOpen}
         disabled={isInFly}
       />
@@ -108,7 +109,7 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
           <Form>
             <Grid container spacing={2} className={classes.container}>
               <Grid item xs={12}>
-                <Typography variant="h6">Make Appointment</Typography>
+                <Typography variant="h6">Change Appointment</Typography>
               </Grid>
               <Grid item xs={12}>
                 <DateField
@@ -132,7 +133,7 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
                   type="submit"
                   disabled={isInFly}
                 >
-                  Make appointment
+                  Change appointment
                 </Button>
               </Grid>
             </Grid>
@@ -142,7 +143,7 @@ const JobNotesAppointmentMade: React.FC<JobNotesAppointmentMadeProps> = props =>
     </>
   )
 }
-export default JobNotesAppointmentMade
+export default JobNotesAppointmentChange
 const useStyles = makeStyles(theme => ({
   paper: {
     minWidth: '40%',

@@ -45,31 +45,82 @@ fragment ActionButton_action on ActionControl {
   isDisplay
 }
 
-fragment JobNotesActions_actions on ClaimJobAction {
-  makeLossAdjusterInitialCall {
-    ...ActionButton_action
+fragment AwaitingInfoPortfolio_data on Query {
+  ...WaitForInfoForm_data
+}
+
+fragment AwaitingInfoPortfolio_portfolioData on ClaimPortfolio {
+  claimStatus {
+    statusId
     id
   }
-  makeLossAdjusterAppointment {
-    ...ActionButton_action
+}
+
+fragment AwaitingInfoReasonSelect_data on Query {
+  claimFilterOptions(where: {subject: "awaitingInfoReasons"}) {
+    label: name
+    value
     id
   }
-  updateReserve {
-    ...ActionButton_action
-    id
-  }
+}
+
+fragment AwaitingInfo_action on ClaimJobAction {
   awaitingInfo {
-    ...ActionButton_action
-    id
-  }
-  addJobNote {
     ...ActionButton_action
     id
   }
 }
 
+fragment AwaitingInfo_data on Query {
+  ...AwaitingInfoPortfolio_data
+  currentUser {
+    userType
+    claimJob(where: {id: $claimId}) {
+      id
+      hasBuilding
+      hasContents
+      hasRestoration
+      building {
+        ...AwaitingInfoPortfolio_portfolioData
+        id
+      }
+      contents {
+        ...AwaitingInfoPortfolio_portfolioData
+        id
+      }
+      restoration {
+        ...AwaitingInfoPortfolio_portfolioData
+        id
+      }
+    }
+    id
+  }
+}
+
+fragment JobNotesActions_actions on ClaimJobAction {
+  addJobNote {
+    id
+  }
+  ...AwaitingInfo_action
+}
+
 fragment JobNotesActions_data on Query {
   ...JobNotesInitialCall_claim
+  ...JobNotesAppointmentMade_claim
+  ...JobNotesAppointmentChange_claim
+  ...AwaitingInfo_data
+}
+
+fragment JobNotesAppointmentChange_claim on Query {
+  claimJob(where: {id: $claimId}) {
+    id
+  }
+}
+
+fragment JobNotesAppointmentMade_claim on Query {
+  claimJob(where: {id: $claimId}) {
+    id
+  }
 }
 
 fragment JobNotesBody_data_15qNS2 on Query {
@@ -102,6 +153,10 @@ fragment JobNotesInitialCall_claim on Query {
   claimJob(where: {id: $claimId}) {
     id
   }
+}
+
+fragment WaitForInfoForm_data on Query {
+  ...AwaitingInfoReasonSelect_data
 }
 */
 
@@ -139,30 +194,11 @@ v3 = {
   "name": "id",
   "storageKey": null
 },
-v4 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "label",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "isDisabled",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "isDisplay",
-    "storageKey": null
-  },
-  (v3/*: any*/)
-],
+v4 = {
+  "kind": "Literal",
+  "name": "portfolios",
+  "value": null
+},
 v5 = [
   {
     "kind": "Literal",
@@ -172,15 +208,33 @@ v5 = [
   {
     "fields": [
       (v2/*: any*/),
-      {
-        "kind": "Literal",
-        "name": "portfolios",
-        "value": null
-      }
+      (v4/*: any*/)
     ],
     "kind": "ObjectValue",
     "name": "where"
   }
+],
+v6 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "ClaimStatus",
+    "kind": "LinkedField",
+    "name": "claimStatus",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "statusId",
+        "storageKey": null
+      },
+      (v3/*: any*/)
+    ],
+    "storageKey": null
+  },
+  (v3/*: any*/)
 ];
 return {
   "fragment": {
@@ -277,29 +331,11 @@ return {
                     "args": null,
                     "concreteType": "ActionControl",
                     "kind": "LinkedField",
-                    "name": "makeLossAdjusterInitialCall",
+                    "name": "addJobNote",
                     "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "ActionControl",
-                    "kind": "LinkedField",
-                    "name": "makeLossAdjusterAppointment",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "ActionControl",
-                    "kind": "LinkedField",
-                    "name": "updateReserve",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": [
+                      (v3/*: any*/)
+                    ],
                     "storageKey": null
                   },
                   {
@@ -309,17 +345,30 @@ return {
                     "kind": "LinkedField",
                     "name": "awaitingInfo",
                     "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "ActionControl",
-                    "kind": "LinkedField",
-                    "name": "addJobNote",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "label",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isDisabled",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isDisplay",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
                     "storageKey": null
                   }
                 ],
@@ -480,6 +529,127 @@ return {
         "key": "JobNotesBody_data_jobNoteConnection",
         "kind": "LinkedHandle",
         "name": "claimNotes"
+      },
+      {
+        "alias": null,
+        "args": [
+          {
+            "fields": [
+              (v4/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "subject",
+                "value": "awaitingInfoReasons"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "where"
+          }
+        ],
+        "concreteType": "FilterOption",
+        "kind": "LinkedField",
+        "name": "claimFilterOptions",
+        "plural": true,
+        "selections": [
+          {
+            "alias": "label",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "value",
+            "storageKey": null
+          },
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "AuthenticatedUser",
+        "kind": "LinkedField",
+        "name": "currentUser",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userType",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "ClaimJob",
+            "kind": "LinkedField",
+            "name": "claimJob",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasBuilding",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasContents",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasRestoration",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ClaimPortfolio",
+                "kind": "LinkedField",
+                "name": "building",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ClaimPortfolio",
+                "kind": "LinkedField",
+                "name": "contents",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ClaimPortfolio",
+                "kind": "LinkedField",
+                "name": "restoration",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v3/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
@@ -488,7 +658,7 @@ return {
     "metadata": {},
     "name": "JobNotesQuery",
     "operationKind": "query",
-    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    view {\n      actions {\n        ...JobNotesActions_actions\n      }\n    }\n    id\n  }\n  ...JobNotesBody_data_15qNS2\n  ...JobNotesActions_data\n}\n\nfragment ActionButton_action on ActionControl {\n  label\n  isDisabled\n  isDisplay\n}\n\nfragment JobNotesActions_actions on ClaimJobAction {\n  makeLossAdjusterInitialCall {\n    ...ActionButton_action\n    id\n  }\n  makeLossAdjusterAppointment {\n    ...ActionButton_action\n    id\n  }\n  updateReserve {\n    ...ActionButton_action\n    id\n  }\n  awaitingInfo {\n    ...ActionButton_action\n    id\n  }\n  addJobNote {\n    ...ActionButton_action\n    id\n  }\n}\n\nfragment JobNotesActions_data on Query {\n  ...JobNotesInitialCall_claim\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment JobNotesInitialCall_claim on Query {\n  claimJob(where: {id: $claimId}) {\n    id\n  }\n}\n"
+    "text": "query JobNotesQuery(\n  $claimId: ID!\n) {\n  claimJob(where: {id: $claimId}) {\n    view {\n      actions {\n        ...JobNotesActions_actions\n      }\n    }\n    id\n  }\n  ...JobNotesBody_data_15qNS2\n  ...JobNotesActions_data\n}\n\nfragment ActionButton_action on ActionControl {\n  label\n  isDisabled\n  isDisplay\n}\n\nfragment AwaitingInfoPortfolio_data on Query {\n  ...WaitForInfoForm_data\n}\n\nfragment AwaitingInfoPortfolio_portfolioData on ClaimPortfolio {\n  claimStatus {\n    statusId\n    id\n  }\n}\n\nfragment AwaitingInfoReasonSelect_data on Query {\n  claimFilterOptions(where: {subject: \"awaitingInfoReasons\"}) {\n    label: name\n    value\n    id\n  }\n}\n\nfragment AwaitingInfo_action on ClaimJobAction {\n  awaitingInfo {\n    ...ActionButton_action\n    id\n  }\n}\n\nfragment AwaitingInfo_data on Query {\n  ...AwaitingInfoPortfolio_data\n  currentUser {\n    userType\n    claimJob(where: {id: $claimId}) {\n      id\n      hasBuilding\n      hasContents\n      hasRestoration\n      building {\n        ...AwaitingInfoPortfolio_portfolioData\n        id\n      }\n      contents {\n        ...AwaitingInfoPortfolio_portfolioData\n        id\n      }\n      restoration {\n        ...AwaitingInfoPortfolio_portfolioData\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment JobNotesActions_actions on ClaimJobAction {\n  addJobNote {\n    id\n  }\n  ...AwaitingInfo_action\n}\n\nfragment JobNotesActions_data on Query {\n  ...JobNotesInitialCall_claim\n  ...JobNotesAppointmentMade_claim\n  ...JobNotesAppointmentChange_claim\n  ...AwaitingInfo_data\n}\n\nfragment JobNotesAppointmentChange_claim on Query {\n  claimJob(where: {id: $claimId}) {\n    id\n  }\n}\n\nfragment JobNotesAppointmentMade_claim on Query {\n  claimJob(where: {id: $claimId}) {\n    id\n  }\n}\n\nfragment JobNotesBody_data_15qNS2 on Query {\n  jobNoteConnection: claimNotes(first: 500, where: {claimId: $claimId}) {\n    edges {\n      node {\n        id\n        portfolioType\n        logDate\n        user {\n          company {\n            companyName\n          }\n          userName\n        }\n        private\n        message\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment JobNotesInitialCall_claim on Query {\n  claimJob(where: {id: $claimId}) {\n    id\n  }\n}\n\nfragment WaitForInfoForm_data on Query {\n  ...AwaitingInfoReasonSelect_data\n}\n"
   }
 };
 })();
