@@ -12,7 +12,9 @@ const routes: AppRouteProps[] = [
   {
     exact: true,
     path: '/video-call',
-    component: lazy(() => import('pages/VideoCall')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "VideoCallPage" */ 'pages/VideoCall')
+    ),
   },
 
   {
@@ -27,13 +29,17 @@ const routes: AppRouteProps[] = [
     exact: true,
     private: true,
     path: '/communicationtasks',
-    component: lazy(() => import('pages/Communication')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "CommunicationPage" */ 'pages/Communication')
+    ),
   },
   {
     exact: true,
     private: true,
     path: '/media',
-    component: lazy(() => import('pages/Media')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "MediaPage" */ 'pages/Media')
+    ),
   },
   {
     exact: true,
@@ -47,22 +53,34 @@ const routes: AppRouteProps[] = [
     exact: false,
     private: true,
     path: '/claim/:claimId',
-    component: lazy(() => import('pages/Claim')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "ClaimPage" */ 'pages/Claim')
+    ),
   },
   {
     exact: false,
     private: true,
     path: '/add-claim',
-    component: lazy(() => import('pages/ClaimAdd')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "AddClaimPage" */ 'pages/ClaimAdd')
+    ),
   },
 
   {
     exact: false,
     private: true,
     path: '/settings',
-    component: lazy(() => import('pages/Settings')),
+    component: lazy(() =>
+      import(/* webpackChunkName: "SettingsPage" */ 'pages/Settings')
+    ),
   },
 
-  { exact: true, path: '*', component: lazy(() => import('pages/NotFound')) },
+  {
+    exact: true,
+    path: '*',
+    component: lazy(() =>
+      import(/* webpackChunkName: "NotFoundPage" */ 'pages/NotFound')
+    ),
+  },
 ]
 export default routes

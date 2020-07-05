@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button'
 
 export type FormikSearchFieldProps = TextFieldProps & {
   name: string
-  startAdornment?: React.ReactElement
   endAdornment?: React.ReactElement
 
   // validate?: (value: any) => string | null | undefined
@@ -16,7 +15,6 @@ export type FormikSearchFieldProps = TextFieldProps & {
 
 const SearchField: React.FC<FormikSearchFieldProps> = ({
   name,
-  startAdornment,
   // endAdornment,
   InputProps,
   required,
